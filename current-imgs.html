@@ -1,0 +1,897 @@
+<title>Dr. Guilherme Rocha</title>
+<meta name="description" content="Dr. Guilherme Rocha, médico em Guarapari (ES). Emagrecimento, metabolismo e saúde hormonal com acompanhamento individual. CRM-ES 11007.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: estrutura de template Framer (blocos arredondados, hero em card verde-oliva com foto, pílulas flutuantes, grids de cards). Visual claro único, na paleta do Instituto: sálvia, oliva e dourado. */
+:root{
+  --bg:#F3F4F0; --card:#FFFFFF; --soft:#E6EAE2; --ink:#1D221B; --ink-2:#343B30; --muted:#686F63; --line:#DCE1D6;
+  --dark:#2F3629; --dark-2:#3A4233; --on-dark:#F4F5F0; --on-dark-muted:#BCC4B5; --dark-line:rgba(244,245,240,.14);
+  --olive:#48503E; --sage:#AEBDAB; --sage-soft:#E1E8DE; --sage-deep:#6E8468;
+  --accent:#48503E; --accent-2:#C7AB6B; --accent-soft:#F1E9D6; --gold-deep:#9A7B3A;
+  --sans:"Inter","Helvetica Neue",Arial,sans-serif;
+  --display:"Instrument Sans","Inter","Helvetica Neue",Arial,sans-serif;
+  --r-xl:32px; --r-lg:24px; --r-md:18px;
+  --wrap:1280px; --gut:clamp(16px,3vw,32px);
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+p{margin:0;text-wrap:pretty}
+h1,h2,h3,h4{margin:0;font-family:var(--display);font-weight:500;letter-spacing:-.04em;line-height:1.02;text-wrap:balance}
+h2{font-size:clamp(2.2rem,4.8vw,4rem)}
+h3{font-size:1.5rem;letter-spacing:-.03em;line-height:1.15}
+.it{color:var(--sage-deep)}
+.dark .it,.hero .it,.dark-block .it,.cta .it,.c-card.inst .it,.step.last .it{color:var(--accent-2)}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gut)}
+section{padding-block:clamp(64px,9vw,120px)}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:8px;z-index:99;background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px}
+.skip:focus{left:16px}
+
+/* pílula de seção */
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;color:var(--ink-2);background:var(--card);border:1px solid var(--line);padding:7px 14px 7px 10px;border-radius:999px;letter-spacing:-.01em}
+.tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 4px var(--accent-soft)}
+.tag.dark{background:rgba(255,255,255,.08);border-color:var(--dark-line);color:var(--on-dark)}
+.tag.dark::before{background:var(--accent-2);box-shadow:0 0 0 4px rgba(199,171,107,.2)}
+.sub{color:var(--muted);font-size:1.08rem;max-width:52ch}
+.head{display:grid;gap:18px;justify-items:start}
+.head.center{justify-items:center;text-align:center;margin-inline:auto}
+.head.center .sub{margin-inline:auto}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;gap:10px;font:500 .95rem/1 var(--sans);letter-spacing:-.01em;padding:7px 7px 7px 20px;border-radius:999px;transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s,color .3s;white-space:nowrap}
+.btn .ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.btn .ic svg{width:14px;height:14px}
+.btn:hover{transform:translateY(-2px)}
+.btn:hover .ic{transform:rotate(-45deg)}
+.btn-dark{background:var(--olive);color:#fff}
+.btn-dark .ic{background:var(--accent-2);color:var(--olive)}
+.btn-light{background:#fff;color:var(--ink)}
+.btn-light .ic{background:var(--olive);color:#fff}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent .ic{background:#fff;color:var(--accent)}
+.btn-line{padding:14px 20px;border:1px solid var(--line);background:var(--card)}
+.btn-line.dark{border-color:var(--dark-line);background:transparent;color:var(--on-dark)}
+
+/* barra superior */
+.topbar{background:var(--olive);color:var(--on-dark-muted);font-size:.82rem;text-align:center;padding:9px 16px}
+.topbar a{color:#fff;font-weight:500;border-bottom:1px solid rgba(255,255,255,.35);margin-left:6px}
+
+/* navegação */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;padding-block:12px}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(255,255,255,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:999px;padding:8px 8px 8px 18px;box-shadow:0 8px 30px rgba(47,54,41,.05)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.03em;font-size:1.05rem}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:var(--sage);color:var(--olive);display:grid;place-items:center;font:600 .9rem/1 var(--display);letter-spacing:-.02em}
+.logo small{display:block;font-weight:400;font-size:.72rem;color:var(--muted);letter-spacing:0}
+.menu{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.menu a{display:block;padding:9px 14px;border-radius:999px;font-size:.92rem;color:var(--ink-2);transition:background .2s}
+.menu a:hover{background:var(--soft)}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:0;background:var(--ink);color:#fff;cursor:pointer;place-items:center}
+.burger svg{width:18px;height:18px}
+.drawer{margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:10px}
+.drawer a{display:block;padding:14px 14px;font-size:1.15rem;font-weight:500;letter-spacing:-.02em;border-radius:14px}
+.drawer a:hover{background:var(--soft)}
+@media (max-width:960px){.menu,.nav-in>.btn{display:none}.burger{display:grid}}
+@media (min-width:961px){.drawer{display:none!important}}
+
+/* HERO */
+.hero{padding-block:8px 0}
+.hero-card{position:relative;overflow:hidden;border-radius:var(--r-xl);background:var(--dark);color:var(--on-dark);display:grid;grid-template-columns:1.05fr .95fr;min-height:min(760px,calc(100svh - 150px))}
+.hero-card::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 78% 40%,rgba(199,171,107,.22),transparent 70%);pointer-events:none}
+.hero-text{position:relative;z-index:2;padding:clamp(28px,5vw,72px);display:flex;flex-direction:column;justify-content:space-between;gap:48px;min-width:0}
+.hero h1{font-size:clamp(2.9rem,6.4vw,5.9rem);margin-top:26px;letter-spacing:-.055em}
+.hero h1 .it{color:var(--accent-2)}
+.hero .sub{color:var(--on-dark-muted);font-size:1.15rem;margin-top:22px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.hero-meta{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:12px 36px;padding-top:24px;border-top:1px solid var(--dark-line)}
+.hero-meta div{font-size:.8rem;color:var(--on-dark-muted)}
+.hero-meta b{display:block;color:#fff;font-weight:500;font-size:1rem;letter-spacing:-.02em;margin-bottom:2px}
+.hero-img{position:relative;min-width:0}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--dark) 0%,rgba(47,54,41,0) 28%),linear-gradient(0deg,rgba(47,54,41,.6) 0%,rgba(47,54,41,0) 35%)}
+.float{position:absolute;z-index:3;background:rgba(20,20,22,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:18px;color:#fff}
+.float.q{right:24px;bottom:24px;max-width:300px;padding:18px 20px}
+.float.q p{font:500 1.08rem/1.35 var(--display);letter-spacing:-.02em}
+.float.q small{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.78rem;color:var(--on-dark-muted)}
+.float.q small i{width:22px;height:22px;border-radius:50%;background:var(--accent-2);display:inline-block}
+.float.crm{top:24px;right:24px;padding:10px 14px;font-size:.8rem;display:flex;align-items:center;gap:8px}
+.float.crm svg{width:16px;height:16px;color:var(--accent-2)}
+@media (max-width:960px){
+  .hero-card{grid-template-columns:1fr;min-height:0}
+  .hero-img{height:520px}
+  .hero-img::after{background:linear-gradient(180deg,var(--dark) 0%,rgba(47,54,41,0) 25%),linear-gradient(0deg,rgba(47,54,41,.6) 0%,rgba(47,54,41,0) 40%)}
+  .hero-meta{grid-template-columns:1fr 1fr}
+  .float.q{left:16px;right:16px;bottom:16px;max-width:none}
+  .float.crm{top:auto;bottom:auto;top:40px;right:16px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .up{animation:up 1s cubic-bezier(.2,.75,.2,1) both}
+  .u1{animation-delay:.1s}.u2{animation-delay:.2s}.u3{animation-delay:.3s}.u4{animation-delay:.45s}
+  @keyframes up{from{opacity:.001;transform:translateY(24px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+  .hero-img img{animation:zoom 1.6s cubic-bezier(.2,.75,.2,1) both}
+  @keyframes zoom{from{transform:scale(1.08)}to{transform:none}}
+}
+
+/* marquee */
+.marquee{overflow:hidden;padding-block:34px;-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.mq{display:flex;gap:14px;width:max-content}
+.mq span{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:12px 20px;font-weight:500;letter-spacing:-.02em;color:var(--ink-2)}
+.mq span svg{width:16px;height:16px;color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.mq{animation:mq 45s linear infinite}@keyframes mq{to{transform:translateX(-50%)}}}
+
+/* SOBRE */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:stretch}
+.about-l{display:flex;flex-direction:column;justify-content:space-between;gap:36px;min-width:0}
+.about-l p.body{color:var(--muted);font-size:1.08rem;max-width:54ch}
+.about-l .body+.body{margin-top:14px}
+.creds{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cred{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:18px 20px}
+.cred span{font-size:.8rem;color:var(--muted)}
+.cred b{display:block;font-weight:500;font-size:1.15rem;letter-spacing:-.03em;margin-top:4px}
+.about-r{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:12px;min-width:0}
+.ph{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--soft)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.about-r .ph.big{grid-row:span 2;min-height:520px}
+.about-r .ph.big img{object-position:50% 20%}
+.quote-card{background:var(--sage);color:var(--olive);color:#fff;border-radius:var(--r-lg);padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.quote-card p{font:500 1.35rem/1.2 var(--display);letter-spacing:-.03em}
+.quote-card small{color:var(--olive);opacity:.75;font-size:.8rem}
+.ph.sil img{filter:grayscale(1);object-position:50% 30%}
+.ph .chip{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:999px;padding:7px 12px;font-size:.78rem;font-weight:500}
+@media (max-width:960px){.about-grid{grid-template-columns:1fr}.about-r .ph.big{min-height:420px}}
+@media (max-width:520px){.about-r{grid-template-columns:1fr}.about-r .ph.big{grid-row:auto}.ph.sil{height:320px}.creds{grid-template-columns:1fr}}
+
+/* ATUAÇÃO */
+.areas-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px 48px;margin-bottom:44px}
+.areas{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:12px}
+.area{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;gap:18px;min-height:460px;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.area:hover{transform:translateY(-4px);box-shadow:0 24px 50px rgba(47,54,41,.08)}
+.area .icon{width:52px;height:52px;border-radius:16px;background:var(--sage-soft);color:var(--olive);display:grid;place-items:center}
+.area .icon svg{width:24px;height:24px}
+.area p{color:var(--muted)}
+.area ul{list-style:none;margin:auto 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.area li{font-size:.82rem;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:6px 11px;color:var(--ink-2)}
+.area .more{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid var(--line);font-weight:500;font-size:.92rem}
+.area .more svg{width:16px;height:16px;transition:transform .3s}
+.area:hover .more svg{transform:translateX(4px)}
+.area.photo{padding:0;color:#fff;border:0;background:var(--dark)}
+.area.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.area.photo:hover img{transform:scale(1.04)}
+.area.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(47,54,41,.95) 30%,rgba(47,54,41,.1) 75%)}
+.area.photo .in{position:relative;z-index:2;margin-top:auto;padding:28px;display:grid;gap:14px}
+.area.photo p{color:rgba(255,255,255,.75)}
+.area.photo .icon{background:rgba(255,255,255,.14);color:#fff}
+@media (max-width:1020px){.areas{grid-template-columns:1fr 1fr}.area.photo{grid-column:span 2;min-height:420px}}
+@media (max-width:640px){.areas{grid-template-columns:1fr}.area.photo{grid-column:auto}.area{min-height:0}}
+
+/* HISTÓRIA COMPLETA */
+.story{background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:clamp(40px,7vw,96px) clamp(20px,5vw,72px);position:relative;overflow:hidden;text-align:center}
+.story::before,.story::after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;border:1px solid var(--line);pointer-events:none}
+.story::before{left:-260px;top:-200px}
+.story::after{right:-260px;bottom:-240px}
+.story h2 .it{color:var(--sage-deep)}
+.cloud{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:880px;margin:44px auto 0;position:relative}
+.cloud span{padding:12px 20px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-weight:500;letter-spacing:-.02em;transition:all .25s}
+.cloud span:nth-child(3n+1){transform:rotate(-2deg)}
+.cloud span:nth-child(4n+2){transform:rotate(2deg)}
+.cloud span:hover{background:var(--olive);color:#fff;border-color:var(--ink);transform:rotate(0) translateY(-3px)}
+.cloud span.hl{background:var(--sage);color:var(--olive);border-color:var(--sage)}
+.story .end{margin-top:40px;color:var(--muted);font-size:1.08rem}
+.story .end b{color:var(--ink);font-weight:500}
+
+/* MÉTODO (numerado) */
+.method{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:flex;flex-direction:column;gap:56px;min-width:0;transition:background .35s,color .35s}
+.step .n{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--muted)}
+.step .n b{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-weight:500;color:var(--ink)}
+.step h3{font-size:1.9rem}
+.step p{color:var(--muted);margin-top:10px}
+.step.last{background:var(--olive);color:#fff;border-color:var(--olive)}
+.step.last .n,.step.last p{color:var(--on-dark-muted)}
+.step.last .n b{border-color:var(--accent-2);color:var(--olive);background:var(--accent-2)}
+.step.last h3 .it{color:var(--accent-2)}
+@media (max-width:960px){.method{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.method{grid-template-columns:1fr}.step{gap:32px}}
+
+/* MENOPAUSA (escuro) */
+.dark-block{background:var(--dark);color:var(--on-dark);border-radius:var(--r-xl);overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+.dark-block .txt{padding:clamp(28px,5vw,72px);display:flex;flex-direction:column;gap:22px;min-width:0}
+.dark-block h2 .it{color:var(--accent-2)}
+.dark-block .sub{color:var(--on-dark-muted)}
+.sym{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.sym span{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--dark-line);font-size:.95rem}
+.sym span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2)}
+.dark-block .vis{position:relative;min-height:460px;min-width:0}
+.dark-block .vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:grayscale(1) brightness(.9)}
+.dark-block .vis::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--dark),rgba(47,54,41,0) 30%)}
+.dark-block .vis .float{left:24px;right:24px;bottom:24px;padding:20px}
+
+.dark-block .vis .float p{margin-top:8px;color:#fff}
+@media (max-width:960px){.dark-block{grid-template-columns:1fr}.dark-block .vis{min-height:380px}.dark-block .vis::after{background:linear-gradient(180deg,var(--dark),rgba(47,54,41,0) 30%)}}
+@media (max-width:480px){.sym{grid-template-columns:1fr}}
+
+/* painel de sinais (menopausa) */
+.signs{background:var(--sage);color:var(--olive);padding:clamp(24px,4vw,56px);display:flex;flex-direction:column;justify-content:center;gap:18px;min-width:0}
+.signs .box{background:rgba(255,255,255,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:var(--r-lg);padding:26px}
+.signs h3{font-size:1.35rem;margin-bottom:14px}
+.signs ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.signs li{display:flex;gap:12px;align-items:center;font-weight:500}
+.signs li svg{flex:none;width:22px;height:22px;padding:4px;border-radius:50%;background:var(--olive);color:#fff}
+.signs .foot-note{font-size:.9rem;opacity:.85}
+.big-num{font:600 clamp(3.6rem,7vw,5.6rem)/.9 var(--display);letter-spacing:-.06em}
+.big-num small{display:block;font:500 1rem/1.3 var(--sans);letter-spacing:-.01em;margin-top:10px;max-width:30ch}
+
+/* CRITÉRIO */
+.crit{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,5vw,72px);align-items:start}
+.crit h2 .it{color:var(--sage-deep)}
+.crit .note{margin-top:28px;display:flex;gap:12px;align-items:flex-start;background:var(--accent-soft);border-radius:var(--r-md);padding:16px 18px;font-size:.92rem;color:var(--ink-2);max-width:460px}
+.crit .note svg{flex:none;width:18px;height:18px;color:var(--gold-deep);margin-top:2px}
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.flow li{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 22px 16px 16px;transition:transform .3s}
+.flow li:hover{transform:translateX(6px)}
+.flow .n{width:52px;height:52px;border-radius:14px;background:var(--bg);display:grid;place-items:center;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.flow b{font-weight:500;font-size:1.2rem;letter-spacing:-.03em;display:block}
+.flow span.d{color:var(--muted);font-size:.92rem}
+.flow .pill{font-size:.75rem;padding:5px 10px;border-radius:999px;background:var(--accent-2);color:var(--olive);font-weight:500}
+.flow li.tool{border-color:var(--sage)}
+.flow li.tool .n{background:var(--sage);color:var(--olive)}
+@media (max-width:960px){.crit{grid-template-columns:1fr}}
+@media (max-width:480px){.flow li{grid-template-columns:44px 1fr}.flow .n{width:44px;height:44px}.flow .pill{grid-column:2;justify-self:start}}
+
+/* CONSULTA */
+.consult{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.consult .ph{min-height:640px}
+.consult .ph img{object-position:50% 25%}
+.consult .ph .float{left:20px;right:20px;bottom:20px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.consult .ph .float p{font-weight:500;letter-spacing:-.02em}
+.consult .ph .float small{display:block;color:var(--on-dark-muted);font-weight:400;font-size:.82rem}
+.cbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:clamp(24px,4vw,48px);display:flex;flex-direction:column;gap:28px;min-width:0}
+.cbox h2 .it{color:var(--sage-deep)}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:1px;background:var(--line)}
+.tl li{display:grid;grid-template-columns:40px 1fr;gap:18px;padding-block:12px;position:relative}
+.tl .n{width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:.85rem;font-weight:500}
+.tl li:first-child .n{background:var(--olive);color:#fff;border-color:var(--olive)}
+.tl b{display:block;font-weight:500;font-size:1.15rem;letter-spacing:-.03em;margin-top:8px}
+.tl span{color:var(--muted);font-size:.95rem}
+@media (max-width:960px){.consult{grid-template-columns:1fr}.consult .ph{min-height:480px}}
+
+/* CONTATO / INSTITUTO */
+.contact{display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:auto auto;gap:12px;margin-top:48px}
+.c-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:flex;flex-direction:column;justify-content:space-between;gap:36px;min-width:0;transition:transform .3s,box-shadow .3s}
+a.c-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(47,54,41,.07)}
+.c-card .top{display:flex;justify-content:space-between;align-items:flex-start}
+.c-card .ico{width:46px;height:46px;border-radius:14px;background:var(--bg);display:grid;place-items:center}
+.c-card .ico svg{width:20px;height:20px}
+.c-card .arr{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+.c-card .arr svg{width:14px;height:14px}
+.c-card span{font-size:.85rem;color:var(--muted)}
+.c-card b{display:block;font-weight:500;font-size:1.25rem;letter-spacing:-.03em;margin-top:4px;overflow-wrap:anywhere}
+.c-card.inst{grid-row:span 2;background:var(--dark);color:#fff;border:0;position:relative;overflow:hidden}
+.c-card.inst::before{content:"";position:absolute;right:-120px;top:-120px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(199,171,107,.35),transparent 70%)}
+.c-card.inst > *{position:relative}
+.c-card.inst span{color:var(--on-dark-muted)}
+.c-card.inst h3{font-size:clamp(2rem,3.4vw,2.8rem);letter-spacing:-.045em;line-height:1.02}
+.c-card.inst h3 .it{color:var(--accent-2);font-size:inherit;margin:0}
+.c-card.inst p{color:var(--on-dark-muted)}
+.c-card.inst .row{display:flex;flex-wrap:wrap;gap:8px}
+.c-card.accent{background:var(--sage);color:var(--olive);border:0}
+.c-card.accent span{color:var(--olive)}
+.c-card.accent .ico{background:rgba(255,255,255,.4)}
+.c-card.accent .arr{border-color:rgba(72,80,62,.3)}
+@media (max-width:960px){.contact{grid-template-columns:1fr 1fr}.c-card.inst{grid-column:span 2;grid-row:auto}}
+@media (max-width:560px){.contact{grid-template-columns:1fr}.c-card.inst{grid-column:auto}}
+
+/* CONTEÚDOS */
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:44px}
+.post{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:10px 10px 22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.post .cover{aspect-ratio:16/10;border-radius:16px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:18px}
+.post .cover span{position:relative;font:600 1.9rem/1 var(--display);letter-spacing:-.04em;color:#fff}
+.post .cover .soon{position:absolute;top:14px;left:14px;font:500 .72rem var(--sans);background:rgba(255,255,255,.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;padding:5px 10px;border-radius:999px}
+.post:nth-child(1) .cover{background:radial-gradient(90% 90% at 80% 10%,#5B6650,#2F3629)}
+.post:nth-child(2) .cover{background:radial-gradient(90% 90% at 20% 0%,#D8BF86,#9A7B3A)}
+.post:nth-child(3) .cover{background:radial-gradient(90% 90% at 70% 20%,#C3D0C0,#6E8468)}
+.post .meta{display:flex;gap:10px;padding-inline:12px;font-size:.82rem;color:var(--muted)}
+.post .meta b{color:var(--sage-deep);font-weight:500}
+.post h3{padding-inline:12px;font-size:1.3rem}
+.post .by{padding-inline:12px;font-size:.85rem;color:var(--muted);margin-top:auto}
+@media (max-width:960px){.posts{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.posts{grid-template-columns:1fr}}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,72px);align-items:start}
+.faq-l{display:grid;gap:18px;position:sticky;top:110px}
+.faq-help{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;display:grid;gap:14px;justify-items:start}
+.faq-help p{color:var(--muted);font-size:.95rem}
+.faq-help b{font-weight:500;font-size:1.1rem;letter-spacing:-.02em}
+.qa{display:grid;gap:10px}
+details{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);transition:background .3s}
+details[open]{background:#fff;box-shadow:0 14px 34px rgba(47,54,41,.06)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 22px;font-weight:500;font-size:1.08rem;letter-spacing:-.02em}
+summary::-webkit-details-marker{display:none}
+summary i{flex:none;width:32px;height:32px;border-radius:50%;background:var(--bg);position:relative;transition:transform .35s,background .3s}
+summary i::before,summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%);border-radius:2px}
+summary i::after{transform:translate(-50%,-50%) rotate(90deg)}
+details[open] summary i{transform:rotate(45deg);background:var(--sage-soft)}
+details p{padding:0 22px 22px;color:var(--muted);max-width:62ch}
+@media (max-width:960px){.faq{grid-template-columns:1fr}.faq-l{position:static}}
+
+/* CTA */
+.cta{position:relative;border-radius:var(--r-xl);overflow:hidden;background:var(--dark);color:#fff;display:grid;grid-template-columns:1.15fr .85fr;min-height:540px}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 80% at 70% 60%,rgba(199,171,107,.25),transparent 70%)}
+.cta .txt{position:relative;z-index:2;padding:clamp(28px,5vw,72px);display:flex;flex-direction:column;justify-content:center;gap:22px;min-width:0}
+.cta h2{font-size:clamp(2.4rem,5.2vw,4.6rem);letter-spacing:-.05em}
+.cta h2 .it{color:var(--accent-2)}
+.cta .sub{color:var(--on-dark-muted)}
+.cta .phone{font-size:.9rem;color:var(--on-dark-muted)}
+.cta .phone b{color:#fff;font-weight:500;user-select:all}
+.cta .img{position:relative;min-width:0}
+.cta .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
+.cta .img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--dark),rgba(47,54,41,0) 35%)}
+@media (max-width:960px){.cta{grid-template-columns:1fr}.cta .img{height:440px}.cta .img::after{background:linear-gradient(180deg,var(--dark),rgba(47,54,41,0) 35%)}}
+
+/* RODAPÉ */
+footer{padding-block:72px 28px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:48px;border-bottom:1px solid var(--line)}
+.foot p{color:var(--muted);font-size:.95rem;max-width:34ch;margin-top:16px}
+.foot h4{font-size:.85rem;color:var(--muted);font-weight:400;letter-spacing:0;margin-bottom:14px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.foot a{font-weight:500;letter-spacing:-.02em;transition:color .2s}
+.foot a:hover{color:var(--sage-deep)}
+.wordmark{font-weight:600;letter-spacing:-.07em;line-height:.8;font-size:clamp(3rem,12.2vw,11.4rem);color:var(--ink);margin-top:40px;white-space:nowrap;overflow:hidden}
+.wordmark{font-family:var(--display)}
+.wordmark .it{color:var(--sage)}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:28px;font-size:.82rem;color:var(--muted)}
+@media (max-width:860px){.foot{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.foot{grid-template-columns:1fr}}
+
+/* revelar ao rolar (só movimento; o conteúdo nunca fica invisível) */
+@media (prefers-reduced-motion:no-preference){
+  .js .rv{transform:translateY(28px);transition:transform 1s cubic-bezier(.2,.75,.2,1)}
+  .js .rv.in{transform:none}
+}
+
+/* HERO tela cheia */
+html{scroll-padding-top:96px}
+.nav{position:fixed;left:0;right:0}
+.nav-in{transition:background .4s,border-color .4s,box-shadow .4s,color .4s}
+.nav.on-hero .nav-in{background:rgba(12,13,9,.28);border-color:rgba(255,255,255,.14);box-shadow:none;color:#fff}
+.nav.on-hero .logo small{color:rgba(255,255,255,.65)}
+.nav.on-hero .menu a{color:rgba(255,255,255,.82)}
+.nav.on-hero .menu a:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav.on-hero .btn-dark{background:#fff;color:var(--olive)}
+.hf{position:relative;padding:0;height:100svh;min-height:640px;max-height:1100px;background:#0C0D09;color:#fff;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate}
+.hf-photo{position:absolute;inset:0;display:flex;justify-content:center;z-index:-2}
+.hf-photo img{height:100%;width:auto;max-width:none;object-fit:cover;object-position:50% 20%;-webkit-mask:linear-gradient(90deg,transparent 0%,#000 22%,#000 78%,transparent 100%);mask:linear-gradient(90deg,transparent 0%,#000 22%,#000 78%,transparent 100%)}
+.hf::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(0deg,#0C0D09 0%,rgba(12,13,9,.92) 22%,rgba(12,13,9,.35) 48%,rgba(12,13,9,0) 65%),
+  radial-gradient(70% 60% at 50% 35%,rgba(12,13,9,0) 40%,rgba(12,13,9,.55) 100%),
+  radial-gradient(40% 35% at 50% 100%,rgba(199,171,107,.18),transparent 70%)}
+.hf-content{position:relative;text-align:center;display:grid;justify-items:center;gap:16px;padding-inline:var(--gut);padding-bottom:clamp(20px,3vw,36px)}
+.hf h1{font-size:clamp(2.9rem,6.4vw,6.6rem);letter-spacing:-.055em;line-height:.95;font-weight:500;max-width:16ch;text-shadow:0 10px 40px rgba(0,0,0,.35)}
+.hf h1 .it{color:var(--accent-2)}
+.hf p{color:rgba(244,245,240,.72);font-size:clamp(1rem,1.4vw,1.15rem);max-width:44ch}
+.hf .btn{margin-top:6px}
+.hf-bar{position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px var(--gut) calc(22px + env(safe-area-inset-bottom,0px));max-width:var(--wrap);width:100%;margin-inline:auto;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,245,240,.55);border-top:1px solid rgba(255,255,255,.08)}
+.hf-scroll{width:26px;height:40px;border:1px solid rgba(255,255,255,.35);border-radius:14px;display:flex;justify-content:center;padding-top:7px}
+.hf-scroll i{width:3px;height:8px;border-radius:2px;background:var(--accent-2)}
+@media (max-width:640px){
+  .hf-photo img{width:100%;height:100%;-webkit-mask:none;mask:none;object-position:50% 12%}
+  .hf-bar span:first-child{display:none}
+  .hf-bar{justify-content:center;gap:22px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .hf-photo img{animation:hfzoom 2.4s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes hfzoom{from{transform:scale(1.12);filter:brightness(.6)}to{transform:none;filter:none}}
+  .hf-in{animation:up 1.1s cubic-bezier(.2,.75,.2,1) both;animation-delay:.5s}
+  .hf-in.h1{animation-delay:.65s}.hf-in.h2{animation-delay:.85s}.hf-in.h3{animation-delay:1s}.hf-in.h4{animation-delay:1.2s}
+  .hf-scroll i{animation:sc 1.8s ease-in-out infinite}
+  @keyframes sc{0%{transform:translateY(0);opacity:1}70%{transform:translateY(12px);opacity:0}100%{opacity:0}}
+}
+
+/* PLATINUM */
+.pl{position:relative;overflow:hidden;border-radius:var(--r-xl);background:#14170F;color:var(--on-dark);padding:clamp(28px,5vw,72px);isolation:isolate}
+.pl::before{content:"";position:absolute;inset:-1px;z-index:-1;background:radial-gradient(60% 50% at 85% 0%,rgba(199,171,107,.22),transparent 70%),radial-gradient(50% 50% at 0% 100%,rgba(174,189,171,.12),transparent 70%)}
+.pl::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1px;background:linear-gradient(135deg,rgba(199,171,107,.6),rgba(255,255,255,.06) 40%,rgba(199,171,107,.35));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.pl-head{display:grid;gap:20px;justify-items:start;max-width:900px}
+.pl-badge{display:inline-flex;align-items:center;gap:12px;padding:8px 16px 8px 12px;border-radius:999px;background:linear-gradient(90deg,rgba(199,171,107,.2),rgba(199,171,107,.06));border:1px solid rgba(199,171,107,.45);font:600 .85rem var(--display);letter-spacing:.12em;text-transform:uppercase;color:#E6D3A6}
+.pl-stars{letter-spacing:.1em;color:var(--accent-2);font-size:.8rem}
+.pl h2{font-size:clamp(2.3rem,5vw,4.4rem)}
+.pl h2 .it{background:linear-gradient(90deg,#E9D7A8,#C7AB6B 60%,#A88C4E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pl-sub{color:var(--on-dark-muted);font-size:1.1rem;max-width:62ch}
+.pl-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:clamp(20px,3vw,40px);margin-top:clamp(36px,5vw,64px);align-items:start}
+.pl-label{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2);margin-bottom:16px}
+.pl-fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pl-feat{display:flex;gap:14px;padding:20px;border-radius:var(--r-md);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:background .3s,border-color .3s;min-width:0}
+.pl-feat:hover{background:rgba(199,171,107,.08);border-color:rgba(199,171,107,.3)}
+.pl-ic{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(199,171,107,.14);color:var(--accent-2)}
+.pl-ic svg{width:20px;height:20px}
+.pl-feat b{display:block;font:500 1.05rem/1.25 var(--display);letter-spacing:-.02em;color:#fff}
+.pl-feat p{font-size:.9rem;color:var(--on-dark-muted);margin-top:4px}
+.pl-fine{margin-top:16px;font-size:.85rem;color:rgba(188,196,181,.75);max-width:64ch}
+.pl-side{display:grid;gap:10px;min-width:0}
+.pl-card{background:#F4F5F0;color:var(--ink);border-radius:var(--r-lg);padding:clamp(22px,3vw,32px);display:grid;gap:22px}
+.pl-card .pl-label{color:var(--gold-deep);margin-bottom:0}
+.pl-steps{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.pl-steps li{display:grid;grid-template-columns:30px 1fr;gap:14px}
+.pl-steps span{width:30px;height:30px;border-radius:50%;background:var(--olive);color:#fff;display:grid;place-items:center;font:600 .8rem var(--display)}
+.pl-steps b{font:500 1.05rem var(--display);letter-spacing:-.02em}
+.pl-steps p{font-size:.9rem;color:var(--muted);margin-top:2px}
+.pl-price{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:16px 18px;border-radius:var(--r-md);background:var(--accent-soft)}
+.pl-price small{display:block;font-size:.75rem;color:var(--muted)}
+.pl-price b{font:600 1.7rem/1 var(--display);letter-spacing:-.04em;color:var(--olive)}
+.pl-price p{font-size:.82rem;color:var(--ink-2)}
+.btn-gold{background:linear-gradient(90deg,#D9C28A,#C7AB6B);color:#1E2218;justify-self:start}
+.btn-gold .ic{background:#1E2218;color:#E6D3A6}
+.pl-dur{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:22px}
+.pl-days{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pl-days span{display:grid;justify-items:center;padding:14px 6px;border-radius:14px;border:1px solid rgba(199,171,107,.3);font-size:.75rem;color:var(--on-dark-muted);text-transform:uppercase;letter-spacing:.1em}
+.pl-days b{font:600 1.5rem/1.1 var(--display);letter-spacing:-.03em;color:#fff;text-transform:none}
+.pl-notes{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(28px,4vw,44px);padding-top:24px;border-top:1px solid rgba(255,255,255,.08)}
+.pl-notes span{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--on-dark-muted);padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.04)}
+.pl-notes span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2)}
+@media (max-width:1020px){.pl-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.pl-fgrid{grid-template-columns:1fr}.pl-days{grid-template-columns:1fr 1fr}.pl-price{grid-template-columns:1fr}}
+
+.areas{grid-template-columns:repeat(4,1fr)}
+.area h3{font-size:1.35rem}
+.pill-gold{justify-self:start;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--accent-2);color:var(--olive)}
+@media (max-width:1100px){.areas{grid-template-columns:1fr 1fr}.area.photo{grid-column:auto;min-height:460px}}
+@media (max-width:640px){.areas{grid-template-columns:1fr}.area.photo{min-height:520px}}
+.imp{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:clamp(24px,5vw,64px)}
+.imp-l{display:grid;gap:20px;align-content:start;justify-items:start;min-width:0}
+.imp-r{display:grid;gap:10px;min-width:0}
+.imp-item{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:18px;border-radius:var(--r-md);background:var(--bg)}
+.imp-item b{width:48px;height:48px;border-radius:14px;background:var(--sage);color:var(--olive);display:grid;place-items:center;font:600 .9rem var(--display)}
+.imp-item h3{font-size:1.15rem}
+.imp-item p{color:var(--muted);font-size:.92rem;margin-top:4px}
+.imp-note{font-size:.88rem;color:var(--ink-2);padding:14px 16px;border-radius:var(--r-md);background:var(--accent-soft)}
+@media (max-width:960px){.imp{grid-template-columns:1fr}}
+
+.pl-team{margin-top:22px}
+.pl-tgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.pl-tgrid span{padding:14px;border-radius:14px;border:1px solid rgba(199,171,107,.3);font-size:.78rem;color:var(--on-dark-muted);display:grid;gap:2px}
+.pl-tgrid b{font:500 1rem var(--display);color:#fff;letter-spacing:-.02em}
+@media (max-width:700px){.pl-tgrid{grid-template-columns:1fr 1fr}}
+.also{margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px;padding:18px 22px;border-radius:var(--r-lg);background:var(--sage-soft);border:1px solid var(--line)}
+.also p{color:var(--muted);font-size:.92rem}
+.also p b{display:block;color:var(--ink);font:500 1.1rem var(--display);letter-spacing:-.02em}
+.also div{display:flex;gap:8px;flex-wrap:wrap}
+.also div span{background:var(--card);border:1px solid var(--line);padding:9px 16px;border-radius:999px;font-weight:500}
+</style>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+
+
+<header class="nav" id="topo">
+  <div class="wrap">
+    <div class="nav-in">
+      <a class="logo" href="#topo" aria-label="Dr. Guilherme Rocha, início">
+        <span class="logo-mark">GR</span>
+        <span>Dr. Guilherme Rocha<small>Médico · CRM-ES 11007</small></span>
+      </a>
+      <ul class="menu">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#atuacao">Como posso ajudar</a></li>
+        <li><a href="#metodo">Método</a></li>
+        <li><a href="#platinum">Platinum</a></li>
+        <li><a href="#consulta">Primeira consulta</a></li>
+        <li><a href="#duvidas">Dúvidas</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <a class="btn btn-dark" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">Agendar consulta<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Abrir menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h16M4 16h16"/></svg></button>
+    </div>
+    <nav class="drawer" id="drawer" hidden>
+      <a href="#sobre">Sobre</a><a href="#atuacao">Como posso ajudar</a><a href="#metodo">Método</a><a href="#platinum">Programa Platinum</a><a href="#consulta">Primeira consulta</a><a href="#duvidas">Dúvidas</a><a href="#contato">Contato</a>
+      <a href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener" style="background:var(--olive);color:#fff;margin-top:6px">Agendar pelo WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+<section class="hf" id="inicio">
+  <div class="hf-photo"><img src="img/retrato.jpg" alt="Dr. Guilherme Rocha olhando para a câmera, de camisa preta, com a mão apoiada no queixo"></div>
+  <div class="hf-content">
+    <h1 class="hf-in h1">Medicina que olha <span class="it">para você.</span></h1>
+    <p class="hf-in h2">Emagrecimento avançado, obesidade, menopausa e implante hormonal, com acompanhamento de perto.</p>
+    <a class="btn btn-light hf-in h3" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">Agendar consulta<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+  </div>
+  <div class="hf-bar hf-in h4">
+    <span>Dr. Guilherme Rocha · CRM-ES 11007</span>
+    <a class="hf-scroll" href="#sobre" aria-label="Rolar para o conteúdo"><i></i></a>
+    <span>Guarapari · Espírito Santo</span>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="mq">
+    <span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Emagrecimento avançado</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Programa Platinum</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Tratamento da obesidade</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Resistência à insulina</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Menopausa</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Perimenopausa</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Implante hormonal</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Metabolismo</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Composição corporal</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Emagrecimento avançado</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Programa Platinum</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Tratamento da obesidade</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Resistência à insulina</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Menopausa</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Perimenopausa</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Implante hormonal</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Metabolismo</span><span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg>Composição corporal</span>
+  </div>
+</div>
+
+<section id="sobre" style="padding-top:clamp(40px,6vw,80px)">
+  <div class="wrap about-grid">
+    <div class="about-l rv">
+      <div class="head">
+        <span class="tag">Quem vai cuidar de você</span>
+        <h2>Prazer, sou o <span class="it">Guilherme Rocha.</span></h2>
+        <div>
+          <p class="body">Atendo em Guarapari, no Instituto que leva o meu nome. Na consulta, antes de falar em dieta ou remédio, eu quero saber como você dorme, o que já tentou, quando o peso começou a mudar, o que seus exames mostram e o que a sua rotina permite fazer.</p>
+          <p class="body">Com esse retrato completo, a gente decide o caminho juntos. E como mudança de verdade leva tempo, o acompanhamento continua depois da primeira consulta, com retornos para medir, ajustar e manter você no rumo.</p>
+        </div>
+        <a class="btn btn-dark" href="#consulta">Como é a primeira consulta<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+      </div>
+      <div class="creds">
+        <div class="cred"><span>Nome completo</span><b>Guilherme Loureiro Rocha</b></div>
+        <div class="cred"><span>Registro profissional</span><b>CRM-ES 11007</b></div>
+        <div class="cred"><span>Onde atendo</span><b>Instituto Guilherme Rocha</b></div>
+        <div class="cred"><span>Cidade</span><b>Guarapari · Espírito Santo</b></div>
+      </div>
+    </div>
+    <div class="about-r rv">
+      <div class="ph big"><img src="img/poltrona.jpg" alt="Dr. Guilherme Rocha de blazer azul e gola alta, sentado em poltrona de couro"><span class="chip">Consulta sem pressa</span></div>
+      <div class="quote-card"><p>Tratamento bom é aquele que você consegue manter.</p><small>O que orienta cada plano</small></div>
+      <div class="ph sil"><img src="img/silhueta.jpg" alt="Perfil do Dr. Guilherme Rocha em preto e branco"></div>
+    </div>
+  </div>
+</section>
+
+<section id="atuacao" style="padding-top:0">
+  <div class="wrap">
+    <div class="areas-head rv">
+      <div class="head">
+        <span class="tag">Como posso ajudar</span>
+        <h2>Quatro frentes de <span class="it">cuidado.</span></h2>
+      </div>
+      <p class="sub">Peso, metabolismo e hormônios raramente caminham separados. Cada frente tem o seu protocolo, e todas começam pela mesma consulta de avaliação.</p>
+    </div>
+    <div class="areas">
+      <a class="area photo rv" href="#platinum">
+        <img src="img/estudio.jpg" alt="">
+        <div class="in">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9L12 3Z"/></svg></div>
+          <span class="pill-gold">Programa Platinum</span>
+          <h3>Emagrecimento avançado</h3>
+          <p>Para quem já tentou muita coisa e precisa de uma estratégia mais completa, com médico, equipe clínica, nutrição e medicamentos quando indicados.</p>
+          <div class="more" style="border-color:rgba(255,255,255,.2)">Conheça o Platinum <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+        </div>
+      </a>
+      <a class="area rv" href="#historia">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>Tratamento da obesidade</h3>
+        <p>Obesidade é uma doença crônica e merece tratamento sério, sem julgamento e sem dieta da moda. Investigamos o que levou o peso até aqui, do metabolismo à resistência à insulina.</p>
+        <ul><li>Resistência à insulina</li><li>Metabolismo</li><li>Composição corporal</li><li>Manutenção do peso</li></ul>
+        <div class="more">Por que o peso volta <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="area rv" href="#menopausa">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/></svg></div>
+        <h3>Menopausa e perimenopausa</h3>
+        <p>Calorões, sono ruim, irritação, ganho de peso e libido em baixa têm explicação e têm tratamento. Você não precisa atravessar essa fase no sofrimento.</p>
+        <ul><li>Ondas de calor</li><li>Sono</li><li>Humor</li><li>Libido</li><li>Peso</li></ul>
+        <div class="more">Ver sinais de alerta <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+      </a>
+      <a class="area rv" href="#implante">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="3" width="6" height="18" rx="3"/><path d="M9 9h6M9 15h6"/></svg></div>
+        <h3>Implante hormonal</h3>
+        <p>Quando há indicação clínica, a reposição hormonal por implante pode aliviar sintomas da menopausa e de deficiências hormonais confirmadas em exames.</p>
+        <ul><li>Avaliação hormonal</li><li>Exames</li><li>Dose individual</li><li>Acompanhamento</li></ul>
+        <div class="more">Como funciona <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></div>
+      </a>
+    </div>
+    <div class="also rv">
+      <p><b>Também no Instituto Guilherme Rocha</b>Atendimento com outros profissionais da equipe.</p>
+      <div><span>Neurologia</span><span>Nutrologia</span></div>
+      <a class="btn btn-line" href="#contato">Falar com o Instituto</a>
+    </div>
+  </div>
+</section>
+
+<section id="historia" style="padding-top:0">
+  <div class="wrap">
+    <div class="story rv">
+      <div class="head center">
+        <span class="tag">Por que o peso volta</span>
+        <h2>A balança mostra só <span class="it">uma parte da sua história.</span></h2>
+        <p class="sub">Quando o tratamento olha apenas para o número, o resultado costuma durar pouco. Na avaliação, eu considero tudo o que influencia o seu corpo:</p>
+      </div>
+      <div class="cloud">
+        <span>Qualidade do sono</span><span>Fome e saciedade</span><span class="hl">Histórico de peso</span><span>Exames laboratoriais</span><span>Hormônios</span><span>Massa muscular</span><span>Medicamentos em uso</span><span class="hl">Estresse</span><span>Rotina de trabalho</span><span>Alimentação real</span><span>Atividade física</span>
+      </div>
+      <p class="end"><b>Quando essas peças se encaixam, o plano deixa de ser genérico e passa a ser seu.</b></p>
+    </div>
+  </div>
+</section>
+
+<section id="metodo" style="padding-top:0">
+  <div class="wrap">
+    <div class="areas-head rv" style="margin-bottom:0">
+      <div class="head">
+        <span class="tag">Método</span>
+        <h2>Da primeira conversa ao <span class="it">acompanhamento.</span></h2>
+      </div>
+      <p class="sub">Um caminho em quatro etapas, para você saber exatamente o que acontece em cada fase do tratamento.</p>
+    </div>
+    <div class="method">
+      <div class="step rv"><div class="n"><b>01</b>Escuta</div><div><h3>Conhecer você</h3><p>Uma consulta sem pressa para entender sua história, o que já funcionou, o que não funcionou e o que você quer mudar.</p></div></div>
+      <div class="step rv"><div class="n"><b>02</b>Investigação</div><div><h3>Achar a causa</h3><p>Exame físico e os exames necessários para descobrir o que está por trás do ganho de peso e dos sintomas.</p></div></div>
+      <div class="step rv"><div class="n"><b>03</b>Plano</div><div><h3>Traçar o caminho</h3><p>Um plano individual que combina alimentação, sono, movimento e, quando há indicação, medicamentos.</p></div></div>
+      <div class="step last rv"><div class="n"><b>04</b>Acompanhamento</div><div><h3>Seguir <span class="it">junto</span></h3><p>Retornos para medir a resposta do seu corpo, ajustar o que for preciso e sustentar as mudanças.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="menopausa" style="padding-top:0">
+  <div class="wrap">
+    <div class="dark-block rv">
+      <div class="txt">
+        <span class="tag dark" style="align-self:flex-start">Saúde da mulher a partir dos 40</span>
+        <h2>A menopausa não precisa ser <span class="it">sinônimo de sofrimento.</span></h2>
+        <p class="sub">Muitas mulheres começam a sentir as mudanças anos antes da última menstruação e ouvem que “é normal da idade”. Com avaliação individual, dá para entender cada sintoma e escolher, com segurança, o tratamento que faz sentido para você.</p>
+        <a class="btn btn-light" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener" style="align-self:flex-start;margin-top:8px">Agendar avaliação<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+      </div>
+      <div class="signs">
+        <div class="big-num">40+<small>É quando a perimenopausa costuma começar, muitas vezes sem que a mulher perceba.</small></div>
+        <div class="box">
+          <h3>Sinais que merecem uma consulta</h3>
+          <ul>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 8.5 2.5 2.5L12 5.5"/></svg>Ciclo menstrual irregular</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 8.5 2.5 2.5L12 5.5"/></svg>Ondas de calor e suor noturno</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 8.5 2.5 2.5L12 5.5"/></svg>Sono que piorou sem motivo aparente</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 8.5 2.5 2.5L12 5.5"/></svg>Ganho de peso concentrado na barriga</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 8.5 2.5 2.5L12 5.5"/></svg>Irritação, ansiedade ou desânimo</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 8.5 2.5 2.5L12 5.5"/></svg>Queda da libido e da energia</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="implante" style="padding-top:0">
+  <div class="wrap">
+    <div class="imp rv">
+      <div class="imp-l">
+        <span class="tag">Implante hormonal</span>
+        <h2>Hormônio certo, na dose certa, <span class="it">para quem precisa.</span></h2>
+        <p class="sub">O implante é uma das formas de fazer reposição hormonal: um pequeno dispositivo colocado sob a pele que libera o hormônio de forma contínua. Ele pode ser uma opção para sintomas da menopausa e para deficiências hormonais confirmadas em exames, mas nunca é o ponto de partida.</p>
+        <a class="btn btn-dark" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">Agendar avaliação hormonal<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+      </div>
+      <div class="imp-r">
+        <div class="imp-item"><b>01</b><div><h3>Avaliação e exames</h3><p>Sintomas, histórico, riscos e dosagens hormonais antes de qualquer decisão.</p></div></div>
+        <div class="imp-item"><b>02</b><div><h3>Indicação médica</h3><p>O implante só é indicado quando faz sentido clínico. Às vezes, outra via de reposição é melhor para você.</p></div></div>
+        <div class="imp-item"><b>03</b><div><h3>Dose individual</h3><p>Hormônio e dose definidos para o seu caso, colocados no Instituto.</p></div></div>
+        <div class="imp-item"><b>04</b><div><h3>Monitoramento</h3><p>Retornos e exames para acompanhar efeitos e ajustar o tratamento.</p></div></div>
+        <p class="imp-note">Não indicamos implantes hormonais com finalidade estética ou de ganho de desempenho.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap crit">
+    <div class="head rv">
+      <span class="tag">Sobre medicamentos</span>
+      <h2>Remédio entra no plano quando existe <span class="it">indicação.</span></h2>
+      <p class="sub">Os novos medicamentos mudaram o tratamento da obesidade e eu uso essas ferramentas quando elas fazem sentido para o seu caso. A decisão vem depois da avaliação, com dose ajustada e acompanhamento, porque segurança vem antes da pressa.</p>
+      <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Nenhum medicamento deve ser usado sem prescrição e acompanhamento médico. Cada indicação depende de avaliação individual.</div>
+    </div>
+    <ol class="flow rv">
+      <li><span class="n">01</span><div><b>Avaliação completa</b><span class="d">Histórico, exames e riscos antes de qualquer decisão.</span></div></li>
+      <li><span class="n">02</span><div><b>Indicação clara</b><span class="d">Você entende por que o medicamento faz sentido, ou por que não.</span></div></li>
+      <li class="tool"><span class="n">03</span><div><b>Dose individual</b><span class="d">Início gradual, ajustado à resposta do seu corpo.</span></div><span class="pill">Com acompanhamento</span></li>
+      <li><span class="n">04</span><div><b>Monitoramento</b><span class="d">Efeitos, exames e composição corporal a cada retorno.</span></div></li>
+      <li><span class="n">05</span><div><b>Plano para depois</b><span class="d">Estratégia para manter os hábitos quando a dose mudar.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="platinum" style="padding-top:0">
+  <div class="wrap">
+    <div class="pl">
+      <div class="pl-head rv">
+        <div class="pl-badge"><span class="pl-stars">★★★★★</span>Programa Platinum</div>
+        <h2>O acompanhamento mais completo do Instituto para <span class="it">emagrecer.</span></h2>
+        <p class="pl-sub">Para quem precisa de uma estratégia mais completa e de alguém olhando de perto a cada etapa. O Platinum reúne, conforme o seu planejamento, acompanhamento médico, uma equipe multidisciplinar com nutrologia, neurologia, nutrição, psicologia e educação física, além de medicamentos e protocolos definidos para o seu caso.</p>
+      </div>
+      <div class="pl-grid">
+        <div class="pl-feats">
+          <p class="pl-label">O que pode fazer parte do seu plano</p>
+          <div class="pl-fgrid"><div class="pl-feat rv"><span class="pl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.4-6 8-6s6.8 2 8 6"/></svg></span><div><b>Acompanhamento médico</b><p>Com o Dr. Guilherme, que avalia o caso, define a estratégia e acompanha a evolução.</p></div></div><div class="pl-feat rv"><span class="pl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></span><div><b>Plano estratégico individual</b><p>Metas, etapas e ajustes pensados para o seu histórico e a sua rotina.</p></div></div><div class="pl-feat rv"><span class="pl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c4 3 6 6 6 10a6 6 0 0 1-12 0c0-4 2-7 6-10Z"/><path d="M12 21v-7"/></svg></span><div><b>Plano alimentar individual</b><p>Montado e acompanhado pela equipe de nutrição do Instituto.</p></div></div><div class="pl-feat rv"><span class="pl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12a8 8 0 0 1-11.8 7L4 20l1.1-4A8 8 0 1 1 20 12Z"/></svg></span><div><b>Suporte pelo WhatsApp</b><p>Com a equipe clínica do Instituto, dirigida pelo Dr. Guilherme.</p></div></div><div class="pl-feat rv"><span class="pl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="M10 8h4M12 6v4"/></svg></span><div><b>Medicamentos no Instituto</b><p>Quando indicados, fornecidos e administrados no próprio Instituto.</p></div></div><div class="pl-feat rv"><span class="pl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v18M5 8h14M7 8l-3 6a3 3 0 0 0 6 0L7 8Zm10 0-3 6a3 3 0 0 0 6 0l-3-6Z"/></svg></span><div><b>Avaliação corporal</b><p>Bioimpedância e outros protocolos definidos em avaliação médica.</p></div></div></div>
+          <div class="pl-team">
+            <p class="pl-label">Equipe que pode fazer parte do seu plano</p>
+            <div class="pl-tgrid"><span><b>Nutrologia</b>Médico nutrólogo</span><span><b>Neurologia</b>Médico neurologista</span><span><b>Nutrição</b>Nutricionista</span><span><b>Psicologia</b>Psicólogo</span><span><b>Movimento</b>Educador físico</span></div>
+          </div>
+          <p class="pl-fine">Somente os recursos definidos no planejamento apresentado após a consulta fazem parte do programa contratado. Nenhum medicamento ou protocolo é garantido antes da avaliação médica.</p>
+        </div>
+        <div class="pl-side rv">
+          <div class="pl-card">
+            <p class="pl-label">Como ingressar</p>
+            <ol class="pl-steps">
+              <li><span>1</span><div><b>Consulta de avaliação</b><p>Individual, com o Dr. Guilherme. Ele avalia histórico, dificuldades, objetivos e exames.</p></div></li>
+              <li><span>2</span><div><b>Indicação</b><p>O ingresso não é automático. O Platinum só é proposto se fizer sentido para o seu caso.</p></div></li>
+              <li><span>3</span><div><b>Plano, duração e valor</b><p>Você recebe o planejamento personalizado com o investimento correspondente.</p></div></li>
+              <li><span>4</span><div><b>Início presencial</b><p>O programa acontece no Instituto, em Guarapari.</p></div></li>
+            </ol>
+            <div class="pl-price">
+              <div><small>Consulta de avaliação</small><b>R$ 650</b></div>
+              <p>Valor exclusivo da consulta. O Platinum é contratado à parte e não tem preço fixo.</p>
+            </div>
+            <a class="btn btn-gold" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20de%20avalia%C3%A7%C3%A3o%20com%20o%20Dr.%20Guilherme%20Rocha%20e%20saber%20mais%20sobre%20o%20Programa%20Platinum" target="_blank" rel="noopener">Agendar avaliação<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+          </div>
+          <div class="pl-dur">
+            <p class="pl-label">Durações mais comuns</p>
+            <div class="pl-days"><span><b>60</b>dias</span><span><b>90</b>dias</span><span><b>120</b>dias</span><span><b>180+</b>dias</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pl-notes">
+        <span>Exclusivamente presencial</span><span>Exames não inclusos</span><span>Frequência de retornos definida pelo médico</span><span>Renovação avaliada ao fim de cada período</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="consulta" style="padding-top:0">
+  <div class="wrap consult">
+    <div class="ph rv">
+      <img src="img/poltrona.jpg" alt="Dr. Guilherme Rocha sentado em poltrona de couro">
+      <div class="float"><p>Dica para a consulta<small>Leve seus exames antigos. Eles ajudam muito.</small></p><a class="btn btn-light" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">Agendar<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a></div>
+    </div>
+    <div class="cbox rv">
+      <div class="head">
+        <span class="tag">Primeira consulta</span>
+        <h2>O que acontece depois que você <span class="it">agenda.</span></h2>
+        <p class="sub">Sem surpresas: você sabe o que esperar do primeiro contato até os retornos.</p>
+      </div>
+      <ol class="tl">
+        <li><span class="n">01</span><div><b>Contato pelo WhatsApp</b><span>A equipe do Instituto encontra o melhor horário e envia as orientações.</span></div></li>
+        <li><span class="n">02</span><div><b>Consulta detalhada</b><span>Conversa, exame físico e revisão dos exames que você já tem.</span></div></li>
+        <li><span class="n">03</span><div><b>Exames, se necessário</b><span>Peço apenas o que ajuda a esclarecer o seu caso.</span></div></li>
+        <li><span class="n">04</span><div><b>Seu plano em mãos</b><span>Você sai sabendo o que fazer, por que fazer e o que observar.</span></div></li>
+        <li><span class="n">05</span><div><b>Retornos</b><span>Ajustes feitos com base na resposta real do seu corpo.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="conteudos" style="padding-top:0">
+  <div class="wrap">
+    <div class="areas-head rv" style="margin-bottom:0">
+      <div class="head">
+        <span class="tag">Conteúdos</span>
+        <h2>Para entender melhor <span class="it">o seu corpo.</span></h2>
+      </div>
+      <p class="sub">Artigos escritos por mim sobre as dúvidas que mais aparecem no consultório. Enquanto os primeiros não chegam, acompanhe no <a href="https://www.instagram.com/dr.guilhermerocha" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:underline">Instagram</a>.</p>
+    </div>
+    <div class="posts">
+      <article class="post rv"><div class="cover"><span class="soon">Em breve</span><span>Obesidade</span></div><div class="meta"><b>Obesidade</b>· 8 min de leitura</div><h3>Por que o peso volta depois da dieta?</h3><p class="by">Por Dr. Guilherme Rocha</p></article>
+      <article class="post rv"><div class="cover"><span class="soon">Em breve</span><span>Menopausa</span></div><div class="meta"><b>Menopausa</b>· 6 min de leitura</div><h3>Perimenopausa: os sinais que aparecem antes da menopausa</h3><p class="by">Por Dr. Guilherme Rocha</p></article>
+      <article class="post rv"><div class="cover"><span class="soon">Em breve</span><span>Metabolismo</span></div><div class="meta"><b>Metabolismo</b>· 7 min de leitura</div><h3>Resistência à insulina: o que o corpo avisa antes do diabetes</h3><p class="by">Por Dr. Guilherme Rocha</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="duvidas" style="padding-top:0">
+  <div class="wrap faq">
+    <div class="faq-l rv">
+      <span class="tag" style="justify-self:start">Dúvidas frequentes</span>
+      <h2>Antes de <span class="it">agendar.</span></h2>
+      <div class="faq-help">
+        <b>Não encontrou sua dúvida?</b>
+        <p>A equipe do Instituto responde pelo WhatsApp.</p>
+        <a class="btn btn-dark" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">Falar no WhatsApp<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+      </div>
+    </div>
+    <div class="qa rv">
+      <details open><summary>Como faço para agendar?<i></i></summary><p>Pelo WhatsApp (27) 99522-3099. A equipe do Instituto Guilherme Rocha confirma data e horário e envia as orientações para o dia da consulta.</p></details>
+      <details><summary>Preciso ter obesidade para marcar uma consulta?<i></i></summary><p>Não. Você pode me procurar para perder poucos quilos, investigar cansaço ou alterações nos exames, cuidar do metabolismo ou tratar sintomas da perimenopausa e da menopausa.</p></details>
+      <details><summary>Vou sair da consulta com remédio para emagrecer?<i></i></summary><p>Só se houver indicação. Em muitos casos, o plano começa por ajustes de alimentação, sono e rotina. Quando o medicamento faz sentido, explico o motivo, os cuidados e como será o acompanhamento.</p></details>
+      <details><summary>Preciso levar exames?<i></i></summary><p>Se tiver, leve, inclusive os antigos. Eles mostram como o seu corpo mudou ao longo do tempo. Se forem necessários exames novos, eu solicito na consulta.</p></details>
+      <details><summary>Quem pode usar implante hormonal?<i></i></summary><p>Só quem tem indicação clínica, definida depois de consulta, exames e avaliação de riscos. Em alguns casos, outra forma de reposição hormonal é mais adequada, e em outros a reposição não é indicada.</p></details>
+      <details><summary>Quanto custa o Programa Platinum?<i></i></summary><p>O Platinum não tem preço fixo. O valor é definido depois da consulta de avaliação, de acordo com a duração, o planejamento médico, os medicamentos e protocolos indicados e os profissionais envolvidos. A consulta custa R$ 650 e é cobrada à parte.</p></details>
+      <details><summary>Posso fazer a consulta sem entrar no Platinum?<i></i></summary><p>Sim. A consulta e o programa são serviços separados. Você pode se consultar e seguir outro plano de tratamento, e o ingresso no Platinum só acontece se houver indicação e se você quiser.</p></details>
+      <details><summary>O Platinum pode ser feito online?<i></i></summary><p>Não. O programa é presencial, porque envolve avaliações, medicamentos administrados no Instituto e acompanhamento de perto. Exames laboratoriais e de imagem não estão incluídos no valor.</p></details>
+      <details><summary>Onde fica o consultório?<i></i></summary><p>No Instituto Guilherme Rocha, na Rua Francisco Vieira Passos, bairro Muquiçaba, em Guarapari (ES), CEP 29215-440.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contato" style="padding-top:0">
+  <div class="wrap">
+    <div class="areas-head rv" style="margin-bottom:0">
+      <div class="head">
+        <span class="tag">Contato</span>
+        <h2>Vamos marcar sua <span class="it">consulta?</span></h2>
+      </div>
+      <p class="sub">Escolha o canal que preferir. O agendamento é feito pela equipe do Instituto.</p>
+    </div>
+    <div class="contact">
+      <div class="c-card inst rv">
+        <div class="top"><span>Instituto Guilherme Rocha</span></div>
+        <div style="display:grid;gap:16px">
+          <h3>Muquiçaba, <span class="it">Guarapari.</span></h3>
+          <p>Rua Francisco Vieira Passos<br>Muquiçaba · Guarapari (ES)<br>CEP 29215-440</p>
+          <div class="row">
+            <a class="btn btn-light" href="https://share.google/YFuNMOtc5Fs2zYW9q" target="_blank" rel="noopener">Como chegar<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+          </div>
+        </div>
+      </div>
+      <a class="c-card accent rv" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12a8 8 0 0 1-11.8 7L4 20l1.1-4A8 8 0 1 1 20 12Z"/></svg></span><span class="arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></div>
+        <div><span>WhatsApp · agendamento</span><b>(27) 99522-3099</b></div>
+      </a>
+      <a class="c-card rv" href="https://www.instagram.com/dr.guilhermerocha" target="_blank" rel="noopener">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></span><span class="arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></div>
+        <div><span>Meu Instagram</span><b>@dr.guilhermerocha</b></div>
+      </a>
+      <a class="c-card rv" href="https://www.instagram.com/institutoguilhermerocha/" target="_blank" rel="noopener">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></span><span class="arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></div>
+        <div><span>Instagram do Instituto</span><b>@institutoguilhermerocha</b></div>
+      </a>
+      <a class="c-card rv" href="https://share.google/YFuNMOtc5Fs2zYW9q" target="_blank" rel="noopener">
+        <div class="top"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span class="arr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></div>
+        <div><span>Avaliações e localização</span><b>Perfil no Google</b></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta rv">
+      <div class="txt">
+        <span class="tag dark" style="align-self:flex-start">Próximo passo</span>
+        <h2>Vamos entender juntos o que o seu corpo <span class="it">está pedindo.</span></h2>
+        <p class="sub">Mande uma mensagem no WhatsApp. A equipe do Instituto responde e encontra o melhor horário para você.</p>
+        <div class="hero-ctas" style="margin-top:6px">
+          <a class="btn btn-light" href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">Agendar pelo WhatsApp<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+        </div>
+        <p class="phone">Ou salve o número: <b>(27) 99522-3099</b></p>
+      </div>
+      <div class="img"><img src="img/estudio.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="logo" href="#topo"><span class="logo-mark">GR</span><span>Dr. Guilherme Rocha<small>Médico · CRM-ES 11007</small></span></a>
+        <p>Emagrecimento avançado, tratamento da obesidade, menopausa e implante hormonal no Instituto Guilherme Rocha, em Guarapari (ES).</p>
+      </div>
+      <div><h4>Navegação</h4><ul><li><a href="#sobre">Sobre</a></li><li><a href="#atuacao">Como posso ajudar</a></li><li><a href="#metodo">Método</a></li><li><a href="#platinum">Programa Platinum</a></li><li><a href="#consulta">Primeira consulta</a></li></ul></div>
+      <div><h4>Atendimento</h4><ul><li><a href="#duvidas">Dúvidas</a></li><li><a href="#contato">Endereço</a></li><li><a href="https://api.whatsapp.com/send?phone=5527995223099&amp;text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Guilherme%20Rocha" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+      <div><h4>Redes</h4><ul><li><a href="https://www.instagram.com/dr.guilhermerocha" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.instagram.com/institutoguilhermerocha/" target="_blank" rel="noopener">Instituto</a></li><li><a href="https://share.google/YFuNMOtc5Fs2zYW9q" target="_blank" rel="noopener">Google</a></li></ul></div>
+    </div>
+    <div class="wordmark" aria-hidden="true">Guilherme <span class="it">Rocha</span></div>
+    <div class="legal"><span>Conteúdo informativo. Diagnóstico e tratamento dependem de avaliação médica individual.</span><span>© 2026 Dr. Guilherme Rocha · CRM-ES 11007</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var b=document.getElementById('burger'),d=document.getElementById('drawer');
+  b.addEventListener('click',function(){var o=d.hidden;d.hidden=!o;b.setAttribute('aria-expanded',String(o))});
+  d.addEventListener('click',function(e){if(e.target.closest('a')){d.hidden=true;b.setAttribute('aria-expanded','false')}});
+  var nav=document.querySelector('.nav'),hf=document.querySelector('.hf');
+  function navState(){nav.classList.toggle('on-hero',window.scrollY<hf.offsetHeight-90)}
+  navState();window.addEventListener('scroll',navState,{passive:true});
+  if(!('IntersectionObserver' in window))return;
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  var vh=window.innerHeight;
+  document.documentElement.classList.add('js');
+  els.forEach(function(el){if(el.getBoundingClientRect().top<vh)el.classList.add('in')});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(el){if(!el.classList.contains('in'))io.observe(el)});
+})();
+</script>

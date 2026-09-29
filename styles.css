@@ -472,12 +472,130 @@ html{scroll-padding-top:96px}
 .about-l .chiprow span,.plt .chiprow span{background:none!important;border:0!important;padding:0!important;border-radius:0;font-size:.95rem;transform:none!important}
 .about-l .chiprow span+span::before,.plt .chiprow span+span::before{content:"·";margin:0 12px;color:var(--accent-2)}
 .plt .chiprow span{color:var(--on-dark-muted)!important}
+.about-l .chiprow span{color:var(--muted)!important;font-size:.74rem!important;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.about-l .chiprow span+span::before{color:var(--sage)}
 .also div span{background:none!important;border:0!important;padding:0!important;font-weight:600}
 .also div span+span::before{content:"·";margin:0 10px;color:var(--accent-2)}
 .ct{display:grid;grid-template-columns:1.25fr .75fr;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--line);background:var(--card)}
 .ct-main{background:var(--dark);color:#fff;padding:clamp(28px,5vw,64px);display:grid;gap:20px;justify-items:start;align-content:center;position:relative;isolation:isolate}
 .ct-main::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 80% at 100% 0%,rgba(199,171,107,.22),transparent 70%)}
 .ct-main .it{color:var(--accent-2)}
+/* luz dourada que passeia (sem seguir o mouse) + reflexo no nome */
+.hf-name{top:clamp(110px,15vh,170px)}
+@media (max-width:760px){.hf-name{top:24vh}.hf-name .n2{font-size:25vw}}
+.hglow{opacity:1!important;width:min(1100px,130vw);height:min(1100px,130vw);margin:0;left:-20%;top:-30%;background:radial-gradient(closest-side,rgba(214,178,104,.22),rgba(199,171,107,.08) 45%,transparent 75%);filter:blur(10px)}
+.hglow2{position:absolute;width:min(900px,110vw);height:min(900px,110vw);right:-25%;bottom:-35%;border-radius:50%;background:radial-gradient(closest-side,rgba(174,189,171,.14),rgba(110,132,104,.06) 50%,transparent 75%);filter:blur(10px)}
+.hf-name .n2{background:linear-gradient(100deg,transparent 42%,rgba(255,248,225,.9) 50%,transparent 58%) 0 0/250% 100% no-repeat,linear-gradient(180deg,#F3E3B6 0%,#C7AB6B 45%,rgba(154,123,58,.35) 100%)!important;-webkit-background-clip:text!important;background-clip:text!important}
+@media (prefers-reduced-motion:no-preference){
+  .hglow{animation:aur1 18s ease-in-out infinite alternate}
+  .hglow2{animation:aur2 22s ease-in-out infinite alternate}
+  @keyframes aur1{0%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(45vw,12vh,0) scale(1.15)}66%{transform:translate3d(70vw,-4vh,0) scale(.95)}100%{transform:translate3d(25vw,22vh,0) scale(1.1)}}
+  @keyframes aur2{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(-55vw,-20vh,0) scale(1.2)}100%{transform:translate3d(-20vw,-40vh,0) scale(.9)}}
+  .hf-name .n2{animation:nameup 1.4s cubic-bezier(.16,1,.3,1) .25s both,namesheen 7s cubic-bezier(.4,0,.2,1) 2.5s infinite!important}
+  @keyframes namesheen{0%{background-position:130% 0,0 0}45%,100%{background-position:-30% 0,0 0}}
+}
+
+/* ===== HERO 2: nome monumental + retrato recortado ===== */
+.hf2{background:radial-gradient(90% 70% at 50% 35%,#1d2217 0%,#0c0e09 70%)}
+.hf2::before{background:linear-gradient(0deg,#0C0D09 0%,rgba(12,13,9,.94) 20%,rgba(12,13,9,.4) 38%,rgba(12,13,9,0) 55%)!important;z-index:3!important}
+.hf2 .hf-content,.hf2 .hf-bar{z-index:4}
+.hf-name{position:absolute;left:0;right:0;top:clamp(90px,11vh,130px);display:flex;flex-direction:column;align-items:center;line-height:.8;z-index:1;pointer-events:none;font-family:var(--display);font-weight:700;letter-spacing:-.06em;text-transform:uppercase;will-change:transform}
+.hf-name span{display:block;white-space:nowrap}
+.hf-name .n1{font-size:clamp(3.6rem,11.5vw,12rem);color:transparent;-webkit-text-stroke:1px rgba(199,171,107,.45)}
+.hf-name .n2{font-size:clamp(5rem,20vw,21rem);background:linear-gradient(180deg,#F3E3B6 0%,#C7AB6B 45%,rgba(154,123,58,.35) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:-.02em}
+.hf-spot{position:absolute;left:50%;top:34%;width:min(900px,120vw);height:min(900px,120vw);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(199,171,107,.28) 0%,rgba(199,171,107,.08) 35%,transparent 65%);z-index:1;pointer-events:none}
+.hf-cut{position:absolute;left:50%;bottom:0;height:min(92vh,1000px);width:auto;max-width:none;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6));will-change:transform}
+.hf2 .hfx{z-index:0}
+.hf2 .hf-content{padding-bottom:clamp(18px,2.4vw,30px)}
+@media (max-width:760px){.hf-cut{height:74vh}.hf-name{top:110px}.hf-spot{top:40%}}
+@media (prefers-reduced-motion:no-preference){
+  .hf-name span{animation:nameup 1.4s cubic-bezier(.16,1,.3,1) both}
+  .hf-name .n1{animation-delay:.1s}.hf-name .n2{animation-delay:.25s}
+  @keyframes nameup{from{opacity:0;transform:translateY(60px) scale(.96);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+  .hf-cut{animation:cutup 1.8s cubic-bezier(.16,1,.3,1) .45s both}
+  @keyframes cutup{from{opacity:0;transform:translateX(-50%) translateY(70px);filter:brightness(.2) drop-shadow(0 30px 60px rgba(0,0,0,.6))}to{opacity:1;transform:translateX(-50%);filter:brightness(1) drop-shadow(0 30px 60px rgba(0,0,0,.6))}}
+  .hf-spot{animation:spotin 2.4s ease .6s both,spotpulse 7s ease-in-out 3s infinite}
+  @keyframes spotin{from{opacity:0}to{opacity:1}}
+  @keyframes spotpulse{0%,100%{opacity:1}50%{opacity:.65}}
+  .hf-name .n2{background-size:100% 200%;animation:nameup 1.4s cubic-bezier(.16,1,.3,1) .25s both}
+  .hf2 .hf-in{animation-delay:1.1s}.hf2 .hf-in.h1{animation-delay:1.2s}.hf2 .hf-in.h2{animation-delay:1.4s}.hf2 .hf-in.h3{animation-delay:1.55s}.hf2 .hf-in.h4{animation-delay:1.8s}
+}
+
+/* hero: grade viva, cantos, partículas e brilho que segue o mouse */
+.hfx{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.hf-photo{z-index:-2}
+.hf::before{z-index:-1}
+.hfx{z-index:0}
+.hf-content,.hf-bar{z-index:2}
+.hfx-grid{position:absolute;inset:0;-webkit-mask:radial-gradient(75% 70% at 50% 45%,transparent 30%,#000 75%);mask:radial-gradient(75% 70% at 50% 45%,transparent 30%,#000 75%)}
+.hfx .gl{stroke:rgba(199,171,107,.28);stroke-width:1;stroke-dasharray:3000;stroke-dashoffset:3000;animation:gldraw 2.4s cubic-bezier(.6,0,.2,1) forwards}
+.hfx .gd{fill:var(--accent-2);opacity:0;animation:gdot .8s ease forwards,gpulse 3.2s ease-in-out 3s infinite}
+@keyframes gldraw{to{stroke-dashoffset:0}}
+@keyframes gdot{to{opacity:.8}}
+@keyframes gpulse{0%,100%{opacity:.8}50%{opacity:.25}}
+.hc{position:absolute;width:26px;height:26px;border-color:rgba(199,171,107,.55);border-style:solid;border-width:0;opacity:0;animation:gdot 1s ease 1.8s forwards}
+.hc.tl{top:96px;left:28px;border-top-width:1px;border-left-width:1px}
+.hc.tr{top:96px;right:28px;border-top-width:1px;border-right-width:1px}
+.hc.bl{bottom:28px;left:28px;border-bottom-width:1px;border-left-width:1px}
+.hc.br{bottom:28px;right:28px;border-bottom-width:1px;border-right-width:1px}
+.hp{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 12px 2px rgba(199,171,107,.55);opacity:0;animation:hfloat 7s ease-in-out infinite}
+@keyframes hfloat{0%{opacity:0;transform:translateY(12px)}25%{opacity:.9}75%{opacity:.6}100%{opacity:0;transform:translateY(-46px)}}
+.hglow{position:absolute;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;background:radial-gradient(circle,rgba(199,171,107,.16),rgba(199,171,107,.05) 40%,transparent 70%);opacity:0;transition:opacity .6s;will-change:transform}
+.hf.glow-on .hglow{opacity:1}
+.hripple{position:absolute;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;border:1px solid rgba(199,171,107,.8);pointer-events:none;animation:hrip 1s cubic-bezier(.2,.7,.2,1) forwards;z-index:1}
+@keyframes hrip{to{transform:scale(40);opacity:0}}
+@media (max-width:640px){.hc{display:none}.hfx-grid{opacity:.6}}
+@media (prefers-reduced-motion:reduce){.hfx .gl{stroke-dashoffset:0;animation:none}.hfx .gd,.hc{opacity:.7;animation:none}.hp{display:none}}
+
+.ph-img img[src*='-bg.jpg']{object-position:50% 0%}
+.ph-img:has(img[src*='-bg.jpg']){aspect-ratio:3/4;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.area.photo.nf.nf-noimg{background:radial-gradient(90% 60% at 70% 20%,rgba(199,171,107,.22),transparent 60%),radial-gradient(80% 70% at 20% 40%,#3E4A37,#14170F)}
+.nf-ph{position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 14px)}
+
+/* tag Platinum com brilho metálico */
+.pill-gold{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(110deg,#A9843A 0%,#F1D88F 20%,#C79F4A 38%,#FFF3C9 50%,#C79F4A 62%,#EACB7C 82%,#A9843A 100%)!important;background-size:240% 100%!important;color:#2B2410!important;font-weight:700!important;text-shadow:0 1px 0 rgba(255,248,220,.55);box-shadow:inset 0 0 0 1px rgba(255,240,190,.75),inset 0 -1px 0 rgba(120,90,30,.35),0 6px 22px rgba(214,172,82,.5),0 0 28px rgba(241,205,120,.3)}
+.pill-gold::after{content:"";position:absolute;inset:-2px;z-index:-1;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.85) 50%,transparent 65%);transform:translateX(-130%)}
+@media (prefers-reduced-motion:no-preference){
+  .pill-gold{animation:goldflow 6s linear infinite}
+  .pill-gold::after{animation:goldsweep 3.4s cubic-bezier(.4,0,.2,1) infinite}
+  @keyframes goldflow{from{background-position:0% 0}to{background-position:240% 0}}
+  @keyframes goldsweep{0%,55%{transform:translateX(-130%)}85%,100%{transform:translateX(130%)}}
+}
+
+/* card Platinum estilo Netflix */
+.area.photo.nf{min-height:520px;background:#0d0f0a;transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s}
+.area.photo.nf img{object-position:50% 8%;transition:transform 1.2s cubic-bezier(.2,.8,.2,1),filter .6s}
+.area.photo.nf::after{background:linear-gradient(0deg,rgba(10,12,8,.96) 18%,rgba(10,12,8,.55) 45%,rgba(10,12,8,0) 70%)}
+.area.photo.nf .icon{display:none}
+.area.photo.nf .in{gap:12px}
+.area.photo.nf h3{font-size:1.6rem}
+.area.photo.nf:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 30px 70px rgba(10,12,8,.35),0 0 0 1px rgba(199,171,107,.55)}
+.area.photo.nf:hover img{transform:scale(1.07);filter:saturate(1.08)}
+
+.logo-img{height:34px;width:auto;display:block}
+.lg-w{display:none}
+.nav.on-hero .lg-w{display:block}
+.nav.on-hero .lg-g{display:none}
+.foot-logo{height:44px}
+.foot-id{margin-top:14px!important;font-size:.82rem!important;color:var(--muted)}
+@media (max-width:420px){.logo-img{height:28px}}
+.hf-bar{justify-content:center!important}
+/* card Platinum com diamante */
+.area.photo.gold{background:radial-gradient(80% 60% at 50% 22%,rgba(199,171,107,.28),transparent 70%),linear-gradient(180deg,#1B1F16,#101309)}
+.area.photo.gold::after{background:none}
+.area.photo.gold .icon{display:none}
+.area.photo.gold{min-height:470px}
+.gem{position:relative;z-index:2;margin:30px auto 0;width:58%;max-width:200px;filter:drop-shadow(0 18px 40px rgba(199,171,107,.35));transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.gem svg{width:100%;height:auto;display:block;overflow:visible}
+.gem-shine{opacity:0;mix-blend-mode:screen}
+.area.photo.gold:hover .gem{transform:translateY(-6px) rotate(-3deg)}
+@media (prefers-reduced-motion:no-preference){
+  .gem-shine{animation:gemshine 5s ease-in-out infinite}
+  @keyframes gemshine{0%,70%,100%{opacity:0}82%{opacity:.35}}
+  .gem{animation:gemfloat 6s ease-in-out infinite}
+  @keyframes gemfloat{0%,100%{translate:0 0}50%{translate:0 -6px}}
+}
+
 .ct-main h2{font-size:clamp(2.2rem,4.4vw,3.8rem)}
 .ct-main p{color:var(--on-dark-muted);font-size:1.08rem;max-width:46ch}
 .ct-btn{font-size:1.05rem;padding:9px 9px 9px 24px}

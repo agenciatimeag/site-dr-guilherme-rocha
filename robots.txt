@@ -1,2 +1,7 @@
 User-agent: *
 Disallow: /
+
+# Ao publicar no domínio definitivo, troque por:
+# User-agent: *
+# Allow: /
+# Sitemap: https://www.drguilhermerocha.com.br/sitemap.xml
