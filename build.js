@@ -56,7 +56,12 @@ const GTM_BODY = `
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 `;
+// Mensagem que já aparece escrita quando a pessoa clica em qualquer botão de WhatsApp do site.
+const WA_MSG = 'Olá, visitei o site e gostaria de atendimento! [NÃO APAGUE ESTA MENSAGEM]';
+const waText = s => s.replace(/(api\.whatsapp\.com\/send\?phone=\d+&(?:amp;)?text=)[^"'\\\s<>]*/g,
+  (m, pre) => pre + encodeURIComponent(WA_MSG).replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase()));
 function speed(html, f) {
+  html = waText(html);
   if (f !== 'admin.html' && !html.includes('GTM-N8DP97WZ')) {
     html = html.includes('<meta charset="utf-8">')
       ? html.replace('<meta charset="utf-8">', '<meta charset="utf-8">' + GTM_HEAD)
@@ -94,6 +99,7 @@ for (const f of files.filter(f => /^api-.+\.js$/.test(f))) {
   fs.mkdirSync(fn, { recursive: true });
   for (const s of serverFiles) {
     if (s === 'tpl.html') fs.writeFileSync(path.join(fn, s), speed(fs.readFileSync(path.join(ROOT, s), 'utf8'), s));
+    else if (s === 'tpl-parts.json') fs.writeFileSync(path.join(fn, s), waText(fs.readFileSync(path.join(ROOT, s), 'utf8')));
     else fs.copyFileSync(path.join(ROOT, s), path.join(fn, s));
   }
   fs.cpSync(path.join(ROOT, 'node_modules'), path.join(fn, 'node_modules'), { recursive: true });
