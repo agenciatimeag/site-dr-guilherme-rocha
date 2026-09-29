@@ -1,0 +1,15 @@
+Site do Dr. Guilherme Rocha, versão estática pronta para publicar.
+
+Arquivos
+- index.html: home
+- platinum.html, obesidade.html, menopausa.html, implante.html: páginas de tratamento
+- blog.html e blog-*.html: blog e artigos
+- styles.css: estilos compartilhados
+- img/: fotos
+- vercel.json: configuração da Vercel
+- robots.txt: bloqueia o Google por enquanto
+
+Importante
+O site está com bloqueio de indexação (robots.txt e meta noindex) para o Google não indexar
+o endereço provisório .vercel.app nem os artigos antes da revisão do médico.
+Quando o domínio definitivo estiver conectado e os artigos aprovados, é preciso remover esse bloqueio.
