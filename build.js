@@ -40,7 +40,29 @@ const TRACKING = `
 fbq('init','667194305437913');fbq('track','PageView');
 </script>
 `;
+// Google Tag Manager: o mais alto possível no <head> e logo depois da abertura do <body>, como o Google pede.
+const GTM_HEAD = `
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N8DP97WZ');</script>
+<!-- End Google Tag Manager -->
+`;
+const GTM_BODY = `
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N8DP97WZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+`;
 function speed(html, f) {
+  if (f !== 'admin.html' && !html.includes('GTM-N8DP97WZ')) {
+    html = html.includes('<meta charset="utf-8">')
+      ? html.replace('<meta charset="utf-8">', '<meta charset="utf-8">' + GTM_HEAD)
+      : html.replace('<head>', '<head>' + GTM_HEAD);
+    html = html.replace(/<body[^>]*>/, m => m + GTM_BODY);
+  }
   if (f !== 'admin.html' && !html.includes('clarity.ms/tag')) html = html.replace('</head>', TRACKING + '</head>');
   html = html.replace(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)")[^>]*>/g,
     (m, href) => `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`);
