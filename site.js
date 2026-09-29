@@ -1,10 +1,7 @@
-/* Google Analytics 4 */
-(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-RKRPTG597H';document.head.appendChild(s);})();window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RKRPTG597H');
+/* Estatísticas: os códigos oficiais do Google Analytics 4, do Microsoft Clarity e do Meta Pixel
+   ficam no <head> de cada página (colocados pelo build.js). Aqui ficam só os eventos de clique no WhatsApp. */
+window.dataLayer=window.dataLayer||[];if(!window.gtag)window.gtag=function(){dataLayer.push(arguments)};
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp"]');if(a)gtag('event','whatsapp_click',{page_path:location.pathname,link_text:(a.textContent||'').trim().slice(0,80)});},true);
-/* Microsoft Clarity */
-(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script','ypuk4cn7ns');
-/* Meta Pixel */
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','667194305437913');fbq('track','PageView');
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp"]');if(a&&window.fbq)fbq('track','Contact',{content_name:'WhatsApp',page:location.pathname});},true);
 
 (function(){

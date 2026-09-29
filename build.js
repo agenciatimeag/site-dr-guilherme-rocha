@@ -17,13 +17,49 @@ const PRIVATE = f => SERVER(f) || ['build.js', 'dev.js', 'package.json', 'packag
   || f === 'current-imgs.html';
 const PUBLIC_EXT = /\.(html|css|js|jpg|jpeg|png|webp|avif|gif|svg|ico|txt|xml|json|woff2?|mp4|webm|pdf)$/i;
 
+// ---------- Velocidade (PageSpeed) ----------
+// 1) As fontes do Google carregam sem travar a primeira pintura da página.
+// 2) Na página inicial, a foto do topo é baixada com prioridade e aparece sem esperar a animação.
+// Também coloca no <head> os códigos oficiais de estatística (Google Analytics 4, Microsoft Clarity e Meta Pixel),
+// do jeito que cada ferramenta pede, para que elas encontrem o código ao verificar o site.
+const TRACKING = `
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKRPTG597H"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RKRPTG597H');</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ypuk4cn7ns");
+</script>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','667194305437913');fbq('track','PageView');
+</script>
+`;
+function speed(html, f) {
+  if (f !== 'admin.html' && !html.includes('clarity.ms/tag')) html = html.replace('</head>', TRACKING + '</head>');
+  html = html.replace(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)")[^>]*>/g,
+    (m, href) => `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`);
+  if (f === 'index.html') {
+    html = html.replace('<img class="hf-cut" ', '<img class="hf-cut" fetchpriority="high" ');
+    html = html.replace('</head>', '<link rel="preload" as="image" href="/retrato-cut.webp" fetchpriority="high">'
+      + '<style>.hf-cut{animation-delay:0s!important}@keyframes cutup{from{opacity:.001;transform:translateX(-50%) translateY(70px);filter:brightness(.2) drop-shadow(0 30px 60px rgba(0,0,0,.6))}to{opacity:1;transform:translateX(-50%);filter:brightness(1) drop-shadow(0 30px 60px rgba(0,0,0,.6))}}</style></head>');
+  }
+  return html;
+}
+
 // ---------- Estáticos ----------
 const STATIC = path.join(OUT, 'static');
 fs.mkdirSync(STATIC, { recursive: true });
 const overrides = {};
 for (const f of files) {
   if (PRIVATE(f) || !PUBLIC_EXT.test(f)) continue;
-  fs.copyFileSync(path.join(ROOT, f), path.join(STATIC, f));
+  if (f.endsWith('.html')) fs.writeFileSync(path.join(STATIC, f), speed(fs.readFileSync(path.join(ROOT, f), 'utf8'), f));
+  else fs.copyFileSync(path.join(ROOT, f), path.join(STATIC, f));
   // endereços limpos: /sobre em vez de /sobre.html
   if (f.endsWith('.html') && f !== 'index.html') overrides[f] = { path: f.slice(0, -5), contentType: 'text/html; charset=utf-8' };
 }
@@ -34,7 +70,10 @@ for (const f of files.filter(f => /^api-.+\.js$/.test(f))) {
   const name = f.replace(/^api-/, '').replace(/\.js$/, '');
   const fn = path.join(OUT, 'functions', 'api', name + '.func');
   fs.mkdirSync(fn, { recursive: true });
-  for (const s of serverFiles) fs.copyFileSync(path.join(ROOT, s), path.join(fn, s));
+  for (const s of serverFiles) {
+    if (s === 'tpl.html') fs.writeFileSync(path.join(fn, s), speed(fs.readFileSync(path.join(ROOT, s), 'utf8'), s));
+    else fs.copyFileSync(path.join(ROOT, s), path.join(fn, s));
+  }
   fs.cpSync(path.join(ROOT, 'node_modules'), path.join(fn, 'node_modules'), { recursive: true });
   fs.writeFileSync(path.join(fn, 'package.json'), JSON.stringify({ private: true }));
   fs.writeFileSync(path.join(fn, '.vc-config.json'), JSON.stringify({
