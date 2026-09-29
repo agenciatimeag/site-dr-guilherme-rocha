@@ -1,7 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-# Ao publicar no domínio definitivo, troque por:
-# User-agent: *
-# Allow: /
-# Sitemap: https://www.drguilhermerocha.com.br/sitemap.xml
+Sitemap: https://www.drguilhermerocha.com.br/sitemap.xml

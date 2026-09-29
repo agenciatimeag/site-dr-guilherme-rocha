@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel do Blog · Dr. Guilherme Rocha</title>
+<link rel="icon" type="image/png" href="/logo-verde.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F3EE;--card:#fff;--ink:#1D2017;--ink-2:#3A3D34;--muted:#6B7063;--line:#E3E2D9;--sage:#AEBDAB;--sage-soft:#E7ECE5;--olive:#48503E;--gold:#C7AB6B;--gold-deep:#9A7B3A;--dark:#14170F;--red:#A3322A;--r:20px;--display:"Instrument Sans",system-ui,sans-serif;--sans:Inter,system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font:inherit;cursor:pointer;background:none;border:0;color:inherit}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.03em;margin:0}
+.hide{display:none!important}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:12px 14px 12px 20px;border-radius:999px;font-weight:500;transition:transform .2s,background .2s}
+.btn:active{transform:scale(.98)}
+.btn .ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--dark)}
+.btn .ic svg{width:14px;height:14px}
+.btn-dark{background:var(--olive);color:#fff}
+.btn-dark:hover{background:#3a4132}
+.btn-dark:disabled{opacity:.6;cursor:wait}
+.btn-line{border:1px solid var(--line);background:var(--card);padding:10px 16px}
+.btn-line:hover{border-color:var(--olive)}
+.chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:500;color:var(--ink-2)}
+.chip:hover{border-color:var(--olive)}
+.chip.danger{color:var(--red)}
+.chip.danger:hover{border-color:var(--red)}
+.label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gold-deep)}
+/* login */
+.login{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.login-art{background:var(--dark) url('/poltrona.jpg') 50% 25%/cover;position:relative}
+.login-art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,23,15,.2),rgba(20,23,15,.75))}
+.login-art p{position:absolute;left:40px;right:40px;bottom:40px;z-index:1;color:#fff;font:500 clamp(1.4rem,2.4vw,2rem)/1.2 var(--display);letter-spacing:-.03em;margin:0}
+.login-art p span{color:var(--gold)}
+.login-f{display:grid;place-items:center;padding:24px}
+.login form{width:min(400px,100%);display:grid;gap:18px}
+.login h1{font-size:32px}
+.login form>p{color:var(--muted);margin:0}
+.brand img{height:30px;display:block}
+@media (max-width:820px){.login{grid-template-columns:1fr}.login-art{display:none}}
+.field{display:grid;gap:6px}
+.field>label,.field .lab{font-size:13px;font-weight:600;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+.field small,.hint{color:var(--muted);font-size:12.5px;font-weight:400}
+.count{font-weight:500;color:var(--muted);font-size:12px}
+.count.warn{color:var(--gold-deep)}
+.count.bad{color:var(--red)}
+input[type=text],input[type=password],input[type=date],input[type=url],input[type=search],select,textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:1px solid transparent;border-radius:12px;padding:11px 13px;transition:border-color .2s,background .2s}
+textarea{resize:vertical}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--olive);background:#fff}
+.err{color:var(--red);font-size:13px;min-height:1em}
+/* topo */
+.top{background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.top .in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top .who{display:flex;gap:8px;align-items:center}
+.wrap{max-width:1180px;margin:0 auto;padding:36px 24px 100px}
+/* lista */
+.list-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+.list-head h1{font-size:clamp(2rem,4vw,2.8rem);margin-top:8px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.filters input{max-width:280px;background:#fff;border-color:var(--line)}
+.filters button{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:500}
+.filters button[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
+.stats{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-left:auto}
+.rows{background:var(--card);border-radius:var(--r);border:1px solid var(--line);overflow:hidden}
+.row{display:grid;grid-template-columns:96px minmax(0,1fr) auto auto;gap:18px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .th{width:96px;height:60px;border-radius:10px;background:var(--sage-soft) center/cover}
+.row b{display:block;font:500 16px/1.3 var(--display);letter-spacing:-.01em}
+.row small{color:var(--muted);font-size:13px}
+.badge{font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.badge.pub{background:var(--sage-soft);color:var(--olive)}
+.badge.draft{background:#F4ECD8;color:var(--gold-deep)}
+.acts{display:flex;gap:6px}
+.empty{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:56px;text-align:center;color:var(--muted)}
+/* editor */
+.ed-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.ed-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:16px}
+.ed-side{position:sticky;top:84px;display:grid;gap:16px}
+.title-input{font:500 30px/1.2 var(--display)!important;letter-spacing:-.03em;background:none!important;padding:4px 0!important;border-radius:0!important;border:0!important;border-bottom:1px solid var(--line)!important}
+.lead-input{font-size:17px!important;color:var(--ink-2)!important}
+.toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:6px;background:var(--paper);border-radius:12px;position:sticky;top:70px;z-index:5}
+.toolbar button{min-width:34px;height:34px;padding:0 10px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.toolbar button:hover{background:#fff}
+.toolbar .sep{width:1px;background:var(--line);margin:4px 2px}
+.editor{min-height:460px;padding:6px 2px;outline:0;font-size:17px;line-height:1.75;color:var(--ink-2)}
+.editor:empty::before{content:attr(data-placeholder);color:#A5A99C}
+.editor h2{font-size:26px;margin:1.4em 0 .5em;color:var(--ink)}
+.editor h3{font-size:20px;margin:1.2em 0 .4em;color:var(--ink)}
+.editor p{margin:0 0 1em}
+.editor a{color:var(--olive);text-decoration:underline}
+.editor img{max-width:100%;border-radius:12px}
+.editor blockquote{margin:1.4em 0;padding:4px 0 4px 20px;border-left:3px solid var(--gold);font:500 20px/1.45 var(--display);color:var(--olive)}
+.editor .key{margin:1.4em 0;padding:20px 22px;border-radius:16px;background:var(--sage-soft);border:1px solid var(--line)}
+.editor .key>b{display:block;font:500 18px var(--display);color:var(--ink)}
+.sec-title{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sec-title h2{font-size:20px}
+.pair{display:grid;gap:8px;padding:14px;border-radius:14px;background:var(--paper);position:relative}
+.pair input,.pair textarea{background:#fff}
+.pair .rm{position:absolute;top:10px;right:10px;font-size:12px;font-weight:600;color:var(--red)}
+.pair .num{font-size:12px;font-weight:600;color:var(--muted)}
+.cover-box{border:1.5px dashed var(--line);border-radius:16px;aspect-ratio:16/10;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;background:var(--paper) center/cover no-repeat;position:relative;overflow:hidden}
+.cover-box:hover{border-color:var(--olive)}
+.cover-box.has{border-style:solid}
+.cover-box.has span{display:none}
+.cover-box .rm{position:absolute;top:8px;right:8px;background:#fff;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:600;display:none}
+.cover-box.has .rm{display:block}
+.status-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--paper);padding:4px;border-radius:12px}
+.status-opts button{padding:10px;border-radius:9px;font-weight:600;font-size:14px;color:var(--muted)}
+.status-opts button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px -4px rgba(0,0,0,.2)}
+.status-opts button.on[data-st=published]{color:var(--olive)}
+.serp{border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:3px;background:#fff}
+.serp .u{font-size:12px;color:#4d5156;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.serp .t{font-size:17px;color:#1a0dab;line-height:1.3}
+.serp .d{font-size:13px;color:#4d5156;line-height:1.45}
+.help{font-size:13px;color:var(--muted);line-height:1.55;background:var(--paper);padding:14px;border-radius:12px;margin:0}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--dark);color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;z-index:100;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+@media (max-width:960px){.ed-grid{grid-template-columns:1fr}.ed-side{position:static}.row{grid-template-columns:72px minmax(0,1fr)}.row .th{width:72px;height:48px}.row .badge,.row .acts{grid-column:2;justify-self:start}.stats{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section class="login hide" id="v-login">
+  <div class="login-art"><p>Conteúdo que <span>educa</span> também é cuidado.</p></div>
+  <div class="login-f">
+    <form id="f-login">
+      <a href="/" class="brand"><img src="/logo-verde.png" alt="G.Rocha"></a>
+      <div><h1>Painel do Blog</h1><p style="margin:8px 0 0;color:var(--muted)">Entre com a senha para escrever, revisar e publicar artigos no site.</p></div>
+      <div class="field"><label for="pw">Senha</label><input type="password" id="pw" autocomplete="current-password" required></div>
+      <div class="err" id="login-err"></div>
+      <button class="btn btn-dark" style="justify-content:space-between">Entrar<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></button>
+    </form>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="v-app" class="hide">
+  <header class="top"><div class="in">
+    <a href="#" class="brand" onclick="showList();return false"><img src="/logo-verde.png" alt="G.Rocha"></a>
+    <div class="who"><a class="chip" href="/blog" target="_blank" rel="noopener">Ver blog ↗</a><button class="chip" onclick="logout()">Sair</button></div>
+  </div></header>
+
+  <!-- lista -->
+  <main class="wrap" id="v-list">
+    <div class="list-head">
+      <div><span class="label">Painel do Blog</span><h1>Artigos</h1></div>
+      <button class="btn btn-dark" onclick="openEditor()">Novo artigo<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v12M2 8h12"/></svg></span></button>
+    </div>
+    <div class="filters" id="filters">
+      <input type="search" id="q" placeholder="Buscar pelo título">
+      <div id="catf" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div id="rows"></div>
+  </main>
+
+  <!-- editor -->
+  <main class="wrap hide" id="v-edit">
+    <div class="ed-head">
+      <button class="chip" onclick="showList()">← Voltar para os artigos</button>
+      <span class="hint" id="ed-state"></span>
+    </div>
+    <div class="ed-grid">
+      <div style="display:grid;gap:18px;min-width:0">
+        <div class="card">
+          <div class="field"><input type="text" id="e-title" class="title-input" placeholder="Título do artigo" maxlength="160"><div class="count" id="c-title"></div></div>
+          <div class="field"><label for="e-lead">Linha fina <small>Frase que aparece abaixo do título, no topo do artigo</small></label><textarea id="e-lead" class="lead-input" rows="2" maxlength="400" placeholder="Ex.: Entenda por que o peso volta e o que muda quando o tratamento olha para o corpo inteiro."></textarea></div>
+          <div class="toolbar" id="toolbar">
+            <button data-cmd="formatBlock" data-val="H2" title="Subtítulo (entra no índice do artigo)">Subtítulo</button>
+            <button data-cmd="formatBlock" data-val="H3" title="Subtítulo menor">Sub. menor</button>
+            <button data-cmd="formatBlock" data-val="P" title="Texto normal">Texto</button>
+            <span class="sep"></span>
+            <button data-cmd="bold" title="Negrito"><b>B</b></button>
+            <button data-cmd="italic" title="Itálico"><i>I</i></button>
+            <span class="sep"></span>
+            <button data-cmd="insertUnorderedList" title="Lista com marcadores">• Lista</button>
+            <button data-cmd="insertOrderedList" title="Lista numerada">1. Lista</button>
+            <button data-cmd="formatBlock" data-val="BLOCKQUOTE" title="Frase em destaque">❝ Destaque</button>
+            <button data-act="key" title="Quadro verde de resumo">▣ Resumo</button>
+            <span class="sep"></span>
+            <button data-act="link" title="Inserir link">Link</button>
+            <button data-act="image" title="Inserir imagem no texto">Imagem</button>
+          </div>
+          <div class="editor" id="e-content" contenteditable="true" data-placeholder="Escreva o artigo aqui. Use Subtítulo para dividir o texto em partes: elas viram o índice “Neste artigo”."></div>
+        </div>
+
+        <div class="card">
+          <div class="sec-title"><h2>Perguntas frequentes</h2><button class="chip" type="button" onclick="addFaq()">+ Adicionar pergunta</button></div>
+          <p class="help">Aparecem no fim do artigo e ajudam o artigo a aparecer nas respostas do Google e de assistentes de IA. Use perguntas reais de pacientes, com respostas curtas e diretas.</p>
+          <div id="faq-list" style="display:grid;gap:10px"></div>
+        </div>
+
+        <div class="card">
+          <div class="sec-title"><h2>Referências</h2><button class="chip" type="button" onclick="addSource()">+ Adicionar referência</button></div>
+          <p class="help">Estudos, diretrizes e sociedades médicas usados no texto. Aparecem no fim do artigo com o link.</p>
+          <div id="src-list" style="display:grid;gap:10px"></div>
+        </div>
+      </div>
+
+      <aside class="ed-side">
+        <div class="card">
+          <div class="field"><span class="lab">Status</span><div class="status-opts"><button data-st="draft">Rascunho</button><button data-st="published">Publicado</button></div></div>
+          <button class="btn btn-dark" id="save" style="justify-content:space-between">Salvar<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8.5l3.2 3L13 5"/></svg></span></button>
+          <a class="chip hide" id="preview" target="_blank" rel="noopener" style="text-align:center">Ver como fica no site ↗</a>
+          <div class="err" id="save-err"></div>
+        </div>
+        <div class="card">
+          <div class="field"><span class="lab">Foto de capa</span>
+            <div class="cover-box" id="cover-box"><span>Clique para escolher a foto<br><small>Horizontal, com o tema do artigo</small></span><button class="rm" type="button" id="cover-rm">Remover</button></div>
+            <input type="text" id="e-coverAlt" placeholder="Descreva a foto (acessibilidade e Google)">
+          </div>
+          <div class="field"><label for="e-category">Tema</label><select id="e-category"></select></div>
+          <div class="field"><label for="e-date">Data de publicação</label><input type="date" id="e-date"></div>
+          <div class="field"><label for="e-author">Autor</label><input type="text" id="e-author" placeholder="Dr. Guilherme Rocha"></div>
+        </div>
+        <div class="card">
+          <span class="label">Google</span>
+          <div class="field"><label for="e-excerpt">Resumo <span class="count" id="c-excerpt"></span></label><textarea id="e-excerpt" rows="3" maxlength="320" placeholder="1 ou 2 frases que aparecem no Google e na lista do blog."></textarea></div>
+          <div class="field"><label for="e-keywords">Palavras-chave <small>separadas por vírgula</small></label><input type="text" id="e-keywords" placeholder="ex.: efeito sanfona, reganho de peso"></div>
+          <div class="field"><label for="e-slug">Endereço</label><input type="text" id="e-slug" placeholder="gerado a partir do título"><small id="slug-hint"></small></div>
+          <div class="serp" aria-label="Prévia no Google"><span class="u" id="s-url"></span><span class="t" id="s-title"></span><span class="d" id="s-desc"></span></div>
+        </div>
+        <p class="help">Rascunhos só aparecem para quem está logado. Ao mudar para <b>Publicado</b> e salvar, o artigo entra no blog, na página inicial e no mapa do Google em até 1 minuto.</p>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<input type="file" id="file" accept="image/jpeg,image/png,image/webp" class="hide">
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+let posts = [], categories = [], cur = null, status = 'draft', cover = '', fileTarget = null, catFilter = 'Todos', dirty = false;
+const SITE = location.origin;
+
+const toast = t => { $('toast').textContent = t; $('toast').classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => $('toast').classList.remove('show'), 2800); };
+const api = async (url, opt = {}) => {
+  const r = await fetch(url, { credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, ...opt });
+  const d = await r.json().catch(() => ({}));
+  if (r.status === 401 && !url.includes('login')) { show('login'); throw new Error('Sua sessão expirou. Entre novamente.'); }
+  if (!r.ok) throw new Error(d.error || 'Algo deu errado.');
+  return d;
+};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = d => d ? d.split('-').reverse().join('/') : '';
+const slugify = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80);
+
+function show(v) { $('v-login').classList.toggle('hide', v !== 'login'); $('v-app').classList.toggle('hide', v === 'login'); }
+
+async function init() {
+  const s = await api('/api/login').catch(() => ({}));
+  if (s.admin) { show('app'); loadList(); } else { show('login'); if (s.configured === false) $('login-err').textContent = 'A senha do painel ainda não foi configurada no servidor (ADMIN_PASSWORD).'; }
+}
+
+$('f-login').onsubmit = async e => {
+  e.preventDefault(); $('login-err').textContent = '';
+  try { await api('/api/login', { method: 'POST', body: JSON.stringify({ password: $('pw').value }) }); $('pw').value = ''; show('app'); loadList(); }
+  catch (err) { $('login-err').textContent = err.message; }
+};
+async function logout() { await api('/api/login', { method: 'DELETE' }); show('login'); }
+
+// ---------- lista ----------
+async function loadList() {
+  const d = await api('/api/posts');
+  posts = d.posts; categories = d.categories;
+  $('e-category').innerHTML = categories.map(c => `<option>${esc(c)}</option>`).join('');
+  $('catf').innerHTML = ['Todos', ...categories].map(c => `<button type="button" data-c="${esc(c)}" aria-pressed="${c === catFilter}">${esc(c)}</button>`).join('');
+  $('catf').querySelectorAll('button').forEach(b => b.onclick = () => { catFilter = b.dataset.c; $('catf').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); renderRows(); });
+  const pub = posts.filter(p => p.status === 'published').length;
+  $('stats').innerHTML = `<span><b>${pub}</b> publicados</span><span><b>${posts.length - pub}</b> rascunhos</span>`;
+  renderRows();
+}
+$('q').oninput = () => renderRows();
+function renderRows() {
+  const q = slugify($('q').value);
+  const list = posts.filter(p => (catFilter === 'Todos' || p.category === catFilter) && (!q || slugify(p.title).includes(q)));
+  $('rows').innerHTML = list.length ? `<div class="rows">${list.map(p => `
+    <div class="row">
+      <div class="th" style="background-image:url('${esc(p.cover)}')"></div>
+      <div style="min-width:0"><b>${esc(p.title)}</b><small>${esc(p.category)} · ${fmt(p.date)} · ${p.min || 3} min</small></div>
+      <span class="badge ${p.status === 'published' ? 'pub' : 'draft'}">${p.status === 'published' ? 'Publicado' : 'Rascunho'}</span>
+      <div class="acts"><button class="chip" onclick="openEditor('${p.id}')">Editar</button><a class="chip" href="/blog/${esc(p.slug)}" target="_blank" rel="noopener">Ver</a><button class="chip danger" onclick="removePost('${p.id}')">Excluir</button></div>
+    </div>`).join('')}</div>`
+    : `<div class="empty">${posts.length ? 'Nenhum artigo encontrado com esse filtro.' : 'Nenhum artigo ainda. Clique em <b>Novo artigo</b> para começar.'}</div>`;
+}
+function showList() {
+  if (dirty && !confirm('Há alterações não salvas. Sair mesmo assim?')) return;
+  dirty = false; $('v-edit').classList.add('hide'); $('v-list').classList.remove('hide'); loadList(); scrollTo(0, 0);
+}
+
+// ---------- editor ----------
+async function openEditor(id) {
+  cur = id ? await api('/api/posts?id=' + id) : { title: '', lead: '', excerpt: '', keywords: '', content: '', category: categories[0], status: 'draft', date: new Date().toISOString().slice(0, 10), author: 'Dr. Guilherme Rocha', cover: '', coverAlt: '', faq: [], sources: [] };
+  $('e-title').value = cur.title; $('e-lead').value = cur.lead || ''; $('e-excerpt').value = cur.excerpt || ''; $('e-keywords').value = cur.keywords || '';
+  $('e-content').innerHTML = cur.content || '';
+  $('e-category').value = cur.category; $('e-date').value = cur.date; $('e-author').value = cur.author || '';
+  $('e-slug').value = cur.slug || ''; $('e-coverAlt').value = cur.coverAlt || ''; setCover(cur.cover || ''); setStatus(cur.status);
+  $('faq-list').innerHTML = ''; (cur.faq || []).forEach(f => addFaq(f));
+  $('src-list').innerHTML = ''; (cur.sources || []).forEach(s => addSource(s));
+  $('preview').classList.toggle('hide', !cur.slug); if (cur.slug) $('preview').href = '/blog/' + cur.slug;
+  $('ed-state').textContent = cur.updatedAt ? 'Última alteração: ' + new Date(cur.updatedAt).toLocaleString('pt-BR') : 'Artigo novo';
+  $('save-err').textContent = ''; dirty = false; refreshMeta();
+  $('v-list').classList.add('hide'); $('v-edit').classList.remove('hide'); scrollTo(0, 0);
+}
+
+function counter(el, out, good, max) {
+  const n = el.value.trim().length;
+  out.textContent = n ? `${n} caracteres${n > max ? ' (longo demais para o Google)' : n < good ? ' (pode ser mais descritivo)' : ''}` : '';
+  out.className = 'count' + (n > max ? ' bad' : n && n < good ? ' warn' : '');
+}
+function refreshMeta() {
+  counter($('e-title'), $('c-title'), 30, 65);
+  counter($('e-excerpt'), $('c-excerpt'), 110, 165);
+  const slug = slugify($('e-slug').value || $('e-title').value) || 'endereco-do-artigo';
+  $('slug-hint').textContent = SITE.replace(/^https?:\/\//, '') + '/blog/' + slug;
+  $('s-url').textContent = SITE.replace(/^https?:\/\//, '') + ' › blog › ' + slug;
+  $('s-title').textContent = ($('e-title').value || 'Título do artigo') + ' | Dr. Guilherme Rocha';
+  $('s-desc').textContent = $('e-excerpt').value || $('e-lead').value || 'O resumo aparece aqui. Escreva 1 ou 2 frases que convidem a pessoa a ler o artigo.';
+}
+['e-title', 'e-excerpt', 'e-slug', 'e-lead'].forEach(i => $(i).addEventListener('input', () => { refreshMeta(); dirty = true; }));
+['e-keywords', 'e-coverAlt', 'e-author', 'e-date', 'e-category'].forEach(i => $(i).addEventListener('input', () => dirty = true));
+$('e-content').addEventListener('input', () => dirty = true);
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+function setStatus(s) { status = s; document.querySelectorAll('.status-opts button').forEach(b => b.classList.toggle('on', b.dataset.st === s)); }
+document.querySelectorAll('.status-opts button').forEach(b => b.onclick = () => { setStatus(b.dataset.st); dirty = true; });
+
+function addFaq(f = { q: '', a: '' }) {
+  const d = document.createElement('div'); d.className = 'pair';
+  d.innerHTML = `<span class="num">Pergunta</span><button class="rm" type="button">Remover</button><input type="text" class="fq" placeholder="Ex.: Quanto tempo leva para ver resultado?" value="${esc(f.q)}"><textarea class="fa" rows="3" placeholder="Resposta curta e direta, em 2 a 4 frases.">${esc(String(f.a || '').replace(/<br\s*\/?>/g, '\n').replace(/<[^>]+>/g, ''))}</textarea>`;
+  d.querySelector('.rm').onclick = () => { d.remove(); dirty = true; };
+  d.addEventListener('input', () => dirty = true);
+  $('faq-list').appendChild(d); if (!f.q) d.querySelector('.fq').focus();
+}
+function addSource(s = { title: '', url: '' }) {
+  const d = document.createElement('div'); d.className = 'pair';
+  d.innerHTML = `<span class="num">Referência</span><button class="rm" type="button">Remover</button><input type="text" class="st" placeholder="Nome do estudo ou da instituição" value="${esc(s.title)}"><input type="url" class="su" placeholder="https://..." value="${esc(s.url)}">`;
+  d.querySelector('.rm').onclick = () => { d.remove(); dirty = true; };
+  d.addEventListener('input', () => dirty = true);
+  $('src-list').appendChild(d); if (!s.title) d.querySelector('.st').focus();
+}
+
+function setCover(url) { cover = url; $('cover-box').style.backgroundImage = url ? `url('${url}')` : ''; $('cover-box').classList.toggle('has', !!url); }
+$('cover-box').onclick = e => { if (e.target.id === 'cover-rm') return; fileTarget = 'cover'; $('file').click(); };
+$('cover-rm').onclick = e => { e.stopPropagation(); setCover(''); dirty = true; };
+
+// Reduz a imagem no navegador antes de enviar (máx. 1600 px, WebP)
+function shrink(file) {
+  return new Promise((ok, fail) => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      let data = c.toDataURL('image/webp', .82);
+      if (!data.startsWith('data:image/webp')) data = c.toDataURL('image/jpeg', .85);
+      URL.revokeObjectURL(img.src); ok(data);
+    };
+    img.onerror = () => fail(new Error('Não foi possível ler a imagem.'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+$('file').onchange = async () => {
+  const f = $('file').files[0]; $('file').value = ''; if (!f) return;
+  try {
+    toast('Enviando imagem...');
+    const { url } = await api('/api/upload', { method: 'POST', body: JSON.stringify({ data: await shrink(f) }) });
+    if (fileTarget === 'cover') setCover(url);
+    else { $('e-content').focus(); restoreSel(); document.execCommand('insertHTML', false, `<img src="${url}" alt=""><p><br></p>`); }
+    dirty = true; toast('Imagem enviada');
+  } catch (e) { toast(e.message); }
+};
+
+// Barra de formatação
+let sel = null;
+const saveSel = () => { const s = getSelection(); if (s.rangeCount && $('e-content').contains(s.anchorNode)) sel = s.getRangeAt(0); };
+const restoreSel = () => { if (sel) { const s = getSelection(); s.removeAllRanges(); s.addRange(sel); } };
+$('e-content').addEventListener('keyup', saveSel); $('e-content').addEventListener('mouseup', saveSel);
+$('toolbar').addEventListener('mousedown', e => e.preventDefault());
+$('toolbar').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  $('e-content').focus(); dirty = true;
+  if (b.dataset.cmd) {
+    const val = b.dataset.val;
+    if (val === 'BLOCKQUOTE' && document.queryCommandValue('formatBlock').toLowerCase() === 'blockquote') document.execCommand('formatBlock', false, 'P');
+    else document.execCommand(b.dataset.cmd, false, val ? '<' + val + '>' : null);
+  }
+  if (b.dataset.act === 'key') document.execCommand('insertHTML', false, '<div class="key"><b>Em resumo</b><ul><li>Primeiro ponto importante</li><li>Segundo ponto</li></ul></div><p><br></p>');
+  if (b.dataset.act === 'link') { saveSel(); const u = prompt('Endereço do link (ex.: https://... ou /platinum para uma página do site)'); if (u) { restoreSel(); document.execCommand('createLink', false, /^(https?:|mailto:|tel:|\/)/.test(u) ? u : 'https://' + u); } }
+  if (b.dataset.act === 'image') { saveSel(); fileTarget = 'inline'; $('file').click(); }
+};
+// Ao colar de outro lugar (Word, Google Docs), mantém só o texto e a formatação básica
+$('e-content').addEventListener('paste', e => {
+  const html = e.clipboardData.getData('text/html');
+  if (!html) return;
+  e.preventDefault();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  doc.querySelectorAll('style,script,meta,link,title').forEach(n => n.remove());
+  doc.querySelectorAll('h1').forEach(n => { const h = doc.createElement('h2'); h.innerHTML = n.innerHTML; n.replaceWith(h); });
+  doc.querySelectorAll('h4,h5,h6').forEach(n => { const h = doc.createElement('h3'); h.innerHTML = n.innerHTML; n.replaceWith(h); });
+  doc.querySelectorAll('span,font').forEach(n => n.replaceWith(...n.childNodes));
+  doc.querySelectorAll('*').forEach(n => { [...n.attributes].forEach(a => { if (!(n.tagName === 'A' && a.name === 'href')) n.removeAttribute(a.name); }); });
+  document.execCommand('insertHTML', false, doc.body.innerHTML);
+});
+
+// Limpa o HTML do editor: <div> soltas viram parágrafos (mantém o quadro de resumo)
+function contentHTML() {
+  const box = document.createElement('div'); box.innerHTML = $('e-content').innerHTML;
+  box.querySelectorAll('div:not(.key)').forEach(d => { const p = document.createElement('p'); p.innerHTML = d.innerHTML; d.replaceWith(p); });
+  box.querySelectorAll('p').forEach(p => { if (!p.textContent.trim() && !p.querySelector('img')) p.remove(); });
+  return box.innerHTML.trim();
+}
+
+$('save').onclick = async () => {
+  $('save-err').textContent = '';
+  const faq = [...document.querySelectorAll('#faq-list .pair')].map(d => ({ q: d.querySelector('.fq').value.trim(), a: esc(d.querySelector('.fa').value.trim()).replace(/\n+/g, '<br>') })).filter(f => f.q || f.a);
+  const sources = [...document.querySelectorAll('#src-list .pair')].map(d => ({ title: d.querySelector('.st').value.trim(), url: d.querySelector('.su').value.trim() })).filter(s => s.title || s.url);
+  const data = { id: cur.id, title: $('e-title').value, lead: $('e-lead').value, excerpt: $('e-excerpt').value, keywords: $('e-keywords').value, slug: $('e-slug').value, content: contentHTML(), category: $('e-category').value, date: $('e-date').value, author: $('e-author').value, cover, coverAlt: $('e-coverAlt').value, status, faq, sources };
+  if (!data.title.trim()) { $('save-err').textContent = 'Dê um título ao artigo antes de salvar.'; return; }
+  if (faq.some(f => !f.q || !f.a)) { $('save-err').textContent = 'Há uma pergunta frequente sem pergunta ou sem resposta.'; return; }
+  if (sources.some(s => !/^https?:\/\/\S+$/.test(s.url) || !s.title)) { $('save-err').textContent = 'Toda referência precisa de nome e de um link começando com https://'; return; }
+  if (status === 'published') {
+    const miss = [];
+    if (!cover) miss.push('foto de capa');
+    if (!data.excerpt.trim()) miss.push('resumo para o Google');
+    if (data.content.replace(/<[^>]+>/g, '').trim().length < 300) miss.push('texto do artigo');
+    if (miss.length) { $('save-err').textContent = 'Para publicar, falta: ' + miss.join(', ') + '.'; return; }
+  }
+  try {
+    $('save').disabled = true;
+    cur = await api('/api/posts', { method: 'POST', body: JSON.stringify(data) });
+    $('e-slug').value = cur.slug; refreshMeta(); dirty = false;
+    $('preview').classList.remove('hide'); $('preview').href = '/blog/' + cur.slug;
+    $('ed-state').textContent = 'Salvo às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    toast(status === 'published' ? 'Artigo publicado' : 'Rascunho salvo');
+  } catch (e) { $('save-err').textContent = e.message; }
+  finally { $('save').disabled = false; }
+};
+document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's' && !$('v-edit').classList.contains('hide')) { e.preventDefault(); $('save').click(); } });
+
+async function removePost(id) {
+  const p = posts.find(x => x.id === id);
+  if (!confirm(`Excluir o artigo "${p.title}"? Essa ação não pode ser desfeita.`)) return;
+  try { await api('/api/posts?id=' + id, { method: 'DELETE' }); toast('Artigo excluído'); loadList(); } catch (e) { toast(e.message); }
+}
+
+init();
+</script>
+</body>
+</html>
