@@ -6,7 +6,7 @@ const { readMinutes, CATEGORIES } = require('./lib-store');
 
 const SHELL = fs.readFileSync(path.join(__dirname, 'tpl.html'), 'utf8');
 const PARTS = JSON.parse(fs.readFileSync(path.join(__dirname, 'tpl-parts.json'), 'utf8'));
-const { cta: CTA, wa: WA, arrow: A, arrowSmall: AS, phys: PHYS } = PARTS;
+const { cta: CTA, wa: WA, arrow: A, arrowSmall: AS, phys: PHYS, clinic: CLINIC, site: SITE } = PARTS;
 const GRAD = { 'Emagrecimento': 1, 'Menopausa': 2, 'Implante hormonal': 4 };
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 
@@ -43,11 +43,16 @@ ${CTA}
 <script>
 document.querySelectorAll('.bfilter button').forEach(function(b){b.addEventListener('click',function(){var f=b.dataset.f;document.querySelectorAll('.bfilter button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});document.querySelectorAll('#plist .post').forEach(function(p){p.hidden=!(f==='Todos'||p.dataset.cat===f);if(!p.hidden)p.classList.add('in')})})});
 </script>`;
-  const ld = { '@context': 'https://schema.org', '@type': 'Blog', name: 'Blog do Dr. Guilherme Rocha', url: origin + '/blog', inLanguage: 'pt-BR', author: { '@type': 'Physician', name: 'Dr. Guilherme Loureiro Rocha' } };
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'Blog', '@id': origin + '/blog#blog', name: 'Blog do Dr. Guilherme Rocha', description: 'Artigos sobre emagrecimento, tratamento da obesidade, menopausa, perimenopausa e saúde hormonal, escritos pelo Dr. Guilherme Rocha, médico em Guarapari (ES).', url: origin + '/blog', inLanguage: 'pt-BR', isPartOf: { '@id': origin + '/#site' }, author: { '@id': origin + '/#medico' }, publisher: { '@id': origin + '/#instituto' },
+      blogPost: posts.slice(0, 30).map(p => ({ '@type': 'BlogPosting', headline: p.title, url: origin + '/blog/' + p.slug, datePublished: p.date, image: abs(origin, p.cover) || undefined })) },
+    PHYS, CLINIC, SITE,
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Início', item: origin + '/' }, { '@type': 'ListItem', position: 2, name: 'Blog', item: origin + '/blog' }] },
+  ].filter(Boolean) };
   return page({
-    title: 'Blog do Dr. Guilherme Rocha: emagrecimento, menopausa e hormônios',
-    desc: 'Artigos do Dr. Guilherme Rocha sobre emagrecimento, efeito sanfona, obesidade, menopausa, perimenopausa e implante hormonal, com base em evidência científica.',
-    body, canon: 'blog', type: 'website', ogimg: origin + '/retrato.jpg',
+    title: 'Blog sobre emagrecimento, obesidade e menopausa | Dr. Guilherme Rocha',
+    desc: 'Artigos do Dr. Guilherme Rocha, médico em Guarapari (ES), sobre emagrecimento, efeito sanfona, tratamento da obesidade, menopausa, perimenopausa e saúde hormonal.',
+    body, canon: 'blog', type: 'website', ogimg: origin + '/og-blog.jpg',
     extra: `<script type="application/ld+json">${ldJson(ld)}</script>`,
   });
 }
@@ -72,10 +77,10 @@ function postPage({ post: p, related, origin }) {
   const refs = sources.length ? '<div class="refs"><h2>Referências</h2><ol>' + sources.map(s => `<li>${esc(s.title)}. <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url)}</a></li>`).join('') + '</ol></div>' : '';
   const url = `${origin}/blog/${p.slug}`;
   const img = abs(origin, p.cover) || origin + '/retrato.jpg';
-  const phys = { ...PHYS, '@id': origin + '/#medico', url: origin + '/', image: origin + '/retrato.jpg' };
+  const phys = PHYS;
   const graph = [
-    { '@type': 'BlogPosting', '@id': url + '#artigo', headline: p.title, description: p.excerpt, inLanguage: 'pt-BR', datePublished: p.date, dateModified: (p.updatedAt || p.date || '').slice(0, 10), image: img, mainEntityOfPage: url, articleSection: p.category, keywords: p.keywords || '', author: { '@id': origin + '/#medico' }, reviewedBy: { '@id': origin + '/#medico' }, publisher: { '@type': 'MedicalClinic', name: 'Instituto Guilherme Rocha', url: origin + '/' }, citation: sources.map(s => s.url) },
-    phys,
+    { '@type': 'BlogPosting', '@id': url + '#artigo', headline: p.title, description: p.excerpt, inLanguage: 'pt-BR', datePublished: p.date, dateModified: (p.updatedAt || p.date || '').slice(0, 10), image: img, mainEntityOfPage: url, articleSection: p.category, keywords: p.keywords || '', author: { '@id': origin + '/#medico' }, reviewedBy: { '@id': origin + '/#medico' }, publisher: { '@id': origin + '/#instituto' }, isPartOf: { '@id': origin + '/blog#blog' }, about: p.category === 'Menopausa' ? { '@type': 'MedicalCondition', name: 'Menopausa' } : p.category === 'Implante hormonal' ? { '@type': 'MedicalTherapy', name: 'Terapia hormonal' } : { '@type': 'MedicalCondition', name: 'Obesidade' }, citation: sources.map(s => s.url) },
+    phys, CLINIC, SITE,
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Início', item: origin + '/' }, { '@type': 'ListItem', position: 2, name: 'Blog', item: origin + '/blog' }, { '@type': 'ListItem', position: 3, name: p.title, item: url }] },
   ];
   if (faq.length) graph.push({ '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: strip(f.a) } })) });
