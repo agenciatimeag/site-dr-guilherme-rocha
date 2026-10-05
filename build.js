@@ -39,6 +39,17 @@ const TRACKING = `
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','667194305437913');fbq('track','PageView');
 </script>
+<!-- Lemify WebChat Widget -->
+<script>
+  (function(w,d,s,k){
+    w.__LemifyWebchat = { key: k, host: 'https://app.lemify.com.br' };
+    var f = d.createElement(s);
+    f.async = true;
+    f.src = 'https://app.lemify.com.br/public/widget.js';
+    d.head.appendChild(f);
+  })(window, document, 'script', '6cbacefb1cec92625112ae3d42a39293692a8c429b1da40c2053d3fb3dc13684');
+</script>
+<!-- Fim Lemify WebChat Widget -->
 `;
 // Google Tag Manager: o mais alto possível no <head> e logo depois da abertura do <body>, como o Google pede.
 const GTM_HEAD = `
