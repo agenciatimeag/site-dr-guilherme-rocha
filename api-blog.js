@@ -6,7 +6,8 @@ const { query, send, isAdmin } = require('./lib-http');
 const { listPage, postPage, notFound } = require('./lib-render');
 
 const origin = req => (process.env.SITE_URL || `${(req.headers['x-forwarded-proto'] || 'http').split(',')[0]}://${req.headers['x-forwarded-host'] || req.headers.host}`).replace(/\/$/, '');
-const PAGES = ['/', '/sobre', '/platinum', '/obesidade', '/menopausa', '/implante', '/blog'];
+const PAGES = ['/', '/obesidade', '/platinum', '/menopausa', '/implante', '/sobre', '/blog'];
+const PAGES_UPDATED = '2026-10-05'; // atualize ao mudar o conteúdo das páginas fixas
 
 module.exports = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ module.exports = async (req, res) => {
     if (q.sitemap) {
       const today = new Date().toISOString().slice(0, 10);
       const rows = [
-        ...PAGES.map(u => `  <url><loc>${o}${u === '/' ? '/' : u}</loc><lastmod>${today}</lastmod><priority>${u === '/' ? '1.0' : '0.8'}</priority></url>`),
+        ...PAGES.map(u => `  <url><loc>${o}${u === '/' ? '/' : u}</loc><lastmod>${PAGES_UPDATED}</lastmod><changefreq>monthly</changefreq><priority>${u === '/' ? '1.0' : u === '/blog' ? '0.7' : '0.9'}</priority></url>`),
         ...published.map(p => `  <url><loc>${o}/blog/${p.slug}</loc><lastmod>${(p.updatedAt || p.date || today).slice(0, 10)}</lastmod><priority>0.6</priority></url>`),
       ];
       const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join('\n')}\n</urlset>\n`;

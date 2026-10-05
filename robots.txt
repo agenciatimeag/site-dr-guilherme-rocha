@@ -1,4 +1,8 @@
+# Site do Dr. Guilherme Rocha, médico em Guarapari (ES).
+# Buscadores (Google, Bing) e assistentes de IA (ChatGPT, Claude, Perplexity, Gemini) podem ler todo o site.
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://www.drguilhermerocha.com.br/sitemap.xml
