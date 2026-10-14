@@ -83,12 +83,12 @@ function speed(html, f) {
   html = html.replace(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)")[^>]*>/g,
     (m, href) => `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`);
   if (f === 'index.html') {
-    // Foto do topo: quando a foto de perfil em preto e branco (silhueta-cut.webp) estiver no repositório, ela entra no lugar da antiga.
+    // Foto do topo: quando a foto de estúdio recortada (estudio-cut.webp) estiver no repositório, ela entra no lugar da antiga.
     let hero = '/retrato-cut.webp';
-    if (fs.existsSync(path.join(ROOT, 'silhueta-cut.webp'))) {
-      hero = '/silhueta-cut.webp';
+    if (fs.existsSync(path.join(ROOT, 'estudio-cut.webp'))) {
+      hero = '/estudio-cut.webp';
       html = html.replace(/<img class="hf-cut" src="\/retrato-cut\.webp" alt="[^"]*" width="928" height="1152">/,
-        '<img class="hf-cut" src="/silhueta-cut.webp" alt="Dr. Guilherme Rocha de perfil, em preto e branco, de óculos e blusa de gola alta" width="834" height="1250">');
+        '<img class="hf-cut" src="/estudio-cut.webp" alt="Dr. Guilherme Rocha, de óculos, blazer cinza e camiseta branca" width="834" height="1250">');
     }
     html = html.replace('<img class="hf-cut" ', '<img class="hf-cut" fetchpriority="high" ');
     html = html.replace('</head>', '<link rel="preload" as="image" href="' + hero + '" fetchpriority="high">'
