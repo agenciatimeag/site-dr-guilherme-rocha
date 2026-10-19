@@ -31,6 +31,26 @@ const CSS = `<style>
 @media (max-width:640px){.cs-slide{width:74vw}#casos .cs{margin-inline:calc(var(--gut) * -1)}}
 @media (prefers-reduced-motion:reduce){.cs-track{animation:none;width:auto;overflow-x:auto}.cs-slide.dup{display:none}}
 .cs-note{color:var(--muted);font-size:.8rem;text-align:center;margin-top:14px}
+.hf-eyebrow{font:500 .78rem/1.3 var(--sans)!important;letter-spacing:.12em;text-transform:uppercase;color:#E9D7A8!important;margin:0}
+.hf-proof{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.hf-proof li{font-size:.85rem;color:rgba(244,245,240,.9);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:99px;backdrop-filter:blur(6px)}
+.hf-proof b{color:#E9D7A8;font-weight:600}
+@media (min-width:761px){.hf-eyebrow{display:none}}
+@media (max-width:760px){
+.hf{height:auto!important;min-height:0!important;max-height:none!important;justify-content:flex-start!important;padding-top:92px!important}
+.hf-name{top:86px!important}.hf-name .n2{font-size:19vw!important;opacity:.6}
+.hf-spot{top:300px!important}
+.hf-cut{position:relative!important;left:auto!important;bottom:auto!important;display:block;height:min(50svh,440px)!important;width:auto!important;margin:0 auto -64px!important;transform:none!important;animation:cutupm 1.2s cubic-bezier(.16,1,.3,1) both!important}
+@keyframes cutupm{from{opacity:.001;transform:translateY(40px)}to{opacity:1;transform:none}}
+.hf2::before{background:linear-gradient(0deg,#0C0D09 0%,rgba(12,13,9,.96) 40%,rgba(12,13,9,.45) 53%,rgba(12,13,9,0) 64%)!important}
+.hf-content{gap:12px!important;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))!important}
+.hf h1{font-size:2.05rem!important;line-height:1.02!important;max-width:17ch!important}
+.hf-content > p.hf-in.h2{display:none}
+.hf-content{width:100%;box-sizing:border-box;min-width:0}.hf-proof{gap:6px}.hf-proof li{font-size:.76rem;padding:6px 10px;white-space:nowrap}
+.hf-bar{display:none!important}
+.hf .btn{display:flex!important;justify-content:space-between;width:100%;max-width:420px;min-height:56px;font-size:1.02rem;font-weight:600;padding:10px 10px 10px 22px}
+.hf2 .hf-in,.hf2 .hf-in.h1,.hf2 .hf-in.h2,.hf2 .hf-in.h3{animation-delay:.15s!important;animation-duration:.6s!important}
+}
 </style>`;
 
 const JS = `<script>(function(){var r=document.querySelector('[data-cs]');if(!r)return;function on(){r.classList.add('hold')}function off(){r.classList.remove('hold')}r.addEventListener('touchstart',on,{passive:true});r.addEventListener('touchend',off,{passive:true});r.addEventListener('touchcancel',off,{passive:true})})();</script>`;
@@ -87,6 +107,13 @@ module.exports = function home(html, root) {
   html = html.replace(/(<a class="btn btn-light hf-in h3"[^>]*>)Agende sua avaliação/, '$1' + LABEL)
     .replace(/(<a class="btn btn-dark"[^>]*>)Agende sua avaliação(<span class="ic">[\s\S]{0,300}?<\/a><a class="btn btn-line" href="\/sobre")/, '$1' + LABEL + '$2')
     .replace('Agende pelo WhatsApp<span class="ic">', LABEL + '<span class="ic">');
+
+  // primeira tela: quem é, onde atende e prova, logo acima do botão
+  html = html.replace('<h1 class="hf-in h1">', '<p class="hf-eyebrow hf-in h1">Médico · CRM-ES 11007 · Guarapari (ES)</p>\n    <h1 class="hf-in h1">')
+    .replace(/(<p class="hf-in h2">[\s\S]*?<\/p>)/, '$1\n    <ul class="hf-proof hf-in h2"><li><b>15+</b> anos de prática</li><li><b>+10 mil</b> vidas transformadas</li></ul>');
+
+  // dúvidas que travam o contato: convênio e valor
+  html = html.replace(/(<details><summary>Onde fica o consultório\?)/, '<details><summary>Atende por convênio?<i></i></summary><p>O atendimento é particular. A equipe do Instituto passa todas as informações pelo WhatsApp.</p></details>\n      <details><summary>Qual o valor da consulta?<i></i></summary><p>A equipe do Instituto informa o valor e as formas de pagamento pelo WhatsApp, junto com os horários disponíveis.</p></details>\n      $1');
 
   // nova ordem: casos de sucesso → áreas de atuação → sobre
   const rt = range(html, /<section[^>]*id="tratamentos"[^>]*>/);
