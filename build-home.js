@@ -19,36 +19,21 @@ const CSS = `<style>
 .cta-big{padding:9px 9px 9px 26px;font-size:1rem;box-shadow:0 10px 30px -12px rgba(29,34,27,.45)}
 .cta-big .ic{width:38px;height:38px}
 @media (max-width:760px){.cta-fold{align-items:stretch}.cta-big{display:flex!important;justify-content:space-between;width:100%;font-size:1.02rem;font-weight:600;padding:10px 10px 10px 22px;min-height:56px}}
-#casos .cs{position:relative;margin-top:8px}
-.cs-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-.cs-track::-webkit-scrollbar{display:none}
-.cs-slide{position:relative;flex:0 0 calc((100% - 32px)/3);scroll-snap-align:start;margin:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column}
+#casos .cs{position:relative;margin-top:8px;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.cs-track{display:flex;gap:16px;width:max-content;animation:csmove var(--cs-dur,36s) linear infinite;will-change:transform}
+.cs:hover .cs-track,.cs.hold .cs-track{animation-play-state:paused}
+@keyframes csmove{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 8px))}}
+.cs-slide{position:relative;flex:0 0 auto;width:clamp(260px,26vw,360px);margin:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
 .cs-slide img{display:block;width:100%;height:auto;aspect-ratio:9/10;object-fit:cover;background:#E7EAE2}
 .cs-slide figcaption{padding:14px 18px 18px;font-size:.92rem;color:var(--ink);line-height:1.45}
 .cs-slide figcaption b{display:block;font:600 .78rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:4px}
 .cs-ba{position:absolute;left:0;right:0;top:12px;display:flex;justify-content:space-around;pointer-events:none}.cs-ba i{font:600 .7rem var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase;background:rgba(20,23,15,.72);color:#fff;padding:5px 10px;border-radius:99px;backdrop-filter:blur(4px)}
-.cs-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px}
-.cs-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background .25s,color .25s}
-.cs-btn:hover{background:var(--olive);color:#fff}
-.cs-btn svg{width:16px;height:16px}
-.cs-dots{display:flex;gap:8px}
-.cs-dots button{width:8px;height:8px;border-radius:99px;border:0;padding:0;background:var(--line);cursor:pointer;transition:width .3s,background .3s}
-.cs-dots button[aria-current="true"]{width:24px;background:var(--olive)}
+@media (max-width:640px){.cs-slide{width:74vw}#casos .cs{margin-inline:calc(var(--gut) * -1)}}
+@media (prefers-reduced-motion:reduce){.cs-track{animation:none;width:auto;overflow-x:auto}.cs-slide.dup{display:none}}
 .cs-note{color:var(--muted);font-size:.8rem;text-align:center;margin-top:14px}
-@media (max-width:1000px){.cs-slide{flex-basis:calc((100% - 16px)/2)}}
-@media (max-width:640px){.cs-slide{flex-basis:84%}}
 </style>`;
 
-const JS = `<script>(function(){var r=document.querySelector('[data-cs]');if(!r)return;var t=r.querySelector('.cs-track'),s=[].slice.call(t.children),d=r.querySelector('.cs-dots'),i=0,timer;
-s.forEach(function(_,k){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Ir para o caso '+(k+1));b.onclick=function(){go(k);stop()};d.appendChild(b)});
-function pos(el){return el.getBoundingClientRect().left-t.getBoundingClientRect().left+t.scrollLeft}
-function go(k){i=(k+s.length)%s.length;t.scrollTo({left:pos(s[i]),behavior:'smooth'})}
-function mark(){var x=t.scrollLeft,best=0,m=1e9;s.forEach(function(el,k){var dd=Math.abs(pos(el)-x);if(dd<m){m=dd;best=k}});i=best;[].forEach.call(d.children,function(b,k){b.setAttribute('aria-current',k===i?'true':'false')})}
-t.addEventListener('scroll',function(){clearTimeout(t._m);t._m=setTimeout(mark,80)},{passive:true});
-r.querySelector('.cs-prev').onclick=function(){go(i-1);stop()};r.querySelector('.cs-next').onclick=function(){go(i+1);stop()};
-function stop(){clearInterval(timer)}
-if(s.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){timer=setInterval(function(){var end=t.scrollLeft+t.clientWidth>=t.scrollWidth-4;go(end?0:i+1)},5000);['pointerdown','touchstart','mouseenter'].forEach(function(e){t.addEventListener(e,stop,{passive:true})})}
-if(s.length<2)r.querySelector('.cs-nav').style.display='none';mark()})();</script>`;
+const JS = `<script>(function(){var r=document.querySelector('[data-cs]');if(!r)return;function on(){r.classList.add('hold')}function off(){r.classList.remove('hold')}r.addEventListener('touchstart',on,{passive:true});r.addEventListener('touchend',off,{passive:true});r.addEventListener('touchcancel',off,{passive:true})})();</script>`;
 
 function casesSection(root) {
   const fotos = fs.readdirSync(root).filter(f => /^caso-\d+\.(jpe?g|png|webp)$/i.test(f))
@@ -61,14 +46,15 @@ function casesSection(root) {
     const alt = 'Caso de sucesso ' + (k + 1) + ' de paciente do Dr. Guilherme Rocha' + (txt ? ': ' + txt : '');
     return `<figure class="cs-slide"><img src="/${f}" alt="${esc(alt)}" width="900" height="1000" loading="lazy" decoding="async"><span class="cs-ba" aria-hidden="true"><i>Antes</i><i>Depois</i></span>`
       + (txt ? `<figcaption><b>Caso ${k + 1}</b>${esc(txt)}</figcaption>` : '') + '</figure>';
-  }).join('');
-  const prev = '<button type="button" class="cs-btn cs-prev" aria-label="Caso anterior"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 8H2M7 3 2 8l5 5"/></svg></button>';
-  const next = '<button type="button" class="cs-btn cs-next" aria-label="Próximo caso"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>';
+  });
+  // segunda cópia (escondida de leitores de tela) para o movimento contínuo sem emendas
+  const dup = slides.map(h => h.replace('<figure class="cs-slide">', '<figure class="cs-slide dup" aria-hidden="true">').replace(/ alt="[^"]*"/, ' alt=""')).join('');
+  const dur = Math.max(20, fotos.length * 6);
   return `
 <section id="casos" style="padding-top:clamp(48px,7vw,96px)">
   <div class="wrap">
     <div class="areas-head rv" style="margin-bottom:32px"><div class="head"><span class="tag">Casos de sucesso</span><h2>Resultados de quem <span class="it">confiou no processo.</span></h2></div><p class="sub">Pacientes do Instituto, acompanhados de perto pelo Dr. Guilherme. Imagens publicadas com autorização.</p></div>
-    <div class="cs" data-cs><div class="cs-track">${slides}</div><div class="cs-nav">${prev}<div class="cs-dots"></div>${next}</div></div>
+    <div class="cs" data-cs style="--cs-dur:${dur}s"><div class="cs-track">${slides.join('')}${dup}</div></div>
     <p class="cs-note">Resultados variam de pessoa para pessoa e dependem de avaliação e acompanhamento médico individual.</p>
   </div>
   ${cta()}
