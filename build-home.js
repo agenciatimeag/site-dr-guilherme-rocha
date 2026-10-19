@@ -44,7 +44,7 @@ const CSS = `<style>
 .hf-spot{left:72%!important;top:42%!important}
 .hf2::before{background:linear-gradient(90deg,rgba(12,13,9,.92) 0%,rgba(12,13,9,.6) 42%,rgba(12,13,9,0) 62%),linear-gradient(0deg,#0C0D09 0%,rgba(12,13,9,0) 22%)!important}
 .hf-content{width:100%;max-width:1280px;margin:0 auto;box-sizing:border-box;text-align:left!important;justify-items:start!important;padding-block:110px 40px!important}
-.hf h1{font-size:clamp(2.8rem,5vw,5.2rem)!important;max-width:13ch!important;line-height:.98!important}
+.hf h1{font-size:clamp(2.6rem,4.4vw,4.6rem)!important;max-width:15ch!important;line-height:1!important}
 .hf p{max-width:40ch}
 .hf-proof{justify-content:flex-start}.hf-proof li{align-items:flex-start;text-align:left}.hf-proof li:first-child{padding-left:0}
 .hf-eyebrow{display:block;white-space:nowrap}
@@ -56,7 +56,7 @@ const CSS = `<style>
 .hf-cut{position:relative!important;left:auto!important;bottom:auto!important;display:block;height:min(50svh,440px)!important;width:auto!important;margin:0 auto -64px!important;transform:none!important;animation:cutupm 1.2s cubic-bezier(.16,1,.3,1) both!important}
 .hf2::before{background:linear-gradient(0deg,#0C0D09 0%,rgba(12,13,9,.96) 40%,rgba(12,13,9,.45) 53%,rgba(12,13,9,0) 64%)!important}
 .hf-content{gap:12px!important;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))!important}
-.hf h1{font-size:2.05rem!important;line-height:1.02!important;max-width:17ch!important}
+.hf h1{font-size:1.95rem!important;line-height:1.04!important;max-width:18ch!important}
 .hf-content > p.hf-in.h2{display:none}
 .hf-content{width:100%;box-sizing:border-box;min-width:0}.hf-proof li{padding:0 16px;font-size:.74rem}.hf-proof b{font-size:1.3rem}
 .hf-bar{display:none!important}
@@ -123,6 +123,9 @@ module.exports = function home(html, root) {
   // primeira tela: quem é, onde atende e prova, logo acima do botão
   html = html.replace('<h1 class="hf-in h1">', '<p class="hf-eyebrow hf-in h1">Médico · CRM-ES 11007 · Guarapari (ES)</p>\n    <h1 class="hf-in h1">')
     .replace(/(<p class="hf-in h2">[\s\S]*?<\/p>)/, '$1\n    <ul class="hf-proof hf-in h2"><li><b>15+</b> anos de experiência</li><li><b>+10 mil</b> vidas transformadas</li></ul>');
+
+  // título da primeira tela pensado para conversão
+  html = html.replace(/(<h1 class="hf-in h1">)[\s\S]*?(<\/h1>)/, '$1Emagrecimento e menopausa com <span class="it">um médico olhando para você por inteiro.</span>$2');
 
   // sem a linha de etiquetas (15+ anos / olhar integrativo / CRM) no bloco sobre
   html = html.replace(/\s*<div class="chiprow"><span>15\+ anos de prática clínica<\/span>[\s\S]*?<\/div>/, '');
