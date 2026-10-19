@@ -32,21 +32,33 @@ const CSS = `<style>
 @media (prefers-reduced-motion:reduce){.cs-track{animation:none;width:auto;overflow-x:auto}.cs-slide.dup{display:none}}
 .cs-note{color:var(--muted);font-size:.8rem;text-align:center;margin-top:14px}
 .hf-eyebrow{font:500 .78rem/1.3 var(--sans)!important;letter-spacing:.12em;text-transform:uppercase;color:#E9D7A8!important;margin:0}
-.hf-proof{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.hf-proof li{font-size:.85rem;color:rgba(244,245,240,.9);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:99px;backdrop-filter:blur(6px)}
-.hf-proof b{color:#E9D7A8;font-weight:600}
-@media (min-width:761px){.hf-eyebrow{display:none}}
+.hf-name{display:none!important}
+.hf-proof{list-style:none;margin:2px 0 0;padding:0;display:flex;justify-content:center;align-items:stretch}
+.hf-proof li{display:flex;flex-direction:column;align-items:center;gap:2px;padding:0 22px;font-size:.78rem;line-height:1.25;letter-spacing:.02em;color:rgba(244,245,240,.7);text-align:center}
+.hf-proof li+li{border-left:1px solid rgba(233,215,168,.28)}
+.hf-proof b{display:block;font:600 1.45rem/1 var(--display);letter-spacing:-.02em;color:#E9D7A8}
+@keyframes cutupm{from{opacity:.001;transform:translateY(40px)}to{opacity:1;transform:none}}
+@media (min-width:761px){
+.hf{justify-content:center!important}
+.hf-cut{left:auto!important;right:max(2vw,calc((100vw - 1280px)/2));transform:none!important;height:min(90vh,940px)!important;animation:cutupm 1.2s cubic-bezier(.16,1,.3,1) both!important}
+.hf-spot{left:72%!important;top:42%!important}
+.hf2::before{background:linear-gradient(90deg,rgba(12,13,9,.92) 0%,rgba(12,13,9,.6) 42%,rgba(12,13,9,0) 62%),linear-gradient(0deg,#0C0D09 0%,rgba(12,13,9,0) 22%)!important}
+.hf-content{width:100%;max-width:1280px;margin:0 auto;box-sizing:border-box;text-align:left!important;justify-items:start!important;padding-block:110px 40px!important}
+.hf h1{font-size:clamp(2.8rem,5vw,5.2rem)!important;max-width:13ch!important;line-height:.98!important}
+.hf p{max-width:40ch}
+.hf-proof{justify-content:flex-start}.hf-proof li{align-items:flex-start;text-align:left}.hf-proof li:first-child{padding-left:0}
+.hf-eyebrow{display:block;white-space:nowrap}
+.hf-bar{position:absolute!important;bottom:0;left:0;right:0}
+}
 @media (max-width:760px){
-.hf{height:auto!important;min-height:0!important;max-height:none!important;justify-content:flex-start!important;padding-top:92px!important}
-.hf-name{top:86px!important}.hf-name .n2{font-size:19vw!important;opacity:.6}
+.hf{height:auto!important;min-height:0!important;max-height:none!important;justify-content:flex-start!important;padding-top:84px!important}
 .hf-spot{top:300px!important}
 .hf-cut{position:relative!important;left:auto!important;bottom:auto!important;display:block;height:min(50svh,440px)!important;width:auto!important;margin:0 auto -64px!important;transform:none!important;animation:cutupm 1.2s cubic-bezier(.16,1,.3,1) both!important}
-@keyframes cutupm{from{opacity:.001;transform:translateY(40px)}to{opacity:1;transform:none}}
 .hf2::before{background:linear-gradient(0deg,#0C0D09 0%,rgba(12,13,9,.96) 40%,rgba(12,13,9,.45) 53%,rgba(12,13,9,0) 64%)!important}
 .hf-content{gap:12px!important;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))!important}
 .hf h1{font-size:2.05rem!important;line-height:1.02!important;max-width:17ch!important}
 .hf-content > p.hf-in.h2{display:none}
-.hf-content{width:100%;box-sizing:border-box;min-width:0}.hf-proof{gap:6px}.hf-proof li{font-size:.76rem;padding:6px 10px;white-space:nowrap}
+.hf-content{width:100%;box-sizing:border-box;min-width:0}.hf-proof li{padding:0 16px;font-size:.74rem}.hf-proof b{font-size:1.3rem}
 .hf-bar{display:none!important}
 .hf .btn{display:flex!important;justify-content:space-between;width:100%;max-width:420px;min-height:56px;font-size:1.02rem;font-weight:600;padding:10px 10px 10px 22px}
 .hf2 .hf-in,.hf2 .hf-in.h1,.hf2 .hf-in.h2,.hf2 .hf-in.h3{animation-delay:.15s!important;animation-duration:.6s!important}
@@ -110,7 +122,7 @@ module.exports = function home(html, root) {
 
   // primeira tela: quem é, onde atende e prova, logo acima do botão
   html = html.replace('<h1 class="hf-in h1">', '<p class="hf-eyebrow hf-in h1">Médico · CRM-ES 11007 · Guarapari (ES)</p>\n    <h1 class="hf-in h1">')
-    .replace(/(<p class="hf-in h2">[\s\S]*?<\/p>)/, '$1\n    <ul class="hf-proof hf-in h2"><li><b>15+</b> anos de prática</li><li><b>+10 mil</b> vidas transformadas</li></ul>');
+    .replace(/(<p class="hf-in h2">[\s\S]*?<\/p>)/, '$1\n    <ul class="hf-proof hf-in h2"><li><b>15+</b> anos de experiência</li><li><b>+10 mil</b> vidas transformadas</li></ul>');
 
   // dúvidas que travam o contato: convênio e valor
   html = html.replace(/(<details><summary>Onde fica o consultório\?)/, '<details><summary>Atende por convênio?<i></i></summary><p>O atendimento é particular. A equipe do Instituto passa todas as informações pelo WhatsApp.</p></details>\n      <details><summary>Qual o valor da consulta?<i></i></summary><p>A equipe do Instituto informa o valor e as formas de pagamento pelo WhatsApp, junto com os horários disponíveis.</p></details>\n      $1');
