@@ -11,7 +11,7 @@ const files = fs.readdirSync(ROOT).filter(f => fs.statSync(path.join(ROOT, f)).i
 
 // ---------- Arquivos do servidor (não vão para o público) ----------
 const SERVER = f => /^(api|lib)-.+\.js$/.test(f) || /^tpl.*\.(html|json)$/.test(f) || f === 'seed.json';
-const PRIVATE = f => SERVER(f) || ['build.js', 'dev.js', 'package.json', 'package-lock.json', 'vercel.json', 'sitemap.xml'].includes(f)
+const PRIVATE = f => SERVER(f) || /^build-.+\.js$/.test(f) || f === 'casos.json' || ['build.js', 'dev.js', 'package.json', 'package-lock.json', 'vercel.json', 'sitemap.xml'].includes(f)
   || /\.(py|md|zip)$/i.test(f) || /^LEIA-ME/i.test(f)
   || /^blog(-.+)?\.html$/.test(f)          // o blog agora é gerado pelo servidor em /blog
   || f === 'current-imgs.html';
@@ -71,7 +71,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 const WA_MSG = 'Olá, visitei o site e gostaria de atendimento! [NÃO APAGUE ESTA MENSAGEM]';
 const waText = s => s.replace(/(api\.whatsapp\.com\/send\?phone=\d+&(?:amp;)?text=)[^"'\\\s<>]*/g,
   (m, pre) => pre + encodeURIComponent(WA_MSG).replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase()));
+const home = require('./build-home.js');
 function speed(html, f) {
+  if (f === 'index.html') html = home(html, ROOT); // casos de sucesso, nova ordem e botões de agendamento
   html = waText(html);
   if (f !== 'admin.html' && !html.includes('GTM-N8DP97WZ')) {
     html = html.includes('<meta charset="utf-8">')
@@ -117,6 +119,9 @@ for (const f of files.filter(f => /^api-.+\.js$/.test(f))) {
   fs.mkdirSync(fn, { recursive: true });
   for (const s of serverFiles) {
     if (s === 'tpl.html') fs.writeFileSync(path.join(fn, s), speed(fs.readFileSync(path.join(ROOT, s), 'utf8'), s));
+    // Foto do autor nos artigos do blog: usa autor.jpg (foto de terno) quando ela estiver no repositório.
+    else if (s === 'lib-render.js' && fs.existsSync(path.join(ROOT, 'autor.jpg')))
+      fs.writeFileSync(path.join(fn, s), fs.readFileSync(path.join(ROOT, s), 'utf8').split('src="/retrato.jpg"').join('src="/autor.jpg"'));
     else if (s === 'tpl-parts.json') fs.writeFileSync(path.join(fn, s), waText(fs.readFileSync(path.join(ROOT, s), 'utf8')));
     else fs.copyFileSync(path.join(ROOT, s), path.join(fn, s));
   }
