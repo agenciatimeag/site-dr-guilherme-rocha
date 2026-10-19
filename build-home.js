@@ -10,7 +10,7 @@ const path = require('path');
 const WA = 'https://api.whatsapp.com/send?phone=5527995223099&amp;text=agendar';
 const ARROW = '<span class="ic"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span>';
 const LABEL = 'Agendar minha consulta';
-const cta = (extra = '') => `<div class="wrap"><div class="cta-fold${extra}"><a class="btn btn-dark cta-big" href="${WA}" target="_blank" rel="noopener">${LABEL}${ARROW}</a><small>Atendimento pelo WhatsApp · resposta da equipe do Instituto</small></div></div>`;
+const cta = (extra = '') => `<div class="wrap"><div class="cta-fold${extra}"><a class="btn btn-dark cta-big" href="${WA}" target="_blank" rel="noopener">${LABEL}${ARROW}</a></div></div>`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const CSS = `<style>
@@ -85,7 +85,7 @@ function casesSection(root) {
   return `
 <section id="casos" style="padding-top:clamp(48px,7vw,96px)">
   <div class="wrap">
-    <div class="areas-head rv" style="margin-bottom:32px"><div class="head"><span class="tag">Casos de sucesso</span><h2>Resultados de quem <span class="it">confiou no processo.</span></h2></div><p class="sub">Pacientes do Instituto, acompanhados de perto pelo Dr. Guilherme. Imagens publicadas com autorização.</p></div>
+    <div class="areas-head rv" style="margin-bottom:32px"><div class="head"><span class="tag">Casos de sucesso</span><h2>Resultados de quem <span class="it">confiou no processo.</span></h2></div></div>
     <div class="cs" data-cs style="--cs-dur:${dur}s"><div class="cs-track">${slides.join('')}${dup}</div></div>
     <p class="cs-note">Resultados variam de pessoa para pessoa e dependem de avaliação e acompanhamento médico individual.</p>
   </div>
@@ -123,6 +123,9 @@ module.exports = function home(html, root) {
   // primeira tela: quem é, onde atende e prova, logo acima do botão
   html = html.replace('<h1 class="hf-in h1">', '<p class="hf-eyebrow hf-in h1">Médico · CRM-ES 11007 · Guarapari (ES)</p>\n    <h1 class="hf-in h1">')
     .replace(/(<p class="hf-in h2">[\s\S]*?<\/p>)/, '$1\n    <ul class="hf-proof hf-in h2"><li><b>15+</b> anos de experiência</li><li><b>+10 mil</b> vidas transformadas</li></ul>');
+
+  // sem a linha de etiquetas (15+ anos / olhar integrativo / CRM) no bloco sobre
+  html = html.replace(/\s*<div class="chiprow"><span>15\+ anos de prática clínica<\/span>[\s\S]*?<\/div>/, '');
 
   // dúvidas que travam o contato: convênio e valor
   html = html.replace(/(<details><summary>Onde fica o consultório\?)/, '<details><summary>Atende por convênio?<i></i></summary><p>O atendimento é particular. A equipe do Instituto passa todas as informações pelo WhatsApp.</p></details>\n      <details><summary>Qual o valor da consulta?<i></i></summary><p>A equipe do Instituto informa o valor e as formas de pagamento pelo WhatsApp, junto com os horários disponíveis.</p></details>\n      $1');
