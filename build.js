@@ -39,6 +39,9 @@ const TRACKING = `
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','667194305437913');fbq('track','PageView');
 </script>
+`;
+// Chat ao vivo da Lemify: vai no fim do <body>, para o widget achar a página pronta quando carregar.
+const LEMIFY = `
 <!-- Lemify WebChat Widget -->
 <script>
   (function(w,d,s,k){
@@ -82,6 +85,7 @@ function speed(html, f) {
     html = html.replace(/<body[^>]*>/, m => m + GTM_BODY);
   }
   if (f !== 'admin.html' && !html.includes('clarity.ms/tag')) html = html.replace('</head>', TRACKING + '</head>');
+  if (f !== 'admin.html' && !html.includes('__LemifyWebchat')) html = html.replace('</body>', LEMIFY + '</body>');
   html = html.replace(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)")[^>]*>/g,
     (m, href) => `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`);
   if (f === 'index.html') {
