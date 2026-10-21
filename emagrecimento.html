@@ -69,6 +69,10 @@ details[open] .chev{transform:rotate(180deg)}
 .hero-scrim{height:100% !important;background:linear-gradient(90deg,#050404 0%,#050404 42%,rgba(5,4,4,.5) 54%,rgba(5,4,4,0) 66%) !important}
 .hero-copy{align-items:flex-start !important;text-align:left !important;max-width:620px;padding:0 64px !important}
 }
+#video-popup[hidden]{display:none!important}
+#video-popup:not([hidden]) #vp-card{animation:vp-in .4s cubic-bezier(.22,1,.36,1)}
+@keyframes vp-in{from{opacity:0;transform:translateY(24px) scale(.97)}}
+@media (prefers-reduced-motion:reduce){#video-popup:not([hidden]) #vp-card{animation:none}}
 </style>
 </head>
 <body>
@@ -79,11 +83,11 @@ details[open] .chev{transform:rotate(180deg)}
 <div class="hero-wrap" style="position: relative; max-width: 1280px; margin: 0 auto; padding-top: 285px; border-radius: 0 0 32px 32px; overflow: hidden; background: linear-gradient(180deg, #050404 0%, #050404 55%, #12160E 100%); display: flex; align-items: flex-end">
 <img fetchpriority="high" class="hero-img" src="/emag-hero.jpg" alt="Dr. Guilherme Rocha, de suéter preto, sobre fundo escuro" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: auto; max-width: none; height: 500px; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%), linear-gradient(180deg, #000 62%, transparent 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%), linear-gradient(180deg, #000 62%, transparent 100%); mask-composite: intersect">
 <div class="hero-scrim" aria-hidden="true" style="position: absolute; top: 0; left: 0; right: 0; height: 501px; background: linear-gradient(180deg, rgba(5, 4, 4, 0) 52%, rgba(5, 4, 4, 0.7) 78%, rgba(5, 4, 4, 0) 100%)"></div>
-<div class="hero-copy" style="position: relative; width: 100%; padding: 0 18px 30px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px">
+<div class="hero-copy" style="position: relative; width: 100%; padding: 0 16px 32px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px">
 <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #E3E6DD">
 <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.3 1.7 2.8-.2.9 2.7 2.3 1.6-.9 2.7.9 2.7-2.3 1.6-.9 2.7-2.8-.2L12 21.5l-2.3-1.7-2.8.2-.9-2.7-2.3-1.6.9-2.7-.9-2.7 2.3-1.6.9-2.7 2.8.2z" fill="#DCC79A"></path><path d="M8.5 12.2l2.4 2.4 4.6-4.8" fill="none" stroke="#1E231A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 Médico · CRM-ES 11007 · Guarapari (ES)</span>
-<h1 style="margin: 0; max-width: 17ch; font-size: clamp(30px, 8.2vw, 60px); font-weight: 700; line-height: 1.06; letter-spacing: -0.045em; color: #FFFFFF; text-wrap: balance">Chega de perder tempo.<br>Emagreça de uma vez por todas!</h1>
+<h1 style="margin: 0; max-width: 17ch; font-size: clamp(30px, 8.2vw, 60px); font-weight: 700; line-height: 1.06; letter-spacing: -0.045em; color: #FFFFFF; text-wrap: balance">Chega de perder tempo.<br><span style="background: linear-gradient(100deg, #F3E2B4 0%, #DCC79A 45%, #C29A55 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #DCC79A; -webkit-box-decoration-break: clone; box-decoration-break: clone">Emagreça de uma vez por todas!</span></h1>
 <p style="margin: 0; max-width: 30ch; font-size: 17px; line-height: 1.5; color: #D3D7CC; text-wrap: balance">Dr. Guilherme Rocha, médico especializado em emagrecimento e obesidade.</p>
 <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 4px">
 <a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #DCC79A; color: #1F241A; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 12px 28px -14px rgba(220, 199, 154, 0.7)">
@@ -97,11 +101,7 @@ Quero agendar minha consulta</a>
 </section>
 
 <section aria-label="Casos reais" style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 48px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 8px">
-
-
-</div>
-<div class="hscroll" style="max-width: 1080px; margin: 22px auto 0; padding: 0 11% 6px; box-sizing: border-box; display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory">
+<div class="hscroll" style="max-width: 1080px; margin: 48px auto 0; padding: 0 11% 6px; box-sizing: border-box; display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory">
 <div class="ba-card" style="flex: 0 0 min(78%, 320px); scroll-snap-align: center; position: relative; aspect-ratio: 3 / 4; border-radius: 24px; overflow: hidden; background: #E7E2D6">
 <img loading="lazy" decoding="async" src="/emag-caso1-depois.jpg" alt="Paciente 1 depois do acompanhamento" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
 <img loading="lazy" decoding="async" class="ba-top" src="/emag-caso1-antes.jpg" alt="Paciente 1 antes do acompanhamento" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; clip-path: inset(0 50% 0 0); animation-delay: 0s">
@@ -145,17 +145,17 @@ Quero agendar minha consulta</a>
 <span style="position: absolute; top: 14px; right: 16px; font-size: 13px; font-weight: 700; color: #FFFFFF; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7)">Depois</span>
 </div>
 </div>
-<p style="margin: 12px 16px 0; font-size: 12.5px; color: #5F6657">Veja resultados reais de pacientes.</p>
+<p style="margin: 16px 16px 0; font-size: 13px; color: #5F6657">Veja resultados reais de pacientes.</p>
 </section>
 
 <section aria-label="Números do Instituto" style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 20px 16px 0; box-sizing: border-box; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
-<div style="padding: 14px 6px; display: flex; flex-direction: column; align-items: center; line-height: 1.25">
+<div style="max-width: 760px; margin: 0 auto; padding: 24px 16px 0; box-sizing: border-box; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; line-height: 1.25">
 <strong style="font-size: 17px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">15+ anos</strong>
 <span style="font-size: 12px; color: #5F6657">de prática</span>
 </div>
-<div style="padding: 14px 6px; display: flex; flex-direction: column; align-items: center; line-height: 1.25"><strong style="font-size: 17px; font-weight: 700; letter-spacing: -0.03em; color: rgb(31, 36, 26)">+10 mil</strong><span style="font-size: 12px; color: rgb(95, 102, 87)">vidas transformadas</span></div>
-<div style="padding: 14px 6px; display: flex; flex-direction: column; align-items: center; line-height: 1.25">
+<div style="padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; line-height: 1.25"><strong style="font-size: 17px; font-weight: 700; letter-spacing: -0.03em; color: rgb(31, 36, 26)">+10 mil</strong><span style="font-size: 12px; color: rgb(95, 102, 87)">vidas transformadas</span></div>
+<div style="padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; line-height: 1.25">
 <strong style="font-size: 17px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">Equipe</strong>
 <span style="font-size: 12px; color: #5F6657">multidisciplinar</span>
 </div>
@@ -163,25 +163,25 @@ Quero agendar minha consulta</a>
 </section>
 
 <section style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 22px">
-<h2 style="margin: 0; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A">Você se reconhece em alguma dessas?</h2>
-<div style="width: 100%; max-width: 420px; display: flex; flex-direction: column; border-top: 1px solid #E7E2D6">
-<span style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; color: #1F241A"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #B8955A"></span>Já fez todas as dietas e o peso sempre volta.</span>
-<span style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; color: #1F241A"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #B8955A"></span>Parou o remédio e recuperou tudo, às vezes mais.</span>
-<span style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; color: #1F241A"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #B8955A"></span>Depois dos 40, a barriga simplesmente não sai.</span>
-<span style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; color: #1F241A"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #B8955A"></span>Vive sem energia, mesmo com exames “normais”.</span>
-<span style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; color: #1F241A"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #B8955A"></span>Pensa na caneta, mas tem medo de usar sem acompanhamento.</span>
+<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 24px">
+<h2 style="margin: 0; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A; text-wrap: balance">Você se reconhece em alguma dessas?</h2>
+<div style="width: 100%; max-width: 360px; display: flex; flex-direction: column; border-top: 1px solid #E7E2D6">
+<span style="display: flex; align-items: flex-start; gap: 12px; padding: 16px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; line-height: 1.5; color: #1F241A; text-align: left"><span aria-hidden="true" style="flex: 0 0 6px; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: #B8955A"></span>Já fez todas as dietas e o peso sempre volta.</span>
+<span style="display: flex; align-items: flex-start; gap: 12px; padding: 16px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; line-height: 1.5; color: #1F241A; text-align: left"><span aria-hidden="true" style="flex: 0 0 6px; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: #B8955A"></span>Parou o remédio e recuperou tudo, às vezes mais.</span>
+<span style="display: flex; align-items: flex-start; gap: 12px; padding: 16px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; line-height: 1.5; color: #1F241A; text-align: left"><span aria-hidden="true" style="flex: 0 0 6px; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: #B8955A"></span>Depois dos 40, a barriga simplesmente não sai.</span>
+<span style="display: flex; align-items: flex-start; gap: 12px; padding: 16px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; line-height: 1.5; color: #1F241A; text-align: left"><span aria-hidden="true" style="flex: 0 0 6px; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: #B8955A"></span>Vive sem energia, mesmo com exames “normais”.</span>
+<span style="display: flex; align-items: flex-start; gap: 12px; padding: 16px 0; border-bottom: 1px solid #E7E2D6; font-size: 16px; font-weight: 500; line-height: 1.5; color: #1F241A; text-align: left"><span aria-hidden="true" style="flex: 0 0 6px; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: #B8955A"></span>Pensa na caneta, mas tem medo de usar sem acompanhamento.</span>
 </div>
-<p style="margin: 6px 0 0; max-width: 28ch; font-size: 17px; font-weight: 600; line-height: 1.4; color: #495940; text-wrap: balance">O problema nunca foi falta de força de vontade. Foi falta de alguém investigar a causa.</p>
+<p style="margin: 8px 0 0; max-width: 28ch; font-size: 17px; font-weight: 600; line-height: 1.4; color: #495940; text-wrap: balance">O problema nunca foi falta de força de vontade. Foi falta de alguém investigar a causa.</p>
 </div>
 </section>
 
 <section style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 64px 16px 0; box-sizing: border-box">
+<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box">
 <div style="position: relative; max-width: 460px; margin: 0 auto; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden; background: #202215; display: flex; align-items: flex-end; box-shadow: 0 30px 60px -36px rgba(31, 36, 26, 0.8)">
 <img loading="lazy" decoding="async" src="/emag-medicao.jpg" alt="Médica medindo a cintura de uma paciente no consultório" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%">
 <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(32, 34, 21, 0) 30%, rgba(32, 34, 21, 0.82) 56%, #202215 78%)"></div>
-<div style="position: relative; width: 100%; padding: 0 22px 30px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<div style="position: relative; width: 100%; padding: 0 24px 32px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <h2 style="margin: 0; max-width: 16ch; font-size: clamp(28px, 7.6vw, 40px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #FFFFFF; text-wrap: balance">Dieta sozinha não resolve. Nunca resolveu.</h2>
 <p style="margin: 0; max-width: 32ch; font-size: 15.5px; line-height: 1.55; color: #D3D7CC; text-wrap: balance">Sono, hormônios, músculo e rotina mexem no seu peso. Enquanto ninguém olhar para tudo isso, ele vai continuar voltando.</p>
 </div>
@@ -193,87 +193,87 @@ Quero agendar minha consulta</a>
 <div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <h2 style="margin: 0; max-width: 16ch; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A; text-wrap: balance">Um tratamento completo, sob o mesmo teto.</h2>
 <p style="margin: 0 0 12px; font-size: 15px; color: #5F6657">Médico, nutrição, psicologia e treino trabalhando juntos no seu caso.</p>
-<div style="width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
-<div style="grid-column: span 2; padding: 22px 20px; border-radius: 22px; background: #495940; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: 0 1px 2px rgba(31, 36, 26, 0.2)">
+<div style="width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="grid-column: span 2; padding: 24px 20px; border-radius: 22px; background: #495940; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: 0 1px 2px rgba(31, 36, 26, 0.2)">
 <span style="width: 44px; height: 44px; border-radius: 14px; background: rgba(220, 199, 154, 0.16); border: 1px solid rgba(220, 199, 154, 0.35); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M20 20l-4.8-4.8"></path></svg></span>
 <h3 style="margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; color: #FFFFFF">Investigação metabólica completa</h3>
 </div>
-<div style="padding: 20px 14px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<div style="padding: 20px 16px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span style="width: 44px; height: 44px; border-radius: 14px; background: #E4EAE1; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c0-8 5-14 14-16-1 9-6 15-14 16z"></path><path d="M5 21l8-8"></path></svg></span>
-<h3 style="margin: 0; font-size: 14.5px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Alimentação que cabe na sua rotina</h3>
+<h3 style="margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Alimentação que cabe na sua rotina</h3>
 </div>
-<div style="padding: 20px 14px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<div style="padding: 20px 16px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span style="width: 44px; height: 44px; border-radius: 14px; background: #E4EAE1; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-45 12 12)"></rect><path d="M9.2 9.2l5.6 5.6"></path></svg></span>
-<h3 style="margin: 0; font-size: 14.5px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Medicamentos modernos para obesidade</h3>
+<h3 style="margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Medicamentos modernos para obesidade</h3>
 </div>
-<div style="padding: 20px 14px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<div style="padding: 20px 16px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span style="width: 44px; height: 44px; border-radius: 14px; background: #E4EAE1; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4.5-2.5 7-6 7-10.5C19 6.4 15.9 3 12 3S5 6.4 5 10.5C5 15 7.5 18.5 12 21z"></path><path d="M12 8v6"></path><path d="M9 11h6"></path></svg></span>
-<h3 style="margin: 0; font-size: 14.5px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Cuidado hormonal na menopausa</h3>
+<h3 style="margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Cuidado hormonal na menopausa</h3>
 </div>
-<div style="padding: 20px 14px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<div style="padding: 20px 16px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span style="width: 44px; height: 44px; border-radius: 14px; background: #E4EAE1; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11"></path><path d="M17.5 6.5v11"></path><path d="M3.5 9v6"></path><path d="M20.5 9v6"></path><path d="M6.5 12h11"></path></svg></span>
-<h3 style="margin: 0; font-size: 14.5px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Proteção da massa muscular</h3>
+<h3 style="margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Proteção da massa muscular</h3>
 </div>
-<div style="grid-column: span 2; padding: 18px 20px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; align-items: center; justify-content: center; gap: 12px">
+<div style="grid-column: span 2; padding: 20px; border-radius: 22px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; align-items: center; justify-content: center; gap: 12px">
 <span style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 14px; background: #E4EAE1; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg></span>
-<h3 style="margin: 0; font-size: 14.5px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A">Apoio psicológico para a fome emocional</h3>
+<h3 style="margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: #1F241A; text-align: left">Apoio psicológico para a fome emocional</h3>
 </div>
 </div>
 </div>
 </section>
 
 <section id="como-funciona" style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 28px">
+<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 24px">
 <h2 style="margin: 0; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A">Do WhatsApp ao seu plano em 3 passos</h2>
 <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; align-items: center">
-<li style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+<li style="display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: #495940; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; box-shadow: 0 0 0 6px #E4EAE1">1</span>
-<span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: #1F241A">Toque no botão e fale com a equipe agora.</span>
+<span style="max-width: 24ch; font-size: 17px; font-weight: 600; line-height: 1.4; letter-spacing: -0.02em; color: #1F241A; text-wrap: balance">Toque no botão e fale com a equipe agora.</span>
 </li>
-<li aria-hidden="true" style="width: 0; height: 30px; margin: 10px 0; border-left: 1.5px dashed #AFBEA5"></li>
-<li style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+<li aria-hidden="true" style="width: 0; height: 24px; margin: 8px 0; border-left: 1.5px dashed #AFBEA5"></li>
+<li style="display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: #FDFCF9; border: 1px solid #AFBEA5; box-sizing: border-box; color: #495940; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">2</span>
-<span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: #1F241A">Faça sua consulta presencial com o Dr. Guilherme.</span>
+<span style="max-width: 24ch; font-size: 17px; font-weight: 600; line-height: 1.4; letter-spacing: -0.02em; color: #1F241A; text-wrap: balance">Faça sua consulta presencial com o Dr. Guilherme.</span>
 </li>
-<li aria-hidden="true" style="width: 0; height: 30px; margin: 10px 0; border-left: 1.5px dashed #AFBEA5"></li>
-<li style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+<li aria-hidden="true" style="width: 0; height: 24px; margin: 8px 0; border-left: 1.5px dashed #AFBEA5"></li>
+<li style="display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: #FDFCF9; border: 1px solid #AFBEA5; box-sizing: border-box; color: #495940; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">3</span>
-<span style="font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: #1F241A">Saia com um plano claro para o seu caso.</span>
+<span style="max-width: 24ch; font-size: 17px; font-weight: 600; line-height: 1.4; letter-spacing: -0.02em; color: #1F241A; text-wrap: balance">Saia com um plano claro para o seu caso.</span>
 </li>
 </ol>
-<a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; max-width: 400px; min-height: 56px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #495940; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(31, 36, 26, 0.2), 0 10px 24px -12px rgba(73, 89, 64, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12)">
+<a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; max-width: 400px; min-height: 56px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #495940; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(31, 36, 26, 0.2), 0 10px 24px -12px rgba(73, 89, 64, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12)">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1-1.2 2 .9c-.3 1.3-1.4 2-2.7 1.8C10.6 15 8.9 13.3 8.5 10.2 8.3 8.9 9 7.8 10.3 7.5l.9 2z"></path></svg>
 Quero agendar minha consulta</a>
 </div>
 </section>
 
 <section style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 80px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 20px">
+<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 80px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 24px">
 <h2 style="margin: 0; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A">Essa consulta é para você?</h2>
-<div style="width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 10px">
-<div style="padding: 28px 22px; border-radius: 24px; background: #E4EAE1; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 8px">
+<div style="padding: 24px 20px; border-radius: 24px; background: #E4EAE1; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <span style="width: 40px; height: 40px; border-radius: 50%; background: #495940; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
 <span style="font-size: 13px; font-weight: 700; color: #495940">É para você</span>
-<p style="margin: 0; max-width: 28ch; font-size: 16.5px; font-weight: 500; line-height: 1.45; color: #1F241A; text-wrap: balance">que já tentou de tudo, quer usar medicação com segurança ou sentiu o corpo mudar depois dos 40.</p>
+<p style="margin: 0; max-width: 28ch; font-size: 16px; font-weight: 500; line-height: 1.45; color: #1F241A; text-wrap: balance">que já tentou de tudo, quer usar medicação com segurança ou sentiu o corpo mudar depois dos 40.</p>
 </div>
-<div style="padding: 28px 22px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <span style="width: 40px; height: 40px; border-radius: 50%; background: #F3E6E0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#9A4A32" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10"></path><path d="M17 7L7 17"></path></svg></span>
 <span style="font-size: 13px; font-weight: 700; color: #9A4A32">Não é para</span>
-<p style="margin: 0; max-width: 28ch; font-size: 16.5px; font-weight: 500; line-height: 1.45; color: #5F6657; text-wrap: balance">quem procura fórmula mágica ou quer continuar tentando sozinho.</p>
+<p style="margin: 0; max-width: 28ch; font-size: 16px; font-weight: 500; line-height: 1.45; color: #5F6657; text-wrap: balance">quem procura fórmula mágica ou quer continuar tentando sozinho.</p>
 </div>
 </div>
 </div>
 </section>
 
 <section id="sobre" style="background: #3A4630; color: #FFFFFF; text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 64px 16px 72px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 18px">
-<div style="width: 100%; max-width: 440px; margin-bottom: 10px; aspect-ratio: 4 / 5; border-radius: 28px; background: #2A2A26; overflow: hidden; border: 1px solid rgba(220, 199, 154, 0.18); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6)">
+<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 80px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 16px">
+<div style="width: 100%; max-width: 440px; margin-bottom: 8px; aspect-ratio: 4 / 5; border-radius: 28px; background: #2A2A26; overflow: hidden; border: 1px solid rgba(220, 199, 154, 0.18); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6)">
 <img loading="lazy" decoding="async" src="/emag-poltrona.jpg" alt="Dr. Guilherme Rocha sentado em uma poltrona de couro" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block">
 </div>
-<span style="font-size: 14px; font-weight: 600; color: #DCC79A">Quem cuida de você</span>
+<span style="margin-bottom: -8px; font-size: 14px; font-weight: 600; color: #DCC79A">Quem cuida de você</span>
 <h2 style="margin: 0; font-size: clamp(30px, 8.2vw, 48px); font-weight: 700; line-height: 1.08; letter-spacing: -0.045em; color: #FFFFFF">Prazer, Guilherme Rocha.</h2>
-<p style="margin: 0; max-width: 32ch; font-size: 16.5px; line-height: 1.55; color: #D4D9D0; text-wrap: balance">Há mais de 15 anos trato pessoas que já tinham desistido de emagrecer. Aqui ninguém vira um número na balança: eu conduzo cada caso pessoalmente.</p>
-<div style="width: 100%; max-width: 400px; margin: 4px 0 6px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); display: flex; flex-direction: column">
+<p style="margin: 0; max-width: 32ch; font-size: 16px; line-height: 1.55; color: #D4D9D0; text-wrap: balance">Há mais de 15 anos trato pessoas que já tinham desistido de emagrecer. Aqui ninguém vira um número na balança: eu conduzo cada caso pessoalmente.</p>
+<div style="width: 100%; max-width: 400px; margin: 8px 0 8px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); display: flex; flex-direction: column">
 <span style="padding: 14px 16px; font-size: 14px; font-weight: 500; color: #EEF0EA">Médico · CRM-ES 11007</span>
 <span style="padding: 14px 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 14px; font-weight: 500; color: #EEF0EA">Instituto Guilherme Rocha</span>
 <span style="padding: 14px 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 14px; font-weight: 500; color: #EEF0EA">Equipe multidisciplinar</span>
@@ -285,7 +285,7 @@ Quero agendar minha consulta</a>
 </section>
 
 <section id="depoimentos" style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 16px">
+<div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <h2 style="margin: 0; max-width: 14ch; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A; text-wrap: balance">Ouça quem já passou pelos meus cuidados!</h2>
 <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: #5F6657"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" fill="#B8955A"></path></svg><strong style="font-weight: 600; color: #1F241A">5.0</strong> no Google</span>
 </div>
@@ -301,73 +301,73 @@ Quero agendar minha consulta</a>
 </div>
 </div>
 <p style="margin: 12px 16px 0; font-size: 13px; color: #5F6657">Toque para assistir · Vídeos com legenda</p>
-<div class="marquee" style="max-width: 1080px; margin: 14px auto 0; overflow: hidden">
-<div class="marquee-track" style="display: flex; gap: 10px; width: max-content; padding: 4px 0">
-<figure style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<div class="marquee" style="max-width: 1080px; margin: 32px auto 0; overflow: hidden">
+<div class="marquee-track" style="display: flex; gap: 12px; width: max-content; padding: 4px 0">
+<figure style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span aria-label="5 estrelas" style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“O Dr. Guilherme mudou a minha vida! Cheguei no consultório sem esperanças e hoje sou outra mulher. Com o acompanhamento e o método dele, consegui eliminar 55 kg de forma saudável e sustentável. Excelente profissional, atencioso e realmente comprometido com o nosso resultado. Recomendo de olhos fechados!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Fernanda Soares</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span aria-label="5 estrelas" style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Passando para deixar meu agradecimento público ao Dr. Guilherme! O carinho, a empatia e a competência com que ele trata cada paciente fazem toda a diferença no processo de emagrecimento. Recuperei minha autoestima e minha saúde. Gratidão eterna por todo o suporte nessa jornada!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Camilla</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span aria-label="5 estrelas" style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Atendimento impecável do início ao fim. O Dr. Guilherme me ajudou a conquistar um resultado que eu achava impossível: foram 55 kg a menos e uma rotina completamente renovada! Ele escuta o paciente e passa muita segurança. Obrigada por me devolver a alegria de me olhar no espelho!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Juliana Mendonça</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span aria-label="5 estrelas" style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Doutor Guilherme é um profissional extraordinário! Desde a primeira consulta me senti super acolhida e entendida. O processo de emagrecimento não foi fácil, mas com a orientação certa dele tudo fluiu da melhor forma. Só tenho a agradecer por toda a dedicação e cuidado comigo!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Patricia</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span aria-label="5 estrelas" style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Melhor médico! Consegui emagrecer com saúde e sem passar sufoco. O Dr. Guilherme é extremamente humano, explicativo e atencioso. Agradeço demais por todo o incentivo e por ter transformado a minha vida. Vale cada centavo!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Renata Almeida</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“O Dr. Guilherme mudou a minha vida! Cheguei no consultório sem esperanças e hoje sou outra mulher. Com o acompanhamento e o método dele, consegui eliminar 55 kg de forma saudável e sustentável. Excelente profissional, atencioso e realmente comprometido com o nosso resultado. Recomendo de olhos fechados!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Fernanda Soares</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Passando para deixar meu agradecimento público ao Dr. Guilherme! O carinho, a empatia e a competência com que ele trata cada paciente fazem toda a diferença no processo de emagrecimento. Recuperei minha autoestima e minha saúde. Gratidão eterna por todo o suporte nessa jornada!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Camilla</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Atendimento impecável do início ao fim. O Dr. Guilherme me ajudou a conquistar um resultado que eu achava impossível: foram 55 kg a menos e uma rotina completamente renovada! Ele escuta o paciente e passa muita segurança. Obrigada por me devolver a alegria de me olhar no espelho!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Juliana Mendonça</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Doutor Guilherme é um profissional extraordinário! Desde a primeira consulta me senti super acolhida e entendida. O processo de emagrecimento não foi fácil, mas com a orientação certa dele tudo fluiu da melhor forma. Só tenho a agradecer por toda a dedicação e cuidado comigo!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Patricia</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
-<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 18px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
+<figure aria-hidden="true" style="margin: 0; width: 290px; padding: 20px; border-radius: 20px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; text-align: left">
 <span style="font-size: 12px; letter-spacing: 2px; color: #B8955A">★★★★★</span>
 <blockquote style="margin: 0; font-size: 14px; line-height: 1.5; color: #3F4637">“Melhor médico! Consegui emagrecer com saúde e sem passar sufoco. O Dr. Guilherme é extremamente humano, explicativo e atencioso. Agradeço demais por todo o incentivo e por ter transformado a minha vida. Vale cada centavo!”</blockquote>
 <figcaption style="display: flex; flex-direction: column; gap: 2px; margin-top: auto"><span style="font-size: 13px; font-weight: 600; color: #1F241A">Renata Almeida</span><span style="font-size: 12px; color: #5F6657">Paciente do Instituto</span></figcaption>
 </figure>
 </div>
 </div>
-<p style="margin: 14px 16px 0; font-size: 12.5px; color: #5F6657">Resultados variam de pessoa para pessoa.</p>
+<p style="margin: 16px 16px 0; font-size: 13px; color: #5F6657">Resultados variam de pessoa para pessoa.</p>
 </section>
 
 <section style="text-align: center">
 <div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; justify-content: center">
-<div style="width: 100%; max-width: 480px; border-radius: 32px; background: #1A1E15; color: #FFFFFF; padding: 36px 18px 28px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 18px; box-shadow: 0 30px 60px -32px rgba(31, 36, 26, 0.85)">
+<div style="width: 100%; max-width: 480px; border-radius: 32px; background: #1A1E15; color: #FFFFFF; padding: 32px 16px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 16px; box-shadow: 0 30px 60px -32px rgba(31, 36, 26, 0.85)">
 <h2 style="margin: 0; max-width: 14ch; font-size: clamp(26px, 7vw, 36px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #F7F4EC; text-wrap: balance">Tudo isso em uma única consulta.</h2>
-<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; align-items: center; gap: 10px">
-<li style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: #E3E7DE"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Análise completa da sua história e dos seus exames</li>
-<li style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: #E3E7DE"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Exame clínico com o próprio Dr. Guilherme</li>
-<li style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: #E3E7DE"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Um plano do que fazer a partir de amanhã</li>
+<ul style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; text-align: left">
+<li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.45; color: #E3E7DE; text-wrap: pretty"><svg style="flex: 0 0 16px; margin-top: 3px" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Análise completa da sua história e dos seus exames</li>
+<li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.45; color: #E3E7DE; text-wrap: pretty"><svg style="flex: 0 0 16px; margin-top: 3px" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Exame clínico com o próprio Dr. Guilherme</li>
+<li style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.45; color: #E3E7DE; text-wrap: pretty"><svg style="flex: 0 0 16px; margin-top: 3px" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Um plano do que fazer a partir de amanhã</li>
 </ul>
-<div class="tk-float" data-tk-wrap style="position: relative; width: 100%; margin: 12px 0 10px; touch-action: pan-y">
+<div class="tk-float" data-tk-wrap style="position: relative; width: 100%; margin: 16px 0; touch-action: pan-y">
 <div aria-hidden="true" style="position: absolute; left: 12%; right: 12%; bottom: -16px; height: 34px; border-radius: 50%; background: rgba(220, 199, 154, 0.32); filter: blur(18px)"></div>
 <div data-tk style="position: relative; width: 100%; aspect-ratio: 1.62 / 1; transform: perspective(900px) rotateX(0deg) rotateY(0deg) scale(1); transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1); will-change: transform">
 <div role="img" aria-label="Ingresso dourado da consulta com o Dr. Guilherme, investimento de R$ 650,00, particular, em Guarapari (ES)" style="position: absolute; inset: 0; border-radius: 18px; overflow: hidden; background: #C99B42; -webkit-mask-image: radial-gradient(circle 13px at 76% 0, transparent 95%, #000 100%), radial-gradient(circle 13px at 76% 100%, transparent 95%, #000 100%); -webkit-mask-composite: source-in; mask-image: radial-gradient(circle 13px at 76% 0, transparent 95%, #000 100%), radial-gradient(circle 13px at 76% 100%, transparent 95%, #000 100%); mask-composite: intersect">
@@ -391,8 +391,8 @@ Quero agendar minha consulta</a>
 <div data-tk-glare aria-hidden="true" style="position: absolute; inset: 0; border-radius: 18px; pointer-events: none; background: transparent; -webkit-mask-image: radial-gradient(circle 13px at 76% 0, transparent 95%, #000 100%), radial-gradient(circle 13px at 76% 100%, transparent 95%, #000 100%); -webkit-mask-composite: source-in; mask-image: radial-gradient(circle 13px at 76% 0, transparent 95%, #000 100%), radial-gradient(circle 13px at 76% 100%, transparent 95%, #000 100%); mask-composite: intersect"></div>
 </div>
 </div>
-<p style="margin: 0; max-width: 32ch; font-size: 13.5px; line-height: 1.5; color: #C9CFC2; text-wrap: balance"><strong style="font-weight: 600; color: #FFFFFF">Menos do que você já gastou com dietas que não funcionaram.</strong> Se o Programa Platinum fizer sentido para você, ele é apresentado na consulta, sem obrigação.</p>
-<a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #DCC79A; color: #1F241A; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35)">
+<p style="margin: 0; max-width: 32ch; font-size: 14px; line-height: 1.5; color: #C9CFC2; text-wrap: balance"><strong style="font-weight: 600; color: #FFFFFF">Menos do que você já gastou com dietas que não funcionaram.</strong> Se o Programa Platinum fizer sentido para você, ele é apresentado na consulta, sem obrigação.</p>
+<a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #DCC79A; color: #1F241A; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35)">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#3A4630" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1-1.2 2 .9c-.3 1.3-1.4 2-2.7 1.8C10.6 15 8.9 13.3 8.5 10.2 8.3 8.9 9 7.8 10.3 7.5l.9 2z"></path></svg>
 Quero agendar minha consulta</a>
 </div>
@@ -403,61 +403,61 @@ Quero agendar minha consulta</a>
 <div style="max-width: 760px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center">
 <h2 style="margin: 0; max-width: 14ch; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A; text-wrap: balance">Talvez você esteja pensando…</h2>
 </div>
-<div class="hscroll" style="max-width: 760px; margin: 22px auto 0; padding: 0 16px 6px; box-sizing: border-box; display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 16px">
-<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div class="hscroll" style="max-width: 760px; margin: 24px auto 0; padding: 0 16px 6px; box-sizing: border-box; display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 16px">
+<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <p style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">“Já tentei de tudo.”</p>
-<p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #5F6657">Por isso mesmo. Cada tentativa vira pista para achar o que trava o seu peso.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #5F6657">Por isso mesmo. Cada tentativa vira pista para achar o que trava o seu peso.</p>
 </div>
-<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <p style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">“Tenho medo do efeito rebote.”</p>
-<p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #5F6657">O rebote vem quando ninguém acompanha. Aqui a dose é individual e existe plano para depois.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #5F6657">O rebote vem quando ninguém acompanha. Aqui a dose é individual e existe plano para depois.</p>
 </div>
-<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <p style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">“Não quero tomar hormônio.”</p>
-<p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #5F6657">Você só usa se precisar. Ninguém sai daqui com hormônio por padrão.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #5F6657">Você só usa se precisar. Ninguém sai daqui com hormônio por padrão.</p>
 </div>
-<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <p style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">“É caro.”</p>
-<p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #5F6657">Caro é continuar pagando por dieta que não funciona. A consulta tem preço fechado e zero obrigação.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #5F6657">Caro é continuar pagando por dieta que não funciona. A consulta tem preço fechado e zero obrigação.</p>
 </div>
-<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <p style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">“Tenho vergonha.”</p>
-<p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #5F6657">Aqui ninguém julga e ninguém dá sermão. A conversa é sobre você, com respeito.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #5F6657">Aqui ninguém julga e ninguém dá sermão. A conversa é sobre você, com respeito.</p>
 </div>
-<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<div style="flex: 0 0 min(78%, 300px); scroll-snap-align: center; padding: 24px 20px; border-radius: 24px; background: #FDFCF9; border: 1px solid #E7E2D6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <p style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; color: #1F241A">“Não tenho tempo.”</p>
-<p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #5F6657">A consulta é uma só. Os retornos se encaixam na sua rotina, não o contrário.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #5F6657">A consulta é uma só. Os retornos se encaixam na sua rotina, não o contrário.</p>
 </div>
 </div>
 </section>
 
 <section id="duvidas" style="text-align: center">
-<div style="max-width: 640px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 22px">
+<div style="max-width: 640px; margin: 0 auto; padding: 80px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 24px">
 <h2 style="margin: 0; font-size: clamp(28px, 7.6vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; color: #1F241A">Perguntas frequentes</h2>
 <div style="width: 100%; display: flex; flex-direction: column; gap: 8px; text-align: left">
-<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 18px">
-<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Quanto custa?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<p style="margin: 0; padding: 0 0 18px; font-size: 15px; color: #5F6657">R$ 650, consulta particular com preço fechado.</p>
+<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Quanto custa?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
+<p style="margin: 0; padding: 0 0 20px; font-size: 15px; color: #5F6657">R$ 650, consulta particular com preço fechado.</p>
 </details>
-<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 18px">
-<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Aceita convênio?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<p style="margin: 0; padding: 0 0 18px; font-size: 15px; color: #5F6657">Não. O atendimento é particular, e o recibo pode ser usado para pedir reembolso ao seu plano.</p>
+<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Aceita convênio?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
+<p style="margin: 0; padding: 0 0 20px; font-size: 15px; color: #5F6657">Não. O atendimento é particular, e o recibo pode ser usado para pedir reembolso ao seu plano.</p>
 </details>
-<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 18px">
-<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Vou sair com receita?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<p style="margin: 0; padding: 0 0 18px; font-size: 15px; color: #5F6657">Se você tiver indicação, sim. O Dr. prescreve o que o seu caso precisa já na consulta.</p>
+<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Vou sair com receita?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
+<p style="margin: 0; padding: 0 0 20px; font-size: 15px; color: #5F6657">Se você tiver indicação, sim. O Dr. prescreve o que o seu caso precisa já na consulta.</p>
 </details>
-<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 18px">
-<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Reposição hormonal emagrece?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<p style="margin: 0; padding: 0 0 18px; font-size: 15px; color: #5F6657">Sozinha, não. Ela trata sintomas quando existe deficiência comprovada e só entra no plano se você precisar.</p>
+<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Reposição hormonal emagrece?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
+<p style="margin: 0; padding: 0 0 20px; font-size: 15px; color: #5F6657">Sozinha, não. Ela trata sintomas quando existe deficiência comprovada e só entra no plano se você precisar.</p>
 </details>
-<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 18px">
-<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Preciso levar exames?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<p style="margin: 0; padding: 0 0 18px; font-size: 15px; color: #5F6657">Leve todos que tiver, inclusive os antigos. Eles ajudam a chegar mais rápido à causa.</p>
+<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Preciso levar exames?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
+<p style="margin: 0; padding: 0 0 20px; font-size: 15px; color: #5F6657">Leve todos que tiver, inclusive os antigos. Eles ajudam a chegar mais rápido à causa.</p>
 </details>
-<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 18px">
-<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Onde fica?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<p style="margin: 0; padding: 0 0 18px; font-size: 15px; color: #5F6657">Presencial, em Muquiçaba, Guarapari (ES).</p>
+<details style="border-radius: 18px; background: #FDFCF9; border: 1px solid #E7E2D6; padding: 0 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: #1F241A">Onde fica?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#495940" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 18px; transition: transform 0.2s"><path d="M6 9l6 6 6-6"></path></svg></summary>
+<p style="margin: 0; padding: 0 0 20px; font-size: 15px; color: #5F6657">Presencial, em Muquiçaba, Guarapari (ES).</p>
 </details>
 </div>
 </div>
@@ -469,19 +469,19 @@ Quero agendar minha consulta</a>
 <div style="aspect-ratio: 16 / 10; background: #E7E2D6">
 <img loading="lazy" decoding="async" src="/emag-recepcao.jpg" alt="Recepção do Instituto Guilherme Rocha" style="width: 100%; height: 100%; object-fit: cover; object-position: 55% 50%; display: block">
 </div>
-<div style="padding: 28px 22px 26px; display: flex; flex-direction: column; align-items: center; gap: 16px">
-<h2 style="margin: 0; max-width: 13ch; font-size: clamp(28px, 7.6vw, 40px); font-weight: 700; line-height: 1.08; letter-spacing: -0.045em; color: #1F241A; text-wrap: balance">Quantas segundas-feiras mais você vai recomeçar?</h2>
+<div style="padding: 32px 24px; display: flex; flex-direction: column; align-items: center; gap: 16px">
+<h2 style="margin: 0; max-width: 13ch; font-size: clamp(28px, 7.6vw, 40px); font-weight: 700; line-height: 1.08; letter-spacing: -0.045em; color: #1F241A; text-wrap: balance">Quantas <span style="white-space: nowrap">segundas-feiras</span> mais você vai recomeçar?</h2>
 <a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #495940; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(31, 36, 26, 0.2), 0 10px 24px -12px rgba(73, 89, 64, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12)">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1-1.2 2 .9c-.3 1.3-1.4 2-2.7 1.8C10.6 15 8.9 13.3 8.5 10.2 8.3 8.9 9 7.8 10.3 7.5l.9 2z"></path></svg>
 Quero agendar minha consulta</a>
-<span style="font-size: 13px; color: #5F6657">A agenda do Dr. é limitada. Garanta o seu horário agora.</span>
+<span style="font-size: 13px; color: #5F6657; text-wrap: balance">A agenda do Dr. é limitada. Garanta o seu horário agora.</span>
 </div>
 </div>
 </div>
 </section>
 
 <footer style="text-align: center">
-<div style="max-width: 760px; margin: 0 auto; padding: 64px 16px 36px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 20px">
+<div style="max-width: 760px; margin: 0 auto; padding: 64px 16px 32px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 24px">
 <span style="display: flex; align-items: center; gap: 10px">
 <img src="/logo-verde.png" alt="Dr. Guilherme Rocha" width="161" height="42" loading="lazy" style="display: block">
 </span>
@@ -490,16 +490,30 @@ Quero agendar minha consulta</a>
 <span style="max-width: 30ch; color: #5F6657">Rua Francisco Vieira Passos, Muquiçaba, Guarapari (ES)</span>
 <span style="color: #5F6657">@dr.guilhermerocha</span>
 </div>
-<p style="margin: 0; padding-top: 18px; border-top: 1px solid #E7E2D6; font-size: 11.5px; line-height: 1.6; color: #5F6657; text-wrap: balance">Dr. Guilherme Loureiro Rocha · Médico · CRM-ES 11007 · Instituto Guilherme Rocha, Guarapari (ES) · Conteúdo informativo, não substitui avaliação médica.</p>
+<p style="margin: 0; padding-top: 24px; border-top: 1px solid #E7E2D6; font-size: 12px; line-height: 1.6; color: #5F6657; text-wrap: balance">Dr. Guilherme Loureiro Rocha · Médico · CRM-ES 11007</p>
 </div>
 </footer>
 
-<div class="mbar" style="position: sticky; bottom: 0; z-index: 25; padding: 10px 14px 14px; background: rgba(246, 243, 236, 0.92); backdrop-filter: blur(14px); border-top: 1px solid #E7E2D6">
+<div class="mbar" style="position: sticky; bottom: 0; z-index: 25; padding: 12px 16px 16px; background: rgba(246, 243, 236, 0.92); backdrop-filter: blur(14px); border-top: 1px solid #E7E2D6">
 <a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 52px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #495940; color: #FFFFFF; font-size: 15.5px; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(31, 36, 26, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12)">
 <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1-1.2 2 .9c-.3 1.3-1.4 2-2.7 1.8C10.6 15 8.9 13.3 8.5 10.2 8.3 8.9 9 7.8 10.3 7.5l.9 2z"></path></svg>
 Quero agendar minha consulta</a>
 </div>
 
+</div>
+<div id="video-popup" hidden style="position: fixed; inset: 0; z-index: 60; padding: 16px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: rgba(20, 24, 16, 0.78); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); font-family: 'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; line-height: 1.55; letter-spacing: -0.01em; color: #1F241A; -webkit-font-smoothing: antialiased">
+<div id="vp-card" role="dialog" aria-modal="true" aria-labelledby="vp-title" style="position: relative; width: 100%; max-width: 360px; padding: 20px 16px 12px; box-sizing: border-box; border-radius: 28px; background: #FDFCF9; box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6); display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+<button type="button" data-vp-close aria-label="Fechar vídeo" style="position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #F1EEE6; color: #1F241A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<span style="padding: 0 44px; font-size: 13px; font-weight: 600; color: #8A6A33">Antes de agendar</span>
+<h2 id="vp-title" style="margin: -4px 0 0; max-width: 16ch; font-size: 22px; font-weight: 700; line-height: 1.15; letter-spacing: -0.03em; color: #1F241A; text-wrap: balance">Veja como é a consulta com o Dr. Guilherme</h2>
+<div id="vp-media" style="height: min(52vh, 440px); max-width: 100%; aspect-ratio: 9 / 16; border-radius: 20px; overflow: hidden; background: #1F241A">
+<video src="/emag-video-consulta.mp4" poster="/emag-video-consulta.jpg" controls playsinline preload="none" aria-label="Vídeo sobre a consulta com o Dr. Guilherme" style="width: 100%; height: 100%; object-fit: cover; display: block; background: #1F241A"></video>
+</div>
+<a class="cta" href="https://wa.me/5527995223099?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20emagrecimento%20e%20quero%20agendar%20minha%20consulta%20com%20o%20Dr.%20Guilherme." target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 52px; padding: 0 20px; box-sizing: border-box; border-radius: 999px; background: #495940; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(31, 36, 26, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12)">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#DCC79A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1-1.2 2 .9c-.3 1.3-1.4 2-2.7 1.8C10.6 15 8.9 13.3 8.5 10.2 8.3 8.9 9 7.8 10.3 7.5l.9 2z"></path></svg>
+Quero agendar minha consulta</a>
+<button type="button" data-vp-close style="min-height: 44px; padding: 0 16px; border: 0; background: none; font-family: inherit; font-size: 14px; font-weight: 500; color: #5F6657; text-decoration: underline; text-underline-offset: 3px; cursor: pointer">Agora não</button>
+</div>
 </div>
 <script>
 (function () {
@@ -533,6 +547,54 @@ Quero agendar minha consulta</a>
   vids.forEach(function (v) {
     v.addEventListener('play', function () { vids.forEach(function (o) { if (o !== v) o.pause(); }); });
   });
+})();
+</script>
+<script>
+(function () {
+  // Pop-up do vídeo: abre uma vez por visita quando a pessoa rola 25% da página
+  var pop = document.getElementById('video-popup');
+  if (!pop) return;
+  var KEY = 'emag-video-popup', done = false, last = null;
+  try { done = !!sessionStorage.getItem(KEY); } catch (e) {}
+  var track = function (ev) { try { (window.dataLayer = window.dataLayer || []).push({ event: ev }); } catch (e) {} };
+  function open() {
+    if (done) return; done = true;
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    last = document.activeElement;
+    pop.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    var card = document.getElementById('vp-card');
+    if (card) { card.setAttribute('tabindex', '-1'); card.style.outline = 'none'; card.focus({ preventScroll: true }); }
+    track('popup_video_consulta_aberto');
+  }
+  function close() {
+    if (pop.hidden) return;
+    pop.hidden = true;
+    document.documentElement.style.overflow = '';
+    var v = pop.querySelector('video'); if (v) v.pause();
+    if (last && last.focus) last.focus({ preventScroll: true });
+    track('popup_video_consulta_fechado');
+  }
+  function check() {
+    var max = document.documentElement.scrollHeight - innerHeight;
+    if (max > 0 && scrollY / max >= 0.25) { removeEventListener('scroll', check); open(); }
+  }
+  if (!done) addEventListener('scroll', check, { passive: true });
+  pop.addEventListener('click', function (e) { if (e.target === pop || e.target.closest('[data-vp-close]')) close(); });
+  addEventListener('keydown', function (e) {
+    if (pop.hidden) return;
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key !== 'Tab') return;
+    var f = [].slice.call(pop.querySelectorAll('button, a[href], video[controls]'));
+    if (!f.length) return;
+    var first = f[0], lastEl = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl.focus(); }
+    else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first.focus(); }
+  });
+  var v = pop.querySelector('video');
+  if (v) v.addEventListener('play', function () { track('popup_video_consulta_play'); }, { once: true });
+  var a = pop.querySelector('a[href]');
+  if (a) a.addEventListener('click', function () { track('popup_video_consulta_whatsapp'); });
 })();
 </script>
 </body>
