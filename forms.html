@@ -85,6 +85,14 @@ body{margin:0;background:#F3F4F0}
       return '<label class="lf-g"><span>'+lab+'</span>'+t+' name="'+esc(f.name)+'"'+(f.required?' required':'')+(f.type==='textarea'?'></textarea>':'>')+'</label>';
     }).join('');
   }).catch(function(){});
+  // guarda nome e telefone já criptografados (SHA-256) para a página de obrigado avisar o Meta (melhora a correspondência)
+  function sha(t){try{return crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join('')})}catch(e){return Promise.resolve('')}}
+  function keep(data){
+    var ph=String(data.phone||'').replace(/\D/g,''); if(ph&&ph.indexOf('55')!==0&&ph.length<=11)ph='55'+ph;
+    var fn=String(data.name||'').trim().toLowerCase().split(/\s+/)[0]||'';
+    try{sessionStorage.removeItem('lq_sent')}catch(e){}
+    return Promise.all([ph?sha(ph):'',fn?sha(fn):'']).then(function(h){try{sessionStorage.setItem('lq_user',JSON.stringify({ph:h[0],fn:h[1]}))}catch(e){}}).catch(function(){});
+  }
   form.addEventListener('submit',function(e){
     e.preventDefault(); err.hidden=true;
     var data={}, miss=false;
@@ -93,7 +101,7 @@ body{margin:0;background:#F3F4F0}
     btn.disabled=true; btn.textContent='Enviando...';
     fetch(SUBMIT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
       .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw j;return j;})})
-      .then(function(j){var d=(j&&j.redirectUrl)||redirect; if(!/^https?:|^\//.test(d))d='https://'+d; location.href=d;})
+      .then(function(j){var d=(j&&j.redirectUrl)||redirect; if(!/^https?:|^\//.test(d))d='https://'+d; return keep(data).then(function(){location.href=d;});})
       .catch(function(){btn.disabled=false;btn.textContent='Quero agendar minha consulta';
         err.innerHTML='Não conseguimos enviar agora. <a href="'+WA+'" target="_blank" rel="noopener" style="color:inherit;font-weight:600">Fale com a equipe pelo WhatsApp</a>.';err.hidden=false;});
   });

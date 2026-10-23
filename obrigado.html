@@ -35,8 +35,18 @@ body{margin:0;background:#14170F}
   </div>
 </main>
 <script>
-// conversão: quem chega aqui deixou um contato
-try{if(window.fbq)fbq('track','Lead');}catch(e){}
-try{if(window.gtag)gtag('event','generate_lead',{page_path:'/obrigado'});}catch(e){}
+// conversão: evento LeadQualificado no Pixel (navegador) e na API de Conversões (servidor), com o mesmo ID para o Meta contar uma vez só
+(function(){
+  var ss={get:function(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
+  var q=new URLSearchParams(location.search);
+  if(ss.get('lq_sent')&&q.get('teste')!=='1')return; // não conta de novo se a pessoa recarregar a página
+  var id='lq-'+Date.now()+'-'+Math.random().toString(36).slice(2,10);
+  var d={}; try{d=JSON.parse(ss.get('lq_user')||'{}')}catch(e){}
+  try{if(window.fbq)fbq('trackCustom','LeadQualificado',{},{eventID:id});}catch(e){}
+  try{if(window.gtag)gtag('event','generate_lead',{page_path:'/obrigado'});}catch(e){}
+  try{fetch('/api/capi',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({event_id:id,ph:d.ph,fn:d.fn,url:location.href,fbclid:q.get('fbclid')||undefined,test:q.get('teste')==='1'})});}catch(e){}
+  ss.set('lq_sent','1');
+})();
 </script>
 </body></html>
