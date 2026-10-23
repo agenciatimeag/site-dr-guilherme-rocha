@@ -85,7 +85,8 @@ function speed(html, f) {
     html = html.replace(/<body[^>]*>/, m => m + GTM_BODY);
   }
   if (f !== 'admin.html' && !html.includes('clarity.ms/tag')) html = html.replace('</head>', TRACKING + '</head>');
-  if (f !== 'admin.html' && !html.includes('__LemifyWebchat')) html = html.replace('</body>', LEMIFY + '</body>');
+  // a página do formulário (/forms) já carrega o script da Lemify para o formulário; ali o chat não entra, para não carregar o mesmo script duas vezes
+  if (f !== 'admin.html' && !html.includes('__LemifyWebchat') && !html.includes('lemify-form-container')) html = html.replace('</body>', LEMIFY + '</body>');
   html = html.replace(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)")[^>]*>/g,
     (m, href) => `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`);
   if (f === 'index.html') {
