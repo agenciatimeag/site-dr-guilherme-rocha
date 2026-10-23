@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="/styles.css">
 <style>
 body{margin:0;background:#F3F4F0}
+.fm-bar{background:#C62828;color:#fff;text-align:center;font:600 .82rem/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;padding:11px var(--gut)}
+.fm-bar span{opacity:.7;margin:0 10px}
 .fm-top{background:radial-gradient(70% 80% at 50% 0%,rgba(199,171,107,.2),transparent 70%),#14170F;color:#F4F5F0;text-align:center;padding:28px var(--gut) 86px}
 .fm-top-in{max-width:560px;margin:0 auto;display:grid;justify-items:center;gap:16px}
 .fm-logo img{height:38px;width:auto}
@@ -23,28 +25,78 @@ body{margin:0;background:#F3F4F0}
 .fm-top p{margin:0;color:rgba(244,245,240,.75);font-size:1rem;line-height:1.5;max-width:42ch}
 .fm-card{max-width:560px;margin:-58px auto 0;padding:0 var(--gut)}
 .fm-box{background:#fff;border:1px solid var(--line);border-radius:24px;padding:clamp(18px,4vw,30px);box-shadow:0 24px 60px -30px rgba(20,23,15,.35);min-height:320px}
+.lf{display:grid;gap:14px}
+.lf-fields{display:grid;gap:14px}
+.lf-g{display:grid;gap:6px;font-size:.88rem;font-weight:600;color:var(--ink)}
+.lf-g input,.lf-g textarea{width:100%;box-sizing:border-box;font:400 1rem var(--sans);padding:14px 16px;border:1px solid #CBD2C4;border-radius:12px;background:#fff;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s}
+.lf-g input:focus,.lf-g textarea:focus{border-color:var(--olive);box-shadow:0 0 0 3px rgba(72,80,62,.18)}
+.lf-btn{margin-top:4px;width:100%;min-height:56px;border:0;border-radius:999px;background:var(--olive);color:#fff;font:600 1.02rem var(--sans);cursor:pointer;transition:opacity .2s}
+.lf-btn:disabled{opacity:.6;cursor:wait}
+.lf-err{margin:0;color:#B42318;background:#FEF3F2;border:1px solid #FECDCA;border-radius:12px;padding:10px 12px;font-size:.88rem}
+.lf-note{margin:0;text-align:center;color:var(--muted);font-size:.78rem}
 .fm-foot{max-width:560px;margin:0 auto;padding:22px var(--gut) 40px;text-align:center;color:var(--muted);font-size:.82rem;line-height:1.6}
 .fm-foot a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 </style>
 </head><body>
+<div class="fm-bar" role="note">Valor R$ 650,00<span>·</span>Não aceitamos planos</div>
 <header class="fm-top">
   <div class="fm-top-in">
     <a class="fm-logo" href="/" aria-label="Dr. Guilherme Rocha, início"><img src="/logo-branco.png" alt="Dr. Guilherme Rocha" width="161" height="42"></a>
     <img class="fm-photo" src="/autor.jpg" alt="Dr. Guilherme Rocha" width="96" height="96">
-    <p class="fm-eyebrow">Médico · CRM-ES 11007 · Guarapari (ES)</p>
-    <h1>Agende sua <span class="it">consulta.</span></h1>
-    <p>Preencha seus dados abaixo. A equipe do Instituto entra em contato para encontrar o melhor horário para você.</p>
+    <h1>Agende sua <span class="it">consulta</span></h1>
+    <p>Preencha os dados e a equipe entrará em contato dentro de minutos para agendar o seu horário.</p>
   </div>
 </header>
 <main class="fm-card">
-  <div class="fm-box">
-    <div id="lemify-form-container"></div>
-    <script>window.__LemifyWebchat = { host: location.origin + '/lemify' };</script>
-    <script src="https://app.lemify.com.br/public/widget.js" data-form-id="2" data-mode="inline-form" data-target="#lemify-form-container"></script>
+  <div class="fm-box" id="lemify-form-container">
+    <form class="lf" id="lf" novalidate>
+      <div class="lf-fields" id="lf-fields">
+        <label class="lf-g"><span>Nome *</span><input name="name" type="text" required autocomplete="name"></label>
+        <label class="lf-g"><span>Telefone/WhatsApp *</span><input name="phone" type="tel" required inputmode="tel" autocomplete="tel"></label>
+        <label class="lf-g"><span>O que mais tem te incomodado?</span><input name="O que mais tem te incomodado?" type="text"></label>
+      </div>
+      <p class="lf-err" id="lf-err" hidden></p>
+      <button class="lf-btn" type="submit" id="lf-btn">Quero agendar minha consulta</button>
+      <p class="lf-note">Seus dados são usados só para o contato da equipe do Instituto.</p>
+    </form>
   </div>
 </main>
 <footer class="fm-foot">
   Instituto Guilherme Rocha · Rua Francisco Vieira Passos, Muquiçaba, Guarapari (ES)<br>
   <a href="/">Conheça o site do Dr. Guilherme</a>
 </footer>
+<script>
+(function(){
+  // Formulário próprio ligado ao formulário nº 2 da Lemify (mesmos campos, envio e redirecionamento).
+  var API = 'https://app.lemify.com.br/public/forms/2';
+  var SUBMIT = '/lemify/public/forms/2/submit'; // envio pelo próprio domínio
+  var WA = 'https://api.whatsapp.com/send?phone=5527995223099&text=agendar';
+  var form = document.getElementById('lf'), box = document.getElementById('lf-fields');
+  var err = document.getElementById('lf-err'), btn = document.getElementById('lf-btn');
+  var redirect = '/obrigado';
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  // usa os campos configurados no painel da Lemify, se estiverem disponíveis
+  fetch(API).then(function(r){return r.ok?r.json():null}).then(function(cfg){
+    if(!cfg||!cfg.fields||!cfg.fields.length)return;
+    if(cfg.settings&&cfg.settings.redirectUrl)redirect=cfg.settings.redirectUrl.trim();
+    box.innerHTML=cfg.fields.map(function(f){
+      var lab=esc(f.label||f.name)+(f.required?' *':'');
+      var t=f.type==='textarea'?'<textarea rows="3"':'<input type="'+esc(f.type||'text')+'"'+(f.type==='tel'?' inputmode="tel" autocomplete="tel"':'')+(f.name==='name'?' autocomplete="name"':'');
+      return '<label class="lf-g"><span>'+lab+'</span>'+t+' name="'+esc(f.name)+'"'+(f.required?' required':'')+(f.type==='textarea'?'></textarea>':'>')+'</label>';
+    }).join('');
+  }).catch(function(){});
+  form.addEventListener('submit',function(e){
+    e.preventDefault(); err.hidden=true;
+    var data={}, miss=false;
+    [].forEach.call(form.querySelectorAll('input,textarea'),function(i){data[i.name]=i.value.trim(); if(i.required&&!data[i.name])miss=true;});
+    if(miss){err.textContent='Preencha os campos com *.';err.hidden=false;return;}
+    btn.disabled=true; btn.textContent='Enviando...';
+    fetch(SUBMIT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw j;return j;})})
+      .then(function(j){var d=(j&&j.redirectUrl)||redirect; if(!/^https?:|^\//.test(d))d='https://'+d; location.href=d;})
+      .catch(function(){btn.disabled=false;btn.textContent='Quero agendar minha consulta';
+        err.innerHTML='Não conseguimos enviar agora. <a href="'+WA+'" target="_blank" rel="noopener" style="color:inherit;font-weight:600">Fale com a equipe pelo WhatsApp</a>.';err.hidden=false;});
+  });
+})();
+</script>
 </body></html>
