@@ -153,6 +153,8 @@ fs.writeFileSync(path.join(OUT, 'config.json'), JSON.stringify({
     { src: '^/blog/([^/]+)/?$', dest: '/api/blog?slug=$1' },
     { src: '^/sitemap\\.xml$', dest: '/api/blog?sitemap=1' },
     { src: '^/admin/?$', dest: '/admin', headers: NOINDEX },
+    // ponte para a Lemify pelo próprio domínio: o formulário da página /forms conversa com a Lemify sem bloqueio entre sites
+    { src: '^/lemify/(.*)$', dest: 'https://app.lemify.com.br/$1' },
     { src: '^/(.*)\\.(jpg|jpeg|png|webp|avif|svg)$', headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }, continue: true },
     { handle: 'filesystem' },
   ],
