@@ -75,6 +75,7 @@ const WA_MSG = 'Olá, visitei o site e gostaria de atendimento! [NÃO APAGUE EST
 const waText = s => s.replace(/(api\.whatsapp\.com\/send\?phone=\d+&(?:amp;)?text=)[^"'\\\s<>]*/g,
   (m, pre) => pre + encodeURIComponent(WA_MSG).replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase()));
 const home = require('./build-home.js');
+const { perf, copyText, copyJson } = require('./build-perf.js'); // sem animações, botão fixo de WhatsApp e textos de conversão
 function speed(html, f) {
   if (f === 'index.html') html = home(html, ROOT); // casos de sucesso, nova ordem e botões de agendamento
   html = waText(html);
@@ -85,8 +86,8 @@ function speed(html, f) {
     html = html.replace(/<body[^>]*>/, m => m + GTM_BODY);
   }
   if (f !== 'admin.html' && !html.includes('clarity.ms/tag')) html = html.replace('</head>', TRACKING + '</head>');
-  // a página do formulário (/forms) já carrega o script da Lemify para o formulário; ali o chat não entra, para não carregar o mesmo script duas vezes
-  if (f !== 'admin.html' && !html.includes('__LemifyWebchat') && !html.includes('lemify-form-container')) html = html.replace('</body>', LEMIFY + '</body>');
+  // Chat da Lemify desligado: o arquivo widget.js deles está com erro e não abre o chat (volta quando a Lemify corrigir).
+  if (process.env.LEMIFY_ON === '1' && f !== 'admin.html' && !html.includes('__LemifyWebchat') && !html.includes('lemify-form-container')) html = html.replace('</body>', LEMIFY + '</body>');
   html = html.replace(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="(https:\/\/fonts\.googleapis\.com\/css2[^"]*)")[^>]*>/g,
     (m, href) => `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`);
   if (f === 'index.html') {
@@ -101,7 +102,7 @@ function speed(html, f) {
     html = html.replace('</head>', '<link rel="preload" as="image" href="' + hero + '" fetchpriority="high">'
       + '<style>.hf-cut{animation-delay:0s!important}@keyframes cutup{from{opacity:.001;transform:translateX(-50%) translateY(70px);filter:brightness(.2) drop-shadow(0 30px 60px rgba(0,0,0,.6))}to{opacity:1;transform:translateX(-50%);filter:brightness(1) drop-shadow(0 30px 60px rgba(0,0,0,.6))}}</style></head>');
   }
-  return html;
+  return waText(perf(html, f));
 }
 
 // ---------- Estáticos ----------
@@ -125,9 +126,12 @@ for (const f of files.filter(f => /^api-.+\.js$/.test(f))) {
   for (const s of serverFiles) {
     if (s === 'tpl.html') fs.writeFileSync(path.join(fn, s), speed(fs.readFileSync(path.join(ROOT, s), 'utf8'), s));
     // Foto do autor nos artigos do blog: usa autor.jpg (foto de terno) quando ela estiver no repositório.
-    else if (s === 'lib-render.js' && fs.existsSync(path.join(ROOT, 'autor.jpg')))
-      fs.writeFileSync(path.join(fn, s), fs.readFileSync(path.join(ROOT, s), 'utf8').split('src="/retrato.jpg"').join('src="/autor.jpg"'));
-    else if (s === 'tpl-parts.json') fs.writeFileSync(path.join(fn, s), waText(fs.readFileSync(path.join(ROOT, s), 'utf8')));
+    else if (s === 'lib-render.js') {
+      let src = copyText(fs.readFileSync(path.join(ROOT, s), 'utf8'));
+      if (fs.existsSync(path.join(ROOT, 'autor.jpg'))) src = src.split('src="/retrato.jpg"').join('src="/autor.jpg"');
+      fs.writeFileSync(path.join(fn, s), src);
+    }
+    else if (s === 'tpl-parts.json') fs.writeFileSync(path.join(fn, s), waText(copyJson(fs.readFileSync(path.join(ROOT, s), 'utf8'))));
     else fs.copyFileSync(path.join(ROOT, s), path.join(fn, s));
   }
   fs.cpSync(path.join(ROOT, 'node_modules'), path.join(fn, 'node_modules'), { recursive: true });
