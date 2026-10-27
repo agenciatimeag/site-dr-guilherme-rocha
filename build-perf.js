@@ -20,13 +20,16 @@ html{scroll-behavior:auto!important}
 @media (min-width:761px){.wa-fix{right:24px;bottom:24px;border-radius:999px;padding:14px 22px 14px 18px}}
 .cta-micro{margin:2px 0 0;font-size:.82rem;opacity:.75;display:flex;align-items:center;gap:6px}
 .cta-micro:before{content:"";width:8px;height:8px;border-radius:50%;background:#2BD46B;box-shadow:0 0 0 3px rgba(43,212,107,.25)}
-.hf .cta-micro{color:#E9EDE3;justify-content:center}
+.hf .cta-micro{color:#E9EDE3;justify-content:center;font-size:.82rem!important;max-width:none!important}
 @media (min-width:761px){.hf .cta-micro{justify-content:flex-start}}
+.cta-micro .g5{color:#F5B301;font-weight:600}
+.hf-proof .g5{color:#F5B301}
+@media (max-width:760px){.hf-proof li{padding:0 12px!important}}
 .cta .lead-cta{margin:0;color:inherit;opacity:.85;font-size:1.05rem;line-height:1.5;max-width:46ch}
 </style>`;
 
-const STICKY = `<a class="wa-fix" href="${WA}" target="_blank" rel="noopener" aria-label="Agendar consulta pelo WhatsApp">${WA_ICON}<span>Agendar minha consulta<small>Resposta em segundos no WhatsApp</small></span></a>`;
-const MICRO = '<p class="cta-micro">Resposta em segundos no WhatsApp</p>';
+const STICKY = `<a class="wa-fix" href="${WA}" target="_blank" rel="noopener" aria-label="Agendar consulta pelo WhatsApp">${WA_ICON}<span>Agendar minha consulta<small>Resposta em segundos · ★ 5,0 no Google</small></span></a>`;
+const MICRO = '<p class="cta-micro"><span>Resposta em segundos no WhatsApp · <b class="g5">★ 5,0</b> no Google</span></p>';
 
 // ---------- Textos ----------
 const GLOBAL = [
@@ -44,6 +47,7 @@ const PAGES = {
   'obesidade.html': [
     [/<h1 class="up u1">Tratamento da <span class="it">obesidade<\/span><\/h1>/, '<h1 class="up u1">Tratamento da obesidade <span class="it">que vai na causa, não só no peso.</span></h1>'],
     [/<p class="lead up u2">Obesidade é uma doença crônica[^<]*<\/p>/, '<p class="lead up u2">Se você já tentou dieta, remédio e academia e o peso sempre volta, o problema não é falta de força de vontade. É falta de investigação. Há mais de 15 anos o Dr. Guilherme descobre o que está travando o seu corpo e monta um plano para destravar.</p>'],
+    [/(monta um plano para destravar\.)<\/p>/, '$1 Para quem quer o acompanhamento mais completo, existe o <a href="/platinum" style="color:inherit;text-decoration:underline">Programa Platinum</a>, o método exclusivo do Instituto.</p>'],
     [/A balança mostra só <span class="it">uma parte da sua história\.<\/span>/, 'O peso volta porque <span class="it">a causa nunca foi tratada.</span>'],
   ],
   'menopausa.html': [
@@ -56,9 +60,11 @@ const PAGES = {
     [/<p class="lead up u2">Reposição hormonal por implante[^<]*<\/p>/, '<p class="lead up u2">Sem fórmula pronta e sem modismo: exames, dose individual e acompanhamento contínuo com o Dr. Guilherme. Descubra na consulta se o implante é o melhor caminho para você.</p>'],
   ],
   'platinum.html': [
-    [/<p class="lead up u2">O protocolo mais completo[^<]*<\/p>/, '<p class="lead up u2">Para quem cansou de recomeçar: médico, nutrologia, nutrição, psicologia e educação física trabalhando juntos no seu caso, conduzidos pessoalmente pelo Dr. Guilherme, com acompanhamento próximo do início ao fim.</p>'],
+    [/<p class="lead up u2">O protocolo mais completo[^<]*<\/p>/, '<p class="lead up u2">O método exclusivo do Instituto Guilherme Rocha, para quem cansou de recomeçar: médico, nutrologia, nutrição, psicologia e educação física trabalhando juntos no seu caso, conduzidos pessoalmente pelo Dr. Guilherme, com acompanhamento próximo do início ao fim.</p>'],
   ],
   'index.html': [
+    [/<li><b>\+10 mil<\/b> vidas transformadas<\/li><\/ul>/, '<li><b>+10 mil</b> vidas transformadas</li><li><b class="g5">★ 5,0</b> no Google</li></ul>'],
+    [/O mais alto nível de acompanhamento do <span class="it">Instituto\.<\/span>/, 'Programa Platinum: <span class="it">o método exclusivo do Dr. Guilherme.</span>'],
     [/<p class="hf-in h2">[^<]*<\/p>/, '<p class="hf-in h2">Emagrecimento, menopausa e saúde hormonal com quem investiga a causa. Chame no WhatsApp e a equipe já agenda a sua consulta.</p>'],
     [/Será um prazer <span class="it">receber você\.<\/span>/, 'Seu horário está a <span class="it">uma mensagem de distância.</span>'],
     [/O agendamento é feito pelo WhatsApp\. A equipe do Instituto responde e reserva o melhor horário para você\./, 'Mande uma mensagem agora: a equipe responde em segundos, faz uma triagem rápida e já reserva o seu horário.'],
