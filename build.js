@@ -146,6 +146,8 @@ const NOINDEX = { 'X-Robots-Tag': 'noindex' };
 fs.writeFileSync(path.join(OUT, 'config.json'), JSON.stringify({
   version: 3,
   overrides,
+  // otimizador de imagens da Vercel: entrega cada foto no tamanho da tela, em AVIF/WebP (usado pelo build-perf.js)
+  images: { sizes: require('./build-perf.js').IMG_SIZES, domains: [], formats: ['image/avif', 'image/webp'], minimumCacheTTL: 2592000 },
   routes: [
     // endereços antigos do blog → novos (301 permanente, bom para o Google)
     { src: '^/blog\\.html$', headers: { Location: '/blog' }, status: 301 },
