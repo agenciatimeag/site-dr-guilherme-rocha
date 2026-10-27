@@ -85,7 +85,7 @@ function casesSection(root) {
   return `
 <section id="casos" style="padding-top:clamp(48px,7vw,96px)">
   <div class="wrap">
-    <div class="areas-head rv" style="margin-bottom:32px"><div class="head"><span class="tag">Casos de sucesso</span><h2>Resultados de quem <span class="it">confiou no processo.</span></h2></div></div>
+    <div class="areas-head rv" style="margin-bottom:32px"><div class="head"><span class="tag">Casos de sucesso</span><h2>Pessoas reais que <span class="it">pararam de recomeçar.</span></h2></div></div>
     <div class="cs" data-cs style="--cs-dur:${dur}s"><div class="cs-track">${slides.join('')}${dup}</div></div>
     <p class="cs-note">Resultados variam de pessoa para pessoa e dependem de avaliação e acompanhamento médico individual.</p>
   </div>
