@@ -110,6 +110,44 @@ const CSS_FILE = readOr('styles.css');
 const JS_FILE = readOr('site.js');
 const minCss = c => c.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1');
 
+// CSS só com as regras que a página usa (a folha completa tem 75 KB; cada página usa uma parte).
+// Classes que o JavaScript coloca depois (menu, vídeo, artigos do blog) ficam sempre.
+const JS_CLASSES = ['on-hero', 'scrolled', 'hold', 'ytm', 'on', 'ytm-x', 'ytm-box', 'short', 'post', 'cover', 'meta', 'by', 'read', 'open'];
+function splitTop(str, ch) { // divide por vírgula fora de parênteses
+  const out = []; let d = 0, cur = '';
+  for (const c of str) { if (c === '(') d++; if (c === ')') d--; if (c === ch && !d) { out.push(cur); cur = ''; } else cur += c; }
+  out.push(cur); return out;
+}
+function purgeCss(css, html) {
+  const cls = new Set(JS_CLASSES), ids = new Set(), tags = new Set(['html', 'body']);
+  for (const m of html.matchAll(/\sclass=(?:"([^"]*)"|'([^']*)'|([^\s>"']+))/g)) (m[1] || m[2] || m[3] || '').split(/\s+/).forEach(c => c && cls.add(c));
+  for (const m of html.matchAll(/\sid=(?:"([^"]*)"|'([^']*)'|([^\s>"']+))/g)) ids.add(m[1] || m[2] || m[3]);
+  for (const m of html.matchAll(/<([a-z][a-z0-9]*)\b/g)) tags.add(m[1]);
+  const keepSel = sel => {
+    const t = sel.replace(/:(not|has|is|where)\((?:[^()]|\([^()]*\))*\)/g, '').replace(/\[[^\]]*\]/g, '').replace(/::?[a-z-]+(\([^)]*\))?/g, '');
+    for (const m of t.matchAll(/\.([\w-]+)/g)) if (!cls.has(m[1])) return false;
+    for (const m of t.matchAll(/#([\w-]+)/g)) if (!ids.has(m[1])) return false;
+    for (const m of t.matchAll(/(?:^|[\s>+~])([a-z][a-z0-9]*)/g)) if (!tags.has(m[1])) return false;
+    return true;
+  };
+  // percorre as regras (com @media aninhado)
+  const walk = src => {
+    let out = '', i = 0;
+    while (i < src.length) {
+      const open = src.indexOf('{', i); if (open < 0) break;
+      const head = src.slice(i, open).trim();
+      let d = 1, j = open + 1; while (j < src.length && d) { if (src[j] === '{') d++; else if (src[j] === '}') d--; j++; }
+      const body = src.slice(open + 1, j - 1);
+      if (/^@media/.test(head)) { const inner = walk(body); if (inner) out += head + '{' + inner + '}'; }
+      else if (/^@/.test(head)) out += head + '{' + body + '}';
+      else if (splitTop(head, ',').some(keepSel)) out += head + '{' + body + '}';
+      i = j;
+    }
+    return out;
+  };
+  try { return walk(css); } catch (e) { return css; }
+}
+
 // Google Tag Manager, Analytics, Clarity e Pixel: os eventos ficam guardados desde o primeiro instante (nada se perde),
 // mas os arquivos pesados (≈450 KB) só baixam no primeiro toque/rolagem ou 8 s depois de a página abrir.
 // Assim a foto e o texto aparecem primeiro no celular. Em /obrigado e /forms continua tudo imediato (conversão).
@@ -162,6 +200,33 @@ function responsive(html) {
   return html;
 }
 
+// Fontes no próprio site (pacotes @fontsource do package.json), sem depender do Google Fonts na abertura.
+// Se os pacotes não estiverem instalados, continua usando o Google Fonts como antes.
+const LATIN = 'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD';
+const FONTS = [
+  ['Instrument Sans', '@fontsource-variable/instrument-sans', 'instrument-sans-latin-wght-normal.woff2', '400 700'],
+  ['Inter', '@fontsource-variable/inter', 'inter-latin-wght-normal.woff2', '400 600'],
+];
+let fontsOk = null;
+function localFonts() {
+  if (fontsOk !== null) return fontsOk;
+  try {
+    const dest = path.join(__dirname, '.vercel', 'output', 'static', 'fonts');
+    fs.mkdirSync(dest, { recursive: true });
+    for (const [, pkg, file] of FONTS) fs.copyFileSync(path.join(path.dirname(require.resolve(pkg + '/package.json')), 'files', file), path.join(dest, file));
+    fontsOk = true;
+  } catch (e) { fontsOk = false; }
+  return fontsOk;
+}
+const FONT_CSS = FONTS.map(([fam, , file, w]) => `@font-face{font-family:"${fam}";font-style:normal;font-display:swap;font-weight:${w};src:url(/fonts/${file}) format("woff2");unicode-range:${LATIN}}`).join('');
+function fonts(html) {
+  if (!/fonts\.googleapis\.com\/css2/.test(html) || !localFonts()) return html;
+  html = html.replace(/<link rel="preconnect" href="https:\/\/fonts\.(googleapis|gstatic)\.com"( crossorigin)?>/g, '')
+    .replace(/<link rel="preload" as="style" href="https:\/\/fonts\.googleapis\.com[^>]*><noscript><link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com[^>]*><\/noscript>/g, '')
+    .replace(/<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com[^>]*>/g, '');
+  return html.replace('</head>', `<link rel="preload" as="font" type="font/woff2" href="/fonts/${FONTS[0][2]}" crossorigin><style>${FONT_CSS}</style></head>`);
+}
+
 // Ajustes de acessibilidade: ordem dos títulos do rodapé e nome dos botões igual ao texto visível
 function a11y(html) {
   html = html.replace(/<footer>[\s\S]*?<\/footer>/, ft => ft.replace(/<h4>([\s\S]*?)<\/h4>/g, '<p class="fh4">$1</p>'));
@@ -184,10 +249,11 @@ function perf(html, f) {
     return `<img loading="lazy" decoding="async"${a}>`;
   });
   if (!NO_STICKY.includes(f) && !html.includes('class="wa-fix"')) html = html.replace('</body>', STICKY + '\n</body>');
-  html = a11y(responsive(tagsLater(html, f)));
+  html = fonts(a11y(responsive(tagsLater(html, f))));
   // CSS e JS do site embutidos na página: menos idas e vindas ao servidor antes de mostrar o conteúdo
-  if (CSS_FILE) html = html.replace(/<link rel="stylesheet" href="\/styles\.css">/, () => '<style>' + minCss(CSS_FILE) + '</style>');
-  if (JS_FILE) html = html.replace('<script src="/site.js"></script>', () => '<script>' + JS_FILE + '</script>');
+  if (CSS_FILE) html = html.replace(/<link rel="stylesheet" href="\/styles\.css">/, () => '<style>' + (f === 'tpl.html' ? minCss(CSS_FILE) : purgeCss(minCss(CSS_FILE), html)) + '</style>');
+  // (o cabeçalho é ajustado no próximo quadro, sem forçar o navegador a recalcular o layout no carregamento)
+  if (JS_FILE) html = html.replace('<script src="/site.js"></script>', () => '<script>' + JS_FILE.replace('upd();window.addEventListener', 'requestAnimationFrame(upd);window.addEventListener') + '</script>');
   return html.replace('</head>', CSS + '</head>');
 }
 

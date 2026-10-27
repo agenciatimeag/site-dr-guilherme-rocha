@@ -134,7 +134,7 @@ for (const f of files.filter(f => /^api-.+\.js$/.test(f))) {
     else if (s === 'tpl-parts.json') fs.writeFileSync(path.join(fn, s), waText(copyJson(fs.readFileSync(path.join(ROOT, s), 'utf8'))));
     else fs.copyFileSync(path.join(ROOT, s), path.join(fn, s));
   }
-  fs.cpSync(path.join(ROOT, 'node_modules'), path.join(fn, 'node_modules'), { recursive: true });
+  fs.cpSync(path.join(ROOT, 'node_modules'), path.join(fn, 'node_modules'), { recursive: true, filter: src => !src.includes('@fontsource') });
   fs.writeFileSync(path.join(fn, 'package.json'), JSON.stringify({ private: true }));
   fs.writeFileSync(path.join(fn, '.vc-config.json'), JSON.stringify({
     runtime: 'nodejs22.x', handler: f, launcherType: 'Nodejs', shouldAddHelpers: true,
@@ -161,7 +161,7 @@ fs.writeFileSync(path.join(OUT, 'config.json'), JSON.stringify({
     { src: '^/admin/?$', dest: '/admin', headers: NOINDEX },
     // ponte para a Lemify pelo próprio domínio: o formulário da página /forms conversa com a Lemify sem bloqueio entre sites
     { src: '^/lemify/(.*)$', dest: 'https://app.lemify.com.br/$1' },
-    { src: '^/(.*)\\.(jpg|jpeg|png|webp|avif|svg)$', headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }, continue: true },
+    { src: '^/(.*)\\.(jpg|jpeg|png|webp|avif|svg|woff2)$', headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }, continue: true },
     { handle: 'filesystem' },
   ],
 }, null, 2));
