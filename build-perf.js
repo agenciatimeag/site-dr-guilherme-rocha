@@ -19,17 +19,17 @@ html{scroll-behavior:auto!important}
 @media (max-width:760px){.wa-fix{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));min-height:58px;border-radius:16px;padding:8px 16px}body{padding-bottom:84px}}
 @media (min-width:761px){.wa-fix{right:24px;bottom:24px;border-radius:999px;padding:14px 22px 14px 18px}}
 .cta-micro{margin:2px 0 0;font-size:.82rem;opacity:.75;display:flex;align-items:center;gap:6px}
-.cta-micro:before{content:"";width:8px;height:8px;border-radius:50%;background:#2BD46B;box-shadow:0 0 0 3px rgba(43,212,107,.25)}
 .hf .cta-micro{color:#E9EDE3;justify-content:center;font-size:.82rem!important;max-width:none!important}
 @media (min-width:761px){.hf .cta-micro{justify-content:flex-start}}
 .cta-micro .g5{color:#F5B301;font-weight:600}
 .hf-proof .g5{color:#F5B301}
-@media (max-width:760px){.hf-proof li{padding:0 12px!important}}
+@media (max-width:760px){.hf-proof li{padding:0 12px!important}.hf-content>p.hf-in.h2{display:block!important;font-size:.95rem!important;line-height:1.45!important;color:rgba(244,245,240,.8)!important;max-width:36ch!important;margin:0 auto!important}.hf-cut{height:min(44svh,390px)!important}}
 .cta .lead-cta{margin:0;color:inherit;opacity:.85;font-size:1.05rem;line-height:1.5;max-width:46ch}
 </style>`;
 
-const STICKY = `<a class="wa-fix" href="${WA}" target="_blank" rel="noopener" aria-label="Agendar consulta pelo WhatsApp">${WA_ICON}<span>Agendar minha consulta<small>Resposta em segundos · ★ 5,0 no Google</small></span></a>`;
-const MICRO = '<p class="cta-micro"><span>Resposta em segundos no WhatsApp · <b class="g5">★ 5,0</b> no Google</span></p>';
+const STICKY = `<a class="wa-fix" href="${WA}" target="_blank" rel="noopener" aria-label="Agendar consulta pelo WhatsApp">${WA_ICON}<span>Agendar minha consulta<small>Resposta em segundos no WhatsApp</small></span></a>`;
+// micro-prova abaixo do botão do topo das páginas internas (a home já mostra os números no topo; o tempo de resposta fica na barra fixa)
+const MICRO = '<p class="cta-micro"><span><b class="g5">★ 5,0</b> no Google · 15+ anos de prática · CRM-ES 11007</span></p>';
 
 // ---------- Textos ----------
 const GLOBAL = [
@@ -43,34 +43,29 @@ const GLOBAL = [
     'Você já esperou demais. <span class="it">Fale com a equipe agora.</span></h2>\n  <p class="lead-cta">Chame no WhatsApp: a equipe responde em segundos, faz uma triagem rápida do seu caso e já reserva o seu horário com o Dr. Guilherme.</p>'],
 ];
 
+const NODES = require('./build-copy.js'); // textos de cada página (original → novo)
 const PAGES = {
-  'obesidade.html': [
-    [/<h1 class="up u1">Tratamento da <span class="it">obesidade<\/span><\/h1>/, '<h1 class="up u1">Tratamento da obesidade <span class="it">que vai na causa, não só no peso.</span></h1>'],
-    [/<p class="lead up u2">Obesidade é uma doença crônica[^<]*<\/p>/, '<p class="lead up u2">Se você já tentou dieta, remédio e academia e o peso sempre volta, o problema não é falta de força de vontade. É falta de investigação. Há mais de 15 anos o Dr. Guilherme descobre o que está travando o seu corpo e monta um plano para destravar.</p>'],
-    [/(monta um plano para destravar\.)<\/p>/, '$1 Para quem quer o acompanhamento mais completo, existe o <a href="/platinum" style="color:inherit;text-decoration:underline">Programa Platinum</a>, o método exclusivo do Instituto.</p>'],
-    [/A balança mostra só <span class="it">uma parte da sua história\.<\/span>/, 'O peso volta porque <span class="it">a causa nunca foi tratada.</span>'],
-  ],
-  'menopausa.html': [
-    [/<h1 class="up u1">Menopausa e <span class="it">perimenopausa<\/span><\/h1>/, '<h1 class="up u1">Menopausa e perimenopausa <span class="it">sem aceitar que “é da idade”.</span></h1>'],
-    [/<p class="lead up u2">Uma fase de mudanças profundas[^<]*<\/p>/, '<p class="lead up u2">Calorões, insônia, irritação, cansaço, gordura na barriga e libido lá embaixo têm explicação e têm tratamento. Você não precisa aguentar isso calada nem esperar piorar.</p>'],
-    [/A menopausa não precisa ser <span class="it">sinônimo de sofrimento\.<\/span>/, 'Você não precisa mais <span class="it">aguentar isso calada.</span>'],
-  ],
-  'implante.html': [
-    [/<h1 class="up u1">Implante <span class="it">hormonal<\/span><\/h1>/, '<h1 class="up u1">Implante hormonal <span class="it">com indicação médica de verdade.</span></h1>'],
-    [/<p class="lead up u2">Reposição hormonal por implante[^<]*<\/p>/, '<p class="lead up u2">Sem fórmula pronta e sem modismo: exames, dose individual e acompanhamento contínuo com o Dr. Guilherme. Descubra na consulta se o implante é o melhor caminho para você.</p>'],
-  ],
-  'platinum.html': [
-    [/<p class="lead up u2">O protocolo mais completo[^<]*<\/p>/, '<p class="lead up u2">O método exclusivo do Instituto Guilherme Rocha, para quem cansou de recomeçar: médico, nutrologia, nutrição, psicologia e educação física trabalhando juntos no seu caso, conduzidos pessoalmente pelo Dr. Guilherme, com acompanhamento próximo do início ao fim.</p>'],
-  ],
   'index.html': [
     [/<li><b>\+10 mil<\/b> vidas transformadas<\/li><\/ul>/, '<li><b>+10 mil</b> vidas transformadas</li><li><b class="g5">★ 5,0</b> no Google</li></ul>'],
     [/O mais alto nível de acompanhamento do <span class="it">Instituto\.<\/span>/, 'Programa Platinum: <span class="it">o método exclusivo do Dr. Guilherme.</span>'],
-    [/<p class="hf-in h2">[^<]*<\/p>/, '<p class="hf-in h2">Emagrecimento, menopausa e saúde hormonal com quem investiga a causa. Chame no WhatsApp e a equipe já agenda a sua consulta.</p>'],
+    [/(<h1 class="hf-in h1">)[\s\S]*?(<\/h1>)/, '$1Emagrecimento e menopausa <span class="it">com abordagem metabólica.</span>$2'],
+    [/<p class="hf-in h2">[^<]*<\/p>/, '<p class="hf-in h2">Há mais de 15 anos ajudando pessoas a emagrecer em Guarapari, principalmente depois dos 40, quando dieta sozinha já não funciona.</p>'],
     [/Será um prazer <span class="it">receber você\.<\/span>/, 'Seu horário está a <span class="it">uma mensagem de distância.</span>'],
     [/O agendamento é feito pelo WhatsApp\. A equipe do Instituto responde e reserva o melhor horário para você\./, 'Mande uma mensagem agora: a equipe responde em segundos, faz uma triagem rápida e já reserva o seu horário.'],
     [/(<summary>Como agendar a avaliação\?<i><\/i><\/summary><p>)[^<]*/, '$1Toque em qualquer botão “Agendar minha consulta”. A equipe responde em segundos no WhatsApp, faz uma triagem rápida do seu caso e já reserva o seu horário'],
   ],
 };
+
+// troca texto exato entre tags (preserva espaços e layout)
+const escRe = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function nodes(s, f) {
+  for (const [from, to] of NODES[f] || []) {
+    const re = new RegExp('>(\\s*)' + escRe(from) + '(\\s*)<');
+    if (!re.test(s)) { console.warn('[copy] texto não encontrado em', f, from.slice(0, 50)); continue; }
+    s = s.replace(re, (m, a, b) => '>' + a + to + b + '<');
+  }
+  return s;
+}
 
 function apply(s, list, f) {
   for (const [re, to] of list) {
@@ -79,7 +74,7 @@ function apply(s, list, f) {
   }
   return s;
 }
-const copyText = (s, f) => apply(apply(s, GLOBAL), PAGES[f] || [], f);
+const copyText = (s, f) => apply(apply(nodes(s, f), GLOBAL), PAGES[f] || [], f);
 
 // textos dentro do JSON de partes do blog (tpl-parts.json): aplica em cada texto, sem quebrar o JSON
 function copyJson(raw) {
@@ -93,8 +88,7 @@ function perf(html, f) {
   if (f === 'admin.html') return html;
   html = copyText(html, f);
   // micro-texto de confiança logo abaixo do primeiro botão de agendamento do topo
-  html = html.replace(/(<div class="hero-ctas up u3"[^>]*>[\s\S]*?<\/a><\/div>)/, '$1' + MICRO)
-    .replace(/(<a class="btn btn-light hf-in h3"[\s\S]*?<\/a>)/, '$1' + MICRO);
+  html = html.replace(/(<div class="hero-ctas up u3"[^>]*>[\s\S]*?<\/a><\/div>)/, '$1' + MICRO);
   // imagens: a primeira imagem de conteúdo tem prioridade; as outras carregam sob demanda
   let first = true;
   html = html.replace(/<img\b([^>]*)>/g, (m, a) => {
