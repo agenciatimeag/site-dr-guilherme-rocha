@@ -23,13 +23,25 @@ html{scroll-behavior:auto!important}
 @media (min-width:761px){.hf .cta-micro{justify-content:flex-start}}
 .cta-micro .g5{color:#F5B301;font-weight:600}
 .hf-proof .g5{color:#F5B301}
-@media (max-width:760px){.hf-proof li{padding:0 12px!important}.hf-content>p.hf-in.h2{display:block!important;font-size:.95rem!important;line-height:1.45!important;color:rgba(244,245,240,.8)!important;max-width:36ch!important;margin:0 auto!important}.hf-cut{height:min(44svh,390px)!important}}
+@media (max-width:760px){.hf-proof li{padding:0 12px!important}.hf-content>p.hf-in.h2{display:block!important;font-size:.95rem!important;line-height:1.45!important;color:rgba(244,245,240,.8)!important;max-width:36ch!important;margin:0 auto!important}.hf-cut{height:min(52svh,470px)!important;margin-bottom:-90px!important;-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 98%);mask-image:linear-gradient(180deg,#000 62%,transparent 98%);filter:none!important}}
+.ph-img{position:relative}
+.ph-doc{position:absolute;left:0;right:0;bottom:0;padding:56px 20px 18px;background:linear-gradient(0deg,rgba(12,13,9,.92),rgba(12,13,9,.55) 60%,transparent);color:#F4F5F0;font-size:.82rem;line-height:1.4}
+.ph-doc b{display:block;font:600 1.15rem/1.2 var(--display,inherit);letter-spacing:-.01em;color:#fff}
+.ph-doc .ph-g{display:block;margin-top:2px}
+.ph-doc .g5{display:inline;font:inherit;color:#F5B301;font-weight:600}
+.ph-img img.ph-dr{object-position:50% 8%!important}
 .cta .lead-cta{margin:0;color:inherit;opacity:.85;font-size:1.05rem;line-height:1.5;max-width:46ch}
 </style>`;
 
 const STICKY = `<a class="wa-fix" href="${WA}" target="_blank" rel="noopener" aria-label="Agendar consulta pelo WhatsApp">${WA_ICON}<span>Agendar minha consulta<small>Resposta em segundos no WhatsApp</small></span></a>`;
-// micro-prova abaixo do botão do topo das páginas internas (a home já mostra os números no topo; o tempo de resposta fica na barra fixa)
-const MICRO = '<p class="cta-micro"><span><b class="g5">★ 5,0</b> no Google · 15+ anos de prática · CRM-ES 11007</span></p>';
+// foto do Dr. Guilherme no topo das páginas de tratamento, com nome e prova
+const docImg = (src, w, h, alt) => `<img class="ph-dr" src="/${src}" alt="${alt}" width="${w}" height="${h}"><span class="ph-doc"><b>Dr. Guilherme Rocha</b>15+ anos de prática · +10 mil vidas transformadas<span class="ph-g"><span class="g5">★ 5,0</span> no Google</span></span>`;
+const DOC = {
+  'obesidade.html': docImg('poltrona.jpg', 1000, 1250, 'Dr. Guilherme Rocha, médico em Guarapari, sentado em poltrona de couro'),
+  'menopausa.html': docImg('estudio.jpg', 834, 1250, 'Dr. Guilherme Rocha, médico em Guarapari, de blazer cinza'),
+  'implante.html': docImg('retrato.jpg', 928, 1152, 'Dr. Guilherme Rocha, médico em Guarapari, com a mão apoiada no queixo'),
+  'platinum.html': docImg('emag-hero.jpg', 563, 1000, 'Dr. Guilherme Rocha, médico responsável pelo Programa Platinum'),
+};
 
 // ---------- Textos ----------
 const GLOBAL = [
@@ -87,8 +99,8 @@ const NO_STICKY = ['admin.html', 'forms.html', 'obrigado.html'];
 function perf(html, f) {
   if (f === 'admin.html') return html;
   html = copyText(html, f);
-  // micro-texto de confiança logo abaixo do primeiro botão de agendamento do topo
-  html = html.replace(/(<div class="hero-ctas up u3"[^>]*>[\s\S]*?<\/a><\/div>)/, '$1' + MICRO);
+  // páginas de tratamento: a foto do topo passa a ser o Dr. Guilherme, com nome e prova (rosto conhecido logo na primeira tela)
+  if (DOC[f]) html = html.replace(/(<div class="ph-img up u2">)<img src="\/[a-z]+-bg\.jpg"[^>]*>/, '$1' + DOC[f]);
   // imagens: a primeira imagem de conteúdo tem prioridade; as outras carregam sob demanda
   let first = true;
   html = html.replace(/<img\b([^>]*)>/g, (m, a) => {

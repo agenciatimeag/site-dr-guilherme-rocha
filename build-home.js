@@ -120,8 +120,8 @@ module.exports = function home(html, root) {
     .replace(/(<a class="btn btn-dark"[^>]*>)Agende sua avaliação(<span class="ic">[\s\S]{0,300}?<\/a><a class="btn btn-line" href="\/sobre")/, '$1' + LABEL + '$2')
     .replace('Agende pelo WhatsApp<span class="ic">', LABEL + '<span class="ic">');
 
-  // primeira tela: quem é, onde atende e prova, logo acima do botão
-  html = html.replace('<h1 class="hf-in h1">', '<p class="hf-eyebrow hf-in h1">Médico · CRM-ES 11007 · Guarapari (ES)</p>\n    <h1 class="hf-in h1">')
+  // primeira tela: prova (números) logo acima do botão; CRM e cidade ficam só no rodapé
+  html = html
     .replace(/(<p class="hf-in h2">[\s\S]*?<\/p>)/, '$1\n    <ul class="hf-proof hf-in h2"><li><b>15+</b> anos de experiência</li><li><b>+10 mil</b> vidas transformadas</li></ul>');
 
   // título da primeira tela pensado para conversão
