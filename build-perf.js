@@ -31,6 +31,12 @@ html{scroll-behavior:auto!important}
 .ph-doc .g5{display:inline;font:inherit;color:#F5B301;font-weight:600}
 .ph-img img.ph-dr{object-position:50% 8%!important}
 .cta .lead-cta{margin:0;color:inherit;opacity:.85;font-size:1.05rem;line-height:1.5;max-width:46ch}
+html body .wa-fix{background:#11793E!important}html body .wa-fix small{opacity:1!important;color:#fff!important}
+html body .also p{color:#454c41!important}html body .quote-card p{color:#14170F!important}html body .quote-card small{color:#2f352b!important;opacity:1!important}
+html body .step .n b,html body .flow .n,html body .flow .pill,html body .cloud .hl{color:#14170F!important}
+html body .post .meta b{color:#3F5239!important}html body .ct-addr small,html body .ct-more small,html body .fg h3{color:#6E5420!important}
+html body .wordmark .it{color:#6F8069!important}
+.foot .fh4{font-size:.85rem;color:var(--muted);font-weight:400;letter-spacing:0;margin:0 0 14px}
 </style>`;
 
 const STICKY = `<a class="wa-fix" href="${WA}" target="_blank" rel="noopener" aria-label="Agendar consulta pelo WhatsApp">${WA_ICON}<span>Agendar minha consulta<small>Resposta em segundos no WhatsApp</small></span></a>`;
@@ -96,6 +102,74 @@ function copyJson(raw) {
 
 const NO_STICKY = ['admin.html', 'forms.html', 'obrigado.html'];
 
+// ---------- Velocidade no celular ----------
+const fs = require('fs');
+const path = require('path');
+const readOr = f => { try { return fs.readFileSync(path.join(__dirname, f), 'utf8'); } catch (e) { return null; } };
+const CSS_FILE = readOr('styles.css');
+const JS_FILE = readOr('site.js');
+const minCss = c => c.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1');
+
+// Google Tag Manager, Analytics, Clarity e Pixel: os eventos ficam guardados desde o primeiro instante (nada se perde),
+// mas os arquivos pesados (≈450 KB) só baixam no primeiro toque/rolagem ou 8 s depois de a página abrir.
+// Assim a foto e o texto aparecem primeiro no celular. Em /obrigado e /forms continua tudo imediato (conversão).
+const TAGS_LATER = `<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});gtag('js',new Date());gtag('config','G-RKRPTG597H');
+(function(c,a){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}})(window,'clarity');
+!function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
+fbq('init','667194305437913');fbq('track','PageView');
+(function(){var ok=0,ev=['pointerdown','touchstart','scroll','keydown','mousemove'];function go(){if(ok)return;ok=1;ev.forEach(function(e){removeEventListener(e,go)});
+['https://www.googletagmanager.com/gtm.js?id=GTM-N8DP97WZ','https://www.googletagmanager.com/gtag/js?id=G-RKRPTG597H','https://www.clarity.ms/tag/ypuk4cn7ns','https://connect.facebook.net/en_US/fbevents.js'].forEach(function(u){var s=document.createElement('script');s.async=true;s.src=u;document.head.appendChild(s)})}
+ev.forEach(function(e){addEventListener(e,go,{passive:true})});addEventListener('load',function(){setTimeout(go,8000)})})();
+</script>`;
+const TAGS_NOW = ['forms.html', 'obrigado.html'];
+function tagsLater(html, f) {
+  if (TAGS_NOW.includes(f) || !html.includes('GTM-N8DP97WZ')) return html;
+  const gtm = /<!-- Google Tag Manager -->\s*<script>[\s\S]*?<\/script>\s*<!-- End Google Tag Manager -->/;
+  const rest = /<!-- Google Analytics 4 -->[\s\S]*?<!-- Meta Pixel -->\s*<script>[\s\S]*?<\/script>/;
+  if (!gtm.test(html) || !rest.test(html)) return html;
+  return html.replace(gtm, () => TAGS_LATER).replace(rest, '');
+}
+
+// Imagens no tamanho certo para cada tela, em AVIF/WebP, pelo otimizador de imagens da Vercel (/_vercel/image).
+const IMG_SIZES = [256, 384, 640, 828, 1080, 1200];
+const vimg = (src, w) => `/_vercel/image?url=${encodeURIComponent(src)}&amp;w=${w}&amp;q=72`;
+function sizesFor(a, src) {
+  if (/class="hf-cut/.test(a)) return '(max-width:760px) 320px, 620px';
+  if (/class="ph-dr/.test(a)) return '(max-width:860px) calc(100vw - 32px), 460px';
+  if (/^\/caso-/.test(src)) return '(max-width:640px) 74vw, 360px';
+  return '(max-width:760px) 100vw, 50vw';
+}
+function responsive(html) {
+  html = html.replace(/<img\b([^>]*?)\ssrc="(\/[\w.-]+\.(?:jpe?g|png|webp))"([^>]*)>/g, (m, pre, src, post) => {
+    const a = pre + post;
+    if (/logo-img|srcset=/.test(a)) return m;
+    const wm = a.match(/\bwidth="(\d+)"/);
+    const nat = wm ? +wm[1] : 1200;
+    // até o primeiro tamanho maior que a foto original (a Vercel não amplia: devolve a original nesse caso)
+    const ws = IMG_SIZES.filter((w, i) => w < nat || (i > 0 && IMG_SIZES[i - 1] < nat && w >= nat) || (i === 0 && w >= nat));
+    if (!ws.length) return m;
+    const set = ws.map(w => vimg(src, w) + ' ' + w + 'w').join(', ');
+    const def = ws.includes(640) ? 640 : ws[ws.length - 1];
+    return `<img${pre} src="${vimg(src, def)}" srcset="${set}" sizes="${sizesFor(a, src)}"${post}>`;
+  });
+  // foto do topo da home: pré-carrega a mesma versão que o celular vai usar
+  html = html.replace(/<link rel="preload" as="image" href="(\/[\w.-]+\.(?:jpe?g|png|webp))" fetchpriority="high">/, (m, src) =>
+    `<link rel="preload" as="image" href="${vimg(src, 640)}" imagesrcset="${IMG_SIZES.filter(w => w <= 1080).map(w => vimg(src, w) + ' ' + w + 'w').join(', ')}" imagesizes="(max-width:760px) 320px, 620px" fetchpriority="high">`);
+  // capas dos artigos (fundo): versão menor
+  html = html.replace(/url\((\/b-[\w-]+\.jpg)\)/g, (m, src) => `url(${vimg(src, 640).replace(/&amp;/g, '&')})`);
+  return html;
+}
+
+// Ajustes de acessibilidade: ordem dos títulos do rodapé e nome dos botões igual ao texto visível
+function a11y(html) {
+  html = html.replace(/<footer>[\s\S]*?<\/footer>/, ft => ft.replace(/<h4>([\s\S]*?)<\/h4>/g, '<p class="fh4">$1</p>'));
+  html = html.replace(/(<a class="wa-fix"[^>]*?) aria-label="[^"]*"/, '$1');
+  html = html.replace(/(<button type="button" class="vt yt"[^>]*?) aria-label="[^"]*"/g, '$1');
+  return html;
+}
+
 function perf(html, f) {
   if (f === 'admin.html') return html;
   html = copyText(html, f);
@@ -110,7 +184,11 @@ function perf(html, f) {
     return `<img loading="lazy" decoding="async"${a}>`;
   });
   if (!NO_STICKY.includes(f) && !html.includes('class="wa-fix"')) html = html.replace('</body>', STICKY + '\n</body>');
+  html = a11y(responsive(tagsLater(html, f)));
+  // CSS e JS do site embutidos na página: menos idas e vindas ao servidor antes de mostrar o conteúdo
+  if (CSS_FILE) html = html.replace(/<link rel="stylesheet" href="\/styles\.css">/, () => '<style>' + minCss(CSS_FILE) + '</style>');
+  if (JS_FILE) html = html.replace('<script src="/site.js"></script>', () => '<script>' + JS_FILE + '</script>');
   return html.replace('</head>', CSS + '</head>');
 }
 
-module.exports = { perf, copyText, copyJson };
+module.exports = { perf, copyText, copyJson, IMG_SIZES };
