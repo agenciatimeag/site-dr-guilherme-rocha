@@ -74,6 +74,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 const WA_MSG = 'Olá, visitei o site e gostaria de atendimento! [NÃO APAGUE ESTA MENSAGEM]';
 const waText = s => s.replace(/(api\.whatsapp\.com\/send\?phone=\d+&(?:amp;)?text=)[^"'\\\s<>]*/g,
   (m, pre) => pre + encodeURIComponent(WA_MSG).replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase()));
+// Número de WhatsApp/telefone do site (todos os botões e textos). Para trocar de novo, mude só estas duas linhas.
+const NUM_OLD = ['5527995223099', '99522-3099'];
+const NUM_NEW = ['5527928362380', '92836-2380'];
+const num = s => NUM_OLD.reduce((t, o, i) => t.split(o).join(NUM_NEW[i]), s);
 const home = require('./build-home.js');
 const { perf, copyText, copyJson } = require('./build-perf.js'); // sem animações, botão fixo de WhatsApp e textos de conversão
 function speed(html, f) {
@@ -102,7 +106,7 @@ function speed(html, f) {
     html = html.replace('</head>', '<link rel="preload" as="image" href="' + hero + '" fetchpriority="high">'
       + '<style>.hf-cut{animation-delay:0s!important}@keyframes cutup{from{opacity:.001;transform:translateX(-50%) translateY(70px);filter:brightness(.2) drop-shadow(0 30px 60px rgba(0,0,0,.6))}to{opacity:1;transform:translateX(-50%);filter:brightness(1) drop-shadow(0 30px 60px rgba(0,0,0,.6))}}</style></head>');
   }
-  return waText(perf(html, f));
+  return num(waText(perf(html, f)));
 }
 
 // ---------- Estáticos ----------
@@ -112,6 +116,7 @@ const overrides = {};
 for (const f of files) {
   if (PRIVATE(f) || !PUBLIC_EXT.test(f)) continue;
   if (f.endsWith('.html')) fs.writeFileSync(path.join(STATIC, f), speed(fs.readFileSync(path.join(ROOT, f), 'utf8'), f));
+  else if (/\.(txt|xml|json|js|css)$/i.test(f)) fs.writeFileSync(path.join(STATIC, f), num(fs.readFileSync(path.join(ROOT, f), 'utf8')));
   else fs.copyFileSync(path.join(ROOT, f), path.join(STATIC, f));
   // endereços limpos: /sobre em vez de /sobre.html
   if (f.endsWith('.html') && f !== 'index.html') overrides[f] = { path: f.slice(0, -5), contentType: 'text/html; charset=utf-8' };
@@ -129,9 +134,9 @@ for (const f of files.filter(f => /^api-.+\.js$/.test(f))) {
     else if (s === 'lib-render.js') {
       let src = copyText(fs.readFileSync(path.join(ROOT, s), 'utf8'));
       if (fs.existsSync(path.join(ROOT, 'autor.jpg'))) src = src.split('src="/retrato.jpg"').join('src="/autor.jpg"');
-      fs.writeFileSync(path.join(fn, s), src);
+      fs.writeFileSync(path.join(fn, s), num(src));
     }
-    else if (s === 'tpl-parts.json') fs.writeFileSync(path.join(fn, s), waText(copyJson(fs.readFileSync(path.join(ROOT, s), 'utf8'))));
+    else if (s === 'tpl-parts.json') fs.writeFileSync(path.join(fn, s), num(waText(copyJson(fs.readFileSync(path.join(ROOT, s), 'utf8')))));
     else fs.copyFileSync(path.join(ROOT, s), path.join(fn, s));
   }
   fs.cpSync(path.join(ROOT, 'node_modules'), path.join(fn, 'node_modules'), { recursive: true, filter: src => !src.includes('@fontsource') });
